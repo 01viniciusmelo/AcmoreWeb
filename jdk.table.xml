@@ -1,0 +1,125 @@
+<application>
+  <component name="ProjectJdkTable">
+    <jdk version="2">
+      <name value="Python 2.7.5 virtualenv at /var/django/judge" />
+      <type value="Python SDK" />
+      <version value="Python 2.7.5" />
+      <homePath value="/var/django/judge/bin/python" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file:///var/django/judge/lib64/python2.7" />
+            <root type="simple" url="file:///var/django/judge/lib64/python2.7/lib-dynload" />
+            <root type="simple" url="file:///usr/lib64/python2.7" />
+            <root type="simple" url="file:///usr/lib/python2.7" />
+            <root type="simple" url="file:///var/django/judge/lib/python2.7/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-1200845671" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Python 2.7.5 virtualenv at /var/django/apply" />
+      <type value="Python SDK" />
+      <version value="Python 2.7.5" />
+      <homePath value="/var/django/apply/bin/python" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file:///var/django/apply/lib64/python2.7" />
+            <root type="simple" url="file:///var/django/apply/lib64/python2.7/lib-dynload" />
+            <root type="simple" url="file:///usr/lib64/python2.7" />
+            <root type="simple" url="file:///usr/lib/python2.7" />
+            <root type="simple" url="file:///var/django/apply/lib/python2.7/site-packages" />
+            <root type="simple" url="file:///usr/lib/python2.7/site-packages/pip-9.0.1-py2.7.egg" />
+            <root type="simple" url="file:///usr/lib64/python2.7/site-packages" />
+            <root type="simple" url="file:///usr/lib64/python2.7/site-packages/gtk-2.0" />
+            <root type="simple" url="file:///usr/lib/python2.7/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-505926686" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Python 2.7.5 virtualenv at /var/django/env/wx" />
+      <type value="Python SDK" />
+      <version value="Python 2.7.5" />
+      <homePath value="/var/django/env/wx/bin/python" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file:///var/django/env/wx/lib64/python2.7" />
+            <root type="simple" url="file:///var/django/env/wx/lib64/python2.7/lib-dynload" />
+            <root type="simple" url="file:///usr/lib64/python2.7" />
+            <root type="simple" url="file:///usr/lib/python2.7" />
+            <root type="simple" url="file:///var/django/env/wx/lib/python2.7/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/1285287187" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Python 2.7.5 (/usr/bin/python2.7)" />
+      <type value="Python SDK" />
+      <version value="Python 2.7.5" />
+      <homePath value="/usr/bin/python2.7" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file:///usr/lib/python2.7/site-packages/pip-9.0.1-py2.7.egg" />
+            <root type="simple" url="jar:///usr/lib/python2.7/site-packages/pyserial-3.2.1-py2.7.egg!/" />
+            <root type="simple" url="file:///usr/lib64/python2.7" />
+            <root type="simple" url="file:///usr/lib64/python2.7/plat-linux2" />
+            <root type="simple" url="file:///usr/lib64/python2.7/lib-dynload" />
+            <root type="simple" url="file:///usr/lib64/python2.7/site-packages" />
+            <root type="simple" url="file:///usr/lib64/python2.7/site-packages/gtk-2.0" />
+            <root type="simple" url="file:///usr/lib/python2.7/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-1247972723" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+    <jdk version="2">
+      <name value="Python 3.5.1 (/usr/bin/python3)" />
+      <type value="Python SDK" />
+      <version value="Python 3.5.1" />
+      <homePath value="/usr/bin/python3" />
+      <roots>
+        <classPath>
+          <root type="composite">
+            <root type="simple" url="file:///usr/local/python3/lib/python3.5" />
+            <root type="simple" url="file:///usr/local/python3/lib/python3.5/plat-linux" />
+            <root type="simple" url="file:///usr/local/python3/lib/python3.5/lib-dynload" />
+            <root type="simple" url="file:///usr/local/python3/lib/python3.5/site-packages" />
+            <root type="simple" url="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-2066100795" />
+            <root type="simple" url="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons" />
+          </root>
+        </classPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+  </component>
+</application>
