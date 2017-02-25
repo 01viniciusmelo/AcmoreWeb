@@ -20,6 +20,7 @@
     {% block style %}
 
     {% endblock %}
+{% load staticfiles %}
 <style>
 .bg {
     position: fixed;
@@ -37,7 +38,7 @@ header{
     border-radius: 0!important;
 }
 body{
-    background: url("https://source.droomo.top/static/img/bg.png");
+    background: url("{% static '/img/bg-2.png' %}");
 }
 .wrapper{
     position: relative;
@@ -244,7 +245,7 @@ function getMessage() {
         }
     });
 }
-setInterval("getMessage()",3000);
+setInterval("getMessage()",10000);
 
 </script>
 </body>
