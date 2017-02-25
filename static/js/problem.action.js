@@ -123,7 +123,12 @@ var table = new Vue({
                                 haveNoJudge = true;
                             }
                             item.result = result;
-                            item.resultText = judgeResult[result];
+                            if (result == 11 || result == 12) {
+                                item.resultText = '<a target="_blank" href="/runtime/'+item.solution_id
+                                    +'?result='+result+'">'+judgeResult[result]+'</a>';
+                            }else {
+                                item.resultText = judgeResult[result];
+                            }
                             item.resultType = judgeResultType[result];
                         });
                         if (haveNoJudge) {
@@ -131,8 +136,8 @@ var table = new Vue({
                         }else {
                             table.freshTime = 4500;
                             table.isRepeat = false;
-    table.stopRepeat();
-    $('#autoLoadStatus').bootstrapToggle('off');
+                            table.stopRepeat();
+                            $('#autoLoadStatus').bootstrapToggle('off');
                         }
                         table.stopRepeat();
                         table.isRepeating = table.repeat();
@@ -152,11 +157,13 @@ var table = new Vue({
             if (type == 1) {
                 table.type = 1;
                 delete table.query.result;
+                delete table.query.rank;
                 delete table.query.order;
             }else if (type == 2) {
                 table.type = 2;
                 table.query["order"] =  "time";
                 table.query["result"] =  4;
+                table.query["type"] = 'rank';
             }
         },
         repeat: function() {

@@ -191,7 +191,7 @@ form {
                 <tbody id="tbody">
                     {% verbatim %}
                     <tr v-for="item in items">
-                        <td :class="item.resultType">{{ item.resultText }}<span v-if="item.result<4"><img style="height: 20px;margin-left: 5px" alt="loading img" :src="loadingImg" /></span></td>
+                        <td :class="item.resultType" v-html="item.resultText">{{ item.resultText }}<span v-if="item.result<4"><img style="height: 20px;margin-left: 5px" alt="loading img" :src="loadingImg" /></span></td>
                         <td class="hidden-xs">{{ item.memory }} K</td>
                         <td class="hidden-xs">{{ item.time }} ms</td>
                         <td>{{ item.user_id }}</td>
@@ -229,7 +229,8 @@ var problem_id = {{ problem.problem_id }};
 var problemStatusUrl = "{% url 'status_list' %}";
 var rootUrl = "{{ request.get_absolute_url }}/";
 </script>
-<script src="https://source.droomo.top/static/js/problem.action.js"></script>
+{%  load staticfiles %}
+<script src="{{STATIC_URL}}/static/js/problem.action.js"></script>
 {% endblock %}
 
 

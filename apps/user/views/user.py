@@ -13,6 +13,8 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from const import language_name, language_enable, judge_result_color, judge_result
 
+import math
+
 
 def user_info(request, username):
     try:
@@ -73,11 +75,14 @@ def user_list(request):
 
     start_record = offset * limit
     users = OldUser.objects.order_by('-solved', 'submit')[start_record: start_record + limit]
+    user_number = OldUser.objects.count()
+    page_number = int(math.ceil(user_number / limit))
 
     context = dict(
         users=users,
         offset=offset,
-        has_next_page=(start_record + limit) < OldUser.objects.count(),
+        page_number=range(0, page_number + 1),
+        has_next_page=(start_record + limit) < user_number,
     )
     return render(request, 'user-list.html', context=context)
 
