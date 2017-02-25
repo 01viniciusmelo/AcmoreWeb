@@ -17,7 +17,12 @@ form{
     margin-bottom:15px;
 }
 .page-nav{
-    margin-bottom:15px;
+    margin-bottom:10px;
+    text-align: center;
+    font-size: 18px;
+}
+.page-nav>a{
+    margin-left: 5px;
 }
 .page-nav .active{
     color: darkgoldenrod
@@ -53,18 +58,16 @@ form{
     {% else %}
     No such Result!
     {% endif %}
-    <div>Page {{ offset }}</div>
-    {% if offset %}
-        <a href="?offset=0{{ page_param }}">First Page</a>
-        <a href="?offset={{ offset|add:-1 }}{{ page_param }}">Previous Page</a>
-    {% else %}
-        <span>Already first page.</a>
-    {% endif %}
-    {% if has_next_page %}
-        <a href="?offset={{ offset|add:1 }}{{ page_param }}">Next Page</a>
-    {% else %}
-        <span>Already last page.</span>
-    {% endif %}
+    <div class="page-nav">
+    Page:
+        {% for index in page_number %}
+            {% ifequal offset index %}
+                <a class="active" href="?offset={{ index }}{{ page_param }}">{{ index }}</a>
+            {% else %}
+                <a href="?offset={{ index }}{{ page_param }}">{{ index }}</a>
+            {% endifequal %}
+        {% endfor %}
+    </div>
 
 {% endblock %}
 

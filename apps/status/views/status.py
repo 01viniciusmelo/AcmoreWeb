@@ -80,6 +80,9 @@ def status_list(request):
 
     start_time = time.time()
 
+    if request.GET.get('type', 'normal') != 'normal':
+        print ('sss')
+
     if content_type == 'json':
         page_number = cache.get_or_set('solutions_count_' +page_param, solutions.count(), 3)
 
@@ -110,8 +113,8 @@ def status_list(request):
                 x.pop('num')
             map(change_problem_id_to_used, context['solutions'])
         else:
-            context['solutions'] = list(solutions.values('problem_id', 'user_id', 'time', 'memory', 'in_date',
-                                                     'result', 'language', 'code_length'))
+            context['solutions'] = list(solutions.values('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'in_date',
+                                             'result', 'language', 'code_length'))
 
         return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
     else:

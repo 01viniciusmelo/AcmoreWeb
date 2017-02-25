@@ -59,4 +59,8 @@ urlpatterns = [
     url(r'^contest/manage/add/$', contest_common.create_contest, name='create_contest'),
 
     url(r'^thanks$', index_view.thanks, name='thanks'),
+    url(r'^help$', index_view.help, name='help'),
+
+    url(r'^marquee-message$', index_view.marquee_message, name='marquee_message'),
+
 ]

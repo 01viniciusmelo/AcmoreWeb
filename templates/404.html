@@ -16,25 +16,9 @@
 <div class="content">
     <h3>Sorry! Page Not Found</h3>
     <p>The requested URL was not found on this server.</p>
-    <p>Server will take you return to last page in <span id="timer" style="color:red"></span> second(s).</p>
     <p><a href="{% url 'index' %}" target="_self">Click here</a> to return to the website index page.</p>
 </div>
 {% endblock %}
 
 {% block footer %}
-{% endblock %}
-
-{% block script %}
-<script>
-timer = function(now) {
-    if (now <= 0) {
-        history.go(-1);
-    }
-    document.getElementById("timer").innerText = now;
-    setTimeout(function() {
-        timer(now - 1);
-    }, 1000);
-}
-timer(5);
-</script>
 {% endblock %}

@@ -20,6 +20,7 @@
     {% block style %}
 
     {% endblock %}
+{% load staticfiles %}
 <style>
 .bg {
     position: fixed;
@@ -37,16 +38,23 @@ header{
     border-radius: 0!important;
 }
 body{
-    background: url("https://source.droomo.top/static/img/bg.png");
+    background: url("{% static '/img/bg-2.png' %}");
 }
 .wrapper{
     position: relative;
     z-index: 5;
 }
+.page-message{
+    margin-top: 75px;
+    margin-bottom: 10px;
+}
+.page-message>div{
+    background-color:rgba(255,255,255,0.8);
+    border-radius: 4px;
+}
 div.body.container {
     background-color:rgb(255,255,255);
     box-shadow: 0 0 10px 0 #dbdbdb;
-    margin-top: 75px;
     margin-bottom: 75px;
     padding-top: 25px;
     padding-bottom: 25px;
@@ -148,6 +156,9 @@ a{
                         {% url 'user_list' as user_list_url %}
                         <li class="{% if request.path == user_list_url %}active{% endif %}"><a href="{% url 'user_list' %}">Rank List</a></li>
 
+                        {% url 'help' as help_url %}
+                        <li class="{% if request.path == help_url %}active{% endif %}"><a href="{% url 'help' %}">Help</a></li>
+
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -168,6 +179,11 @@ a{
             </div><!-- /.container-fluid -->
         </nav>
     </header>
+    <div class="container page-message">
+        <div id="page-message">
+            <noscript><marquee scrollamount="8" style="color: red;font-size: 18px;">当前浏览器不支持Javacript，将无法获取重要实时通知。</marquee></noscript>
+        </div>
+    </div>
     <div class="container body">
         <!--<div class="bg">
             <canvas id="animationCanvas"></canvas>
@@ -175,21 +191,20 @@ a{
         <div class="wrapper">
             <div class="clearfix">
                 {% block main %}
-		<div class="text-center">
-                   <h2>Welcome to Acmore Online Judge.</h2>
-		   <p>蓝桥杯题目前往<a href="https://acmore.cc/problem/oj/search?content=%E8%93%9D%E6%A1%A5%E6%9D%AF&type=author" target="_self">蓝桥杯</a></p>
-                   <p>Report BUG / 帮助报告问题前往<a href="https://www.droomo.top/guestbook#comment-form" target="_blank">GUESTBOOK</a></p>
-		<p style="    color: #CC0000;
-    font-size: 68px;
-    font-weight: 500;
-    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">新年快乐</p>
-                <p style="    color: cadetblue;
-    font-size: 45px;
-    font-weight: 500;
-    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">Happy Chinese new year</p>
-		<p>IE8及以下版本浏览器请<a href="http://browsehappy.com/" target="_blank">升级浏览器</a></p>
-		<p><a target="_self" href="{% url 'thanks' %}">Thanks</a></p>
-		</div>
+                <div class="text-center">
+                    <h2>Welcome to <span style="color:cadetblue;font-size: 28px;">ACMORE</span> Online Judge.</h2>
+
+                    <p>蓝桥杯题目前往<a href="https://acmore.cc/problem/oj/search?content=%E8%93%9D%E6%A1%A5%E6%9D%AF&type=author" target="_self">蓝桥杯</a></p>
+                    <p>Report BUG / 帮助报告问题前往<a href="https://www.droomo.top/guestbook#comment-form" target="_blank">GUESTBOOK</a></p>
+
+                    <p>IE8及以下版本浏览器请<a href="http://browsehappy.com/" target="_blank">升级浏览器</a></p>
+                    <p style="font-weight: 500;
+            font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">
+                        <span style="color:#CC0000;font-size: 32px;">欢迎使用</span>
+                        <span style="color:cadetblue;font-size: 28px;">ACMORE Online Judge.</span>
+                    </p>
+                    <p><a target="_self" href="{% url 'thanks' %}">Thanks</a></p>
+                </div>
                 {% endblock %}
             </div>
         </div>
@@ -213,6 +228,25 @@ a{
 
 {% endblock %}
 <!--<script src="{% static 'js/animate.js' %}"></script>-->
+<script>
 
+var cacheMessage = "";
+function getMessage() {
+    $.ajax({
+        url: "{% url 'marquee_message' %}",
+        success: function (data) {
+            if (data != cacheMessage) {
+                cacheMessage = data;
+                if (cacheMessage == '') {
+                    $("#page-message").empty();
+                }
+                $("#page-message").html("<marquee style='color:red;font-size:16px;'>"+cacheMessage+"</marquee>");
+            }
+        }
+    });
+}
+setInterval("getMessage()",10000);
+
+</script>
 </body>
 </html>
