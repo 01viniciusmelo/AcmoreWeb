@@ -90,6 +90,11 @@ def register(request):
         types = [
             u'Please visit the page in the correct way.',
             u'Some error happened.',
+            u'Username has been used.',
+            u'E-mail has been used.',
+            u'Username not in format.',
+            u'Password is too weak.',
+            u'Password is different to confirm password.'
         ]
         context = dict(
             from_url=from_url,
@@ -117,12 +122,23 @@ def register(request):
             pass
             #from_url = reverse('index')
 
-        if  username and email and password and repassword and \
-            not OldUser.objects.filter(user_id=username).exists() and \
-            not OldUser.objects.filter(email=email).exists() and \
-            not User.objects.filter(username=username).exists() and \
-            not User.objects.filter(email=email).exists() and \
-            password == repassword:
+
+        if  username and email and password and repassword:
+            if len(username) < 6:
+                return register_error(from_url, '', 4)
+            if len(password) < 6:
+                return register_error(from_url, '', 5)
+
+            if password != repassword:
+                return register_error(from_url, '', 6)
+
+            if OldUser.objects.filter(user_id=username).exists() \
+                    or User.objects.filter(username=username).exists():
+                return register_error(from_url, '', 2)
+            if OldUser.objects.filter(email=email).exists() \
+                    or User.objects.filter(email=email).exists():
+                return register_error(from_url, '', 3)
+
 
             old_user = OldUser(
                 user_id=username,
