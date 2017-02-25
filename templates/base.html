@@ -148,6 +148,9 @@ a{
                         {% url 'user_list' as user_list_url %}
                         <li class="{% if request.path == user_list_url %}active{% endif %}"><a href="{% url 'user_list' %}">Rank List</a></li>
 
+                        {% url 'help' as help_url %}
+                        <li class="{% if request.path == help_url %}active{% endif %}"><a href="{% url 'help' %}">Help</a></li>
+
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -175,21 +178,20 @@ a{
         <div class="wrapper">
             <div class="clearfix">
                 {% block main %}
-		<div class="text-center">
-                   <h2>Welcome to Acmore Online Judge.</h2>
-		   <p>蓝桥杯题目前往<a href="https://acmore.cc/problem/oj/search?content=%E8%93%9D%E6%A1%A5%E6%9D%AF&type=author" target="_self">蓝桥杯</a></p>
-                   <p>Report BUG / 帮助报告问题前往<a href="https://www.droomo.top/guestbook#comment-form" target="_blank">GUESTBOOK</a></p>
-		<p style="    color: #CC0000;
-    font-size: 68px;
-    font-weight: 500;
-    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">新年快乐</p>
-                <p style="    color: cadetblue;
-    font-size: 45px;
-    font-weight: 500;
-    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">Happy Chinese new year</p>
-		<p>IE8及以下版本浏览器请<a href="http://browsehappy.com/" target="_blank">升级浏览器</a></p>
-		<p><a target="_self" href="{% url 'thanks' %}">Thanks</a></p>
-		</div>
+                <div class="text-center">
+                    <h2>Welcome to <span style="color:cadetblue;font-size: 28px;">ACMORE</span> Online Judge.</h2>
+
+                    <p>蓝桥杯题目前往<a href="https://acmore.cc/problem/oj/search?content=%E8%93%9D%E6%A1%A5%E6%9D%AF&type=author" target="_self">蓝桥杯</a></p>
+                    <p>Report BUG / 帮助报告问题前往<a href="https://www.droomo.top/guestbook#comment-form" target="_blank">GUESTBOOK</a></p>
+
+                    <p>IE8及以下版本浏览器请<a href="http://browsehappy.com/" target="_blank">升级浏览器</a></p>
+                    <p style="font-weight: 500;
+            font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">
+                        <span style="color:#CC0000;font-size: 32px;">欢迎使用</span>
+                        <span style="color:cadetblue;font-size: 28px;">ACMORE Online Judge.</span>
+                    </p>
+                    <p><a target="_self" href="{% url 'thanks' %}">Thanks</a></p>
+                </div>
                 {% endblock %}
             </div>
         </div>

@@ -14,3 +14,6 @@ def index(request):
 
 def thanks(request):
     return render(request, 'thanks.html')
+
+def help(request):
+    return render(request, 'help.html')
