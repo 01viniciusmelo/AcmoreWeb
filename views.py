@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.views.decorators.cache import cache_page
 
+from judge.settings import BASE_DIR
+
 import json
 
 
@@ -22,7 +24,7 @@ def help(request):
 
 @cache_page(10)
 def marquee_message(request):
-    with open('msg.txt', 'r') as msg_file:
+    with open(BASE_DIR+'/msg.txt', 'r') as msg_file:
         message_content = msg_file.read()
 
     return HttpResponse(message_content)
