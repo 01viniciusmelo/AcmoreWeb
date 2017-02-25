@@ -60,4 +60,7 @@ urlpatterns = [
 
     url(r'^thanks$', index_view.thanks, name='thanks'),
     url(r'^help$', index_view.help, name='help'),
+
+    url(r'^marquee-message$', index_view.marquee_message, name='marquee_message'),
+
 ]

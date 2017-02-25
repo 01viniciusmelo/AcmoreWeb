@@ -6,7 +6,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.db.models import Count
 
 from django.shortcuts import render
 
