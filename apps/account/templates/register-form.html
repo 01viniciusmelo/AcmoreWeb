@@ -1,0 +1,327 @@
+{% extends "base-single.html" %}
+
+{% block title %}
+ACMORE Sign up.
+{% endblock %}
+
+{% block style %}
+    <style>
+        .main-body {
+            padding: 15px;
+        }
+
+        .text-danger {
+            color: rgb(189, 8, 28);
+        }
+
+        .tip-message {
+            display: none;
+            background: rgb(255, 255, 255);
+            border-radius: 6px;
+            box-shadow: rgba(0, 0, 0, 0.380392) 0px 0px 2px, rgba(0, 0, 0, 0.317647) 0px 1px 3px;
+            color: rgb(0, 0, 0);
+            font-style: normal;
+            font-weight: normal;
+            line-height: 150%;
+            padding: 8px 14px;
+            text-align: left;
+            max-width: 215px;
+            float: left;
+        }
+
+        .tip-message:before {
+            border-color: transparent rgba(0, 0, 0, 0.48);
+            border-width: 8px 10px 8px 0;
+        }
+
+        .tip-message:before, .tip-message:after {
+            border-style: solid;
+            content: '';
+            display: block;
+            margin-top: -8px;
+            position: absolute;
+            right: 100%;
+            top: 17px;
+            width: 0;
+        }
+
+        .tip-message:after {
+            border-style: solid;
+            display: block;
+            margin-top: -8px;
+            position: absolute;
+            right: 100%;
+            top: 17px;
+            width: 0;
+        }
+
+        .tip-message:after {
+            border-color: transparent #fff;
+            border-width: 8px 10px 8px 0;
+            margin-right: -1px;
+        }
+        .helper-info {
+            margin-top: 10px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="main-body clearfix">
+        <div class="title">
+            <a href="{% url 'index' %}">ACMORE</a>
+        </div>
+
+        <form class="form col-sm-12" method="post" action="{% url 'account_register' %}">
+            <noscript>
+                <p>Your browser does not support javascript, please pay attention to the following points:</p>
+                <ul>
+                    <li>The username can only be <font color="red">Chinese character/alphanumeric/underlined</font> and length in 6 to 32
+                    <li>Length of password must be more than six.</li>
+                    <li>Only one account can be registered for each e-mail address.</li>
+                </ul>
+            </noscript>
+            {% csrf_token %}
+            <input name="from_url" value="{{ from_url }}" type="hidden"/>
+            <div id="formArea">
+                {% verbatim %}
+                <div class="form-group clearfix">
+                    <div>
+                        <label for="UserName">Username</label>
+                        <fieldset style="position: relative;">
+                            <input v-model.lazy="un" name="username" type="text" class="form-control" id="UserName"
+                                   placeholder="UserName" required="required" value=""/>
+                            <span v-if="status.un.showCheck"
+                                  v-bind:class="status.un.check ? 'glyphicon glyphicon-ok-circle text-success' : 'glyphicon glyphicon-remove-circle text-danger'"
+                                  style="background-color: #fff;position: absolute;right: 12px;top: 10px"></span>
+                            <div v-if="status.un.showMessage" style="position:absolute; right:-225px; top: 0; width: 215px;">
+                                <div class="tip-message">
+                                    <span v-html="status.un.message"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <div>
+                        <label for="email">Email</label>
+                        <fieldset style="position: relative;">
+                            <input v-model.lazy="em" name="email" type="email" class="form-control" id="email"
+                                   placeholder="Email" required="required"/>
+                            <span v-if="status.em.showCheck"
+                                  v-bind:class="status.em.check ? 'glyphicon glyphicon-ok-circle text-success' : 'glyphicon glyphicon-remove-circle text-danger'"
+                                  style="background-color: #fff;position: absolute;right: 12px;top: 10px"></span>
+                            <div v-if="status.em.showMessage" style="position:absolute; right:-225px; top: 0; width: 215px;">
+                                <div class="tip-message">
+                                    <span>{{ status.em.message }}</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <div>
+                        <label for="Password">Password</label>
+                        <fieldset style="position: relative;">
+                            <input v-model.lazy="p" name="password" type="password" class="form-control" id="Password"
+                                   placeholder="PassWord" required="required"/>
+                            <span v-if="status.p.showCheck"
+                                  v-bind:class="status.p.check ? 'glyphicon glyphicon-ok-circle text-success' : 'glyphicon glyphicon-remove-circle text-danger'"
+                                  style="position: absolute;right: 12px;top: 10px"></span>
+                            <div v-if="status.p.showMessage" style="position:absolute; right:-225px; top: 0; width: 215px;">
+                                <div class="tip-message">
+                                    <span>{{ status.p.message }}</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="form-group clearfix">
+                    <div>
+                        <label for="repeatPassword">Confirm Password</label>
+                        <fieldset style="position: relative;">
+                            <input v-model="rp" name="repassword" type="password" class="form-control" id="repeatPassword"
+                                   placeholder="Repeat PassWord" required="required"/>
+                            <span v-if="status.rp.showCheck"
+                                  v-bind:class="status.rp.check ? 'glyphicon glyphicon-ok-circle text-success' : 'glyphicon glyphicon-remove-circle text-danger'"
+                                  style="position: absolute;right: 12px;top: 10px"></span>
+                            <div v-if="status.rp.showMessage" style="position:absolute; right:-225px; top: 0; width: 215px;">
+                                <div class="tip-message">
+                                    <span>{{ status.rp.message }}</span>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                {% endverbatim %}
+                <div class="form-group">
+                    <div class="text-center clearfix">
+                        <button type="submit" class="btn btn-diy col-xs-12">Sign up</button>
+                    </div>
+                    <div class="text-center helper-info">
+                        <span>Already a member?</span>
+                        <a href="{% url 'account_login' %}">Log in.</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if error_message %}
+                <div id="loginError" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <span>{{ error_message }}</span>
+                </div>
+                <script>
+                setTimeout(function(){
+                    var alertDom=document.getElementById("loginError");
+                    alertDom.parentNode.removeChild(alertDom);
+                }, 3500)
+                </script>
+            {% endif %}
+        </form>
+
+    </div>
+{% endblock %}
+
+{% load static %}
+{% block script %}
+    <script src="{% static 'js/vue.js' %}"></script>
+    <script>
+        $(".tip-message").css('display', 'inline-block');
+        var formArea = new Vue({
+            el: "#formArea",
+            data: {
+                status: {
+                    un: {
+                        showCheck: 0,
+                        check: 0,
+                        showMessage: 0,
+                        message: '',
+                    },
+                    em: {},
+                    p: {},
+                    rp: {
+                        message:'Repeat password is different from first input'
+                    }
+                },
+                un: '',
+                em: '',
+                p: '',
+                rp: ''
+            },
+            watch: {
+                un: function () {
+                    this.check("un");
+                },
+                em: function () {
+                    this.check("em");
+                },
+                p: function () {
+                    this.check("p");
+                },
+                rp: function () {
+                    this.check("rp");
+                }
+            },
+            methods: {
+                check: function (type) {
+                    if (type == "un" || type == "em") {
+                        var content = '';
+                        if (type == "un") {
+                            content = this.un;
+                            if (!checkUsername(content)) {
+                                this.status.un = {
+                                    showCheck:1,
+                                    showMessage:1,
+                                    check: 0,
+                                    message: 'The username can only be:<br>' +
+                                    '<b><ul style="padding-left: 15px;">' +
+                                    '<li>Chinese character</li>' +
+                                    '<li>alphanumeric</li>' +
+                                    '<li>underlined</li>' +
+                                    '</ul>Length 6 to 32</b>'
+                                };
+                                return false;
+                            }else {
+                                this.status.un = {
+                                    c: 1,
+                                    m: ''
+                                };
+                            }
+                        } else {
+                            content = this.em;
+                            if (!checkEmailFormat(content)) {
+                                this.status.em = {
+                                    showCheck:1,
+                                    showMessage:1,
+                                    check: 0,
+                                    message: 'Email format error'
+                                };
+                                return false;
+                            }else {
+                                this.status.em = {
+                                    c: 1,
+                                    m: ''
+                                };
+                            }
+                        }
+                        var _this = this;
+                        $.ajax({
+                            data: {
+                                type: type,
+                                content: content,
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            url: "{% url 'account_register_check' %}",
+                            dataType: "json",
+                            type: "POST",
+                            success: function (data) {
+                                if (type == "un") {
+                                    _this.status.un = data.data;
+                                } else {
+                                    _this.status.em = data.data;
+                                }
+                            }
+                        });
+                    } else {
+                        if (type == 'p') {
+                            if (this.p.length < 6) {
+                                this.status.p.showCheck = 1;
+                                this.status.p.showMessage = 1;
+                                this.status.p.check = 0;
+                                this.status.p.message = 'Password is too weak.';
+                            }else {
+                                this.status.p.showCheck = 0;
+                                this.status.p.showMessage = 0;
+                                this.status.p.check = 1;
+                            }
+                        }
+                        if (type == "rp" || (type == 'p' && this.rp != '')) {
+                            if (this.p != this.rp) {
+                                this.status.rp.showCheck = 1;
+                                this.status.rp.showMessage = 1;
+                                this.status.rp.check = 0;
+                            }else {
+                                this.status.rp.showCheck = 0;
+                                this.status.rp.showMessage = 0;
+                                this.status.rp.check = 1;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        $("form").on("submit", function (event) {
+            //event.preventDefault();
+            if (!(formArea.status.un.check && formArea.status.em.check
+            && formArea.status.p.check && formArea.status.rp.check)) {
+                return false;
+            }
+        });
+    </script>
+{% endblock %}
+

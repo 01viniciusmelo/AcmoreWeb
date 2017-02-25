@@ -1,0 +1,117 @@
+{% extends "base-single.html" %}
+
+{% block title %}
+ACMORE Log in.
+{% endblock %}
+
+{% block style %}
+<style>
+.main-body {
+    padding: 15px;
+}
+.alert {
+    margin-top: 15px;
+    padding: 10px 15px;
+}
+.alert-danger {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ba2121;
+    border-color: #ba2121;
+    background-color: transparent;
+}
+.alert button.close {
+    color: #ba2121;
+}
+.form-check {
+    display: none;
+}
+.helper-info {
+    margin-top: 10px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="main-body clearfix">
+    <div class="title">
+        <a href="{% url 'index' %}">ACMORE</a>
+    </div>
+    <form class="form col-md-12" method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        <input name="from_url" value="{{ from_url }}" type="hidden" />
+        <div class="form-group">
+            <label for="UserName">Username</label>
+            <input name="username" type="text" class="form-control" id="UserName" placeholder="UserName" required="required" value="{{ username }}" />
+        </div>
+        <div class="form-group">
+            <label for="PassWord">Password</label>
+            <input name="password" type="password" class="form-control" id="PassWord" placeholder="PassWord" required="required" />
+        </div>
+        <div class="form-group">
+            <div class="text-center clearfix">
+                <button type="submit" class="btn btn-diy col-xs-12">Log in</button>
+            </div>
+            <div class="text-center helper-info">
+                <span>Need an account?</span>
+                <a href="{% url 'account_register' %}">Sign up.</a>
+            </div>
+        </div>
+
+        <div class="alert alert-danger form-check" role="alert"></div>
+
+        {% if error_message %}
+            <div id="loginError" class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <span>{{ error_message }}</span>
+            </div>
+            <script>
+            setTimeout(function(){
+                var alertDom=document.getElementById("loginError");
+                alertDom.parentNode.removeChild(alertDom);
+            }, 3500)
+            </script>
+        {% endif %}
+
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("form").on("submit", function() {
+        var noChecked;
+        var checkFrom = function() {
+            if ($("input[name='username']").val() == "") {
+                noChecked = "username";
+                return false;
+            }
+            if ($("input[name='password']").val() == "") {
+                noChecked = 'password';
+                return false;
+            }
+            return true;
+        };
+
+        if (checkFrom()) {
+
+        }else {
+            if (noChecked == "username") {
+                $(".form-check").text("Please input UserName.");
+            }else if (noChecked == "password"){
+                $(".form-check").text("Please input PassWord.");
+            }
+
+            $(".form-check").show();
+            setTimeout(function() {
+                $(".form-check").hide();
+            }, 2000);
+            return false;
+        }
+    });
+</script>
+{% endblock %}
+

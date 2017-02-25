@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ u.user_id }} -- ACMORE .
+{% endblock %}
+
+{% block style %}
+<style>
+.panel>.panel-body>.row {
+    margin-top: 10px;
+}
+</style>
+{% endblock %}
+{% block main %}
+    <h3>{{ u.user_id }} <small>{{ u.nick }}</small></h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% if user.is_authenticated %}
+                {% if user.is_email_check %}
+                    <div class="row">
+                        <div class="col-xs-3">School:</div>
+                        <div class="col-xs-9">{{ u.school }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">Email:</div>
+                        <div class="col-xs-8">{{ u.email }}</div>
+                    </div>
+                {% else %}
+                    <div class="row text-center">
+                        <a href="{% url 'user_center' %}">Validating your own email address</a> to view more information.
+                    </div>
+                {% endif %}
+
+            {% else %}
+                <div class="row text-center">
+                    <a href="{% url 'account_login' %}?from_url={{ request.path }}"><span>Log in</span></a> to view more information.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div id="chart" style="width: 100%;height:550px;"></div>
+
+{% endblock %}
+{% block script %}
+<script src="https://source.droomo.top/static/js/echarts.common.min.js"></script>
+<script src="https://source.droomo.top/static/js/roma.js"></script>
+<script>
+var chart = echarts.init(document.getElementById('chart'), 'roma');
+option = {
+    tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left',
+        data:['AC','Wrong','Others','Solved','Repeat AC','Wrong Answer','Runtime Error','Compile Error','Presentation Error','Output Limit Exceed','Time Limit Exceed','Memory Limit Exceed']
+    },
+    series: [
+        {
+            name:'Status',
+            type:'pie',
+            selectedMode: 'single',
+            radius: [0, '30%'],
+
+            label: {
+                normal: {
+                    position: 'inner'
+                }
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[
+                {
+                    value:{{ total_ac_number }}, name:'AC',
+                    itemStyle:{
+                        normal:{color:"#009999"}
+                    }
+                },
+                {
+                    value:{{ total_wrong_number }}, name:'Wrong',
+                    itemStyle:{
+                        normal:{color:"#993333"}
+                    }
+                },
+                {
+                    value:{{ total_others_number }}, name:'Others',
+                    itemStyle:{
+                        normal:{color:"#FF9933"}
+                    }
+                }
+            ]
+        },
+        {
+            name:'Status',
+            type:'pie',
+            radius: ['40%', '55%'],
+
+            data:[
+                {
+                    value:{{ total_solved_number }}, name:'Solved', selected:true,
+                    itemStyle:{
+                        normal:{color:"#5F9EA0"}
+                    }
+                },
+                {
+                    value:{{ total_ac_number }}-{{ total_solved_number }}, name:'Repeat AC',
+                    itemStyle:{
+                        normal:{color:"#009966"}
+                    }
+                },
+                {% for result in total_wrong %}
+                    {
+                        value:{{ result.count }}, name:'{{ result.name }}',
+                        itemStyle:{
+                            normal:{color:"{{ result.color }}"}
+                        }
+                    },
+                {% endfor %}
+                {% for result in total_others %}
+                    {
+                        value:{{ result.count }}, name:'{{ result.name }}',
+                        itemStyle:{
+                            normal:{color:"{{ result.color }}"}
+                        }
+                    },
+                {% endfor %}
+            ]
+        }
+    ]
+};
+chart.setOption(option);
+</script>
+{% endblock %}

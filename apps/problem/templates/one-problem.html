@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}
+OJ Problem - {{ problem.title }}
+{% endblock %}
+
+{% block style %}
+<link href="https://source.droomo.top/static/css/bootstrap-toggle.min.css" rel="stylesheet">
+<style>
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    background-color: cadetblue;
+    color:#fff;
+}
+.nav-tabs>li>a:hover{
+    background-color: #ddd;
+}
+.nav-tabs>li>a{
+    background-color: #eee;
+}
+a{
+    color:cadetblue;
+}
+.desc-block{
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #111;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans!important;
+}
+.desc-block>blockquote{
+    font-size: 16px!important;
+}
+.label-diy {
+    background-color: cadetblue;
+}
+.judge-info {
+    margin: 25px 0 15px 0;
+}
+.judge-info>div{
+    margin-bottom: 10px;
+}
+.problem-title>h2{
+    display: inline-block;
+}
+.pagination {
+    margin: 0;
+    float: right;
+}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: cadetblue;
+    border-color: cadetblue;
+}
+.pagination>li>a, .pagination>li>a:hover, .pagination>li>span:hover, .pagination>li>a:focus, .pagination>li>span:focus{
+    color: cadetblue;
+}
+.tab-pane {
+    min-height: 630px;
+}
+nav.table-page {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+table {
+    margin-bottom: 50px!important;
+}
+form {
+    margin-top: 50px!important;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+
+<div>
+    <div class="problem-title">
+        <h2>{{ problem.problem_id }}:{{ problem.title }}</h2>
+        <span class="label label-default">Local</span>
+    </div>
+    <div class="clearfix judge-info">
+        <div class="col-md-2 col-xs-6"><span>Time Limit: <strong class="label label-diy">{{ problem.time_limit }}s</strong></span></div>
+        <div class="col-md-3 col-xs-6"><span>Memory Limit: <strong class="label label-diy">{{ problem.memory_limit }}MB</strong></span></div>
+        <div class="col-md-2 col-xs-6"><span>Accepted: <strong class="label label-diy">{{ problem.accepted }}</strong></span></div>
+        <div class="col-md-3 col-xs-6"><span>Submissions: <strong class="label label-diy">{{ problem.submit }}</strong></span></div>
+        <div class="col-md-2 col-xs-6">
+            {% if problem.spj == '1' %}
+            <strong class="label label-danger">Special Judge</strong>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#problemDesc"><span class="glyphicon glyphicon-book">&nbsp;</span>Description</a></li>
+        {% if user.is_authenticated %}
+        <li role="presentation"><a href="#problemSubmit"><span class="glyphicon glyphicon-open">&nbsp;</span>Submit</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}?from_url={{ request.get_full_path }}">Login and submit</a></li>
+        {% endif %}
+        <li role="presentation" class="pull-right"><a href="#table" data-href="rank"><span class="glyphicon glyphicon-stats">&nbsp;</span>Problem Rank</a></li>
+        <li role="presentation" class="pull-right"><a href="#table" data-href="record"><span class="glyphicon glyphicon-retweet">&nbsp;</span>Records</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="problemDesc">
+
+            <h3>Description</h3>
+            {% autoescape off %}
+            <div class="desc-block">{{ problem.description }}</div>
+
+            {% if problem.input != "" %}
+            <h3>Input</h3>
+            <div class="desc-block">{{ problem.input }}</div>
+            {% endif %}
+
+            {% if problem.output != "" %}
+            <h3>Output</h3>
+            <div class="desc-block">{{ problem.output }}</div>
+            {% endif %}
+
+            {% if problem.sample_input != "" %}
+            <h3>Sample Input</h3>
+            <pre>{{ problem.sample_input }}</pre>
+            {% endif %}
+
+            {% if problem.sample_output != "" %}
+            <h3>Sample Output</h3>
+            <pre>{{ problem.sample_output }}</pre>
+            {% endif %}
+
+            {% if problem.hint != "" %}
+            <h3>Hint</h3>
+            <div>{{ problem.hint }}</div>
+            {% endif %}
+            {% endautoescape %}
+
+            <h3>Author</h3>
+            <div class="desc-block">
+                <a href="{% url 'oj_problem_list_by_search' %}?type=author&content={{ problem.source }}">{{ problem.source }}</a>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="problemSubmit">
+
+            <form action="{% url 'submit_problem' 'online' problem.problem_id %}" method="post" class="form">
+                <div class="form-group clearfix">
+                    <label for="language" class="pull-left">Language:</label>
+                    <div class="col-xs-5">
+                        <select id="language" name="language" class="form-control" >
+                            {% for language in support_language %}
+                                <option value="{{ language.0 }}">{{ language.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sourceCode">Source Code:</label>
+                    <textarea class="form-control" rows="20" id="sourceCode" name="source"></textarea><br>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-diy" type="submit" id="submitCode">Submit</button>
+                </div>
+                 {% csrf_token %}
+            </form>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="table">
+            <label for="autoLoadStatus" style="margin: 25px 0;">Auto refresh status:</label>
+            <input type="checkbox" id="autoLoadStatus" data-toggle="toggle"
+                   data-on="ON<img style='height: 20px;margin-left:5px' src='https://source.droomo.top/static/img/loading.gif'/>"
+                   data-off="OFF" data-width="70" data-onstyle="diy" data-size="small"/>
+            <table class="table table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th width="" class="table-border-left">Result</th>
+                        <th class="hidden-xs" width="">Mem used</th>
+                        <th class="hidden-xs" width="">Time used</th>
+                        <th width="" class="table-border-left">User</th>
+                        <th width="">Language</th>
+                        <th class="hidden-xs" width="">Size</th>
+                        <th width="" class="table-border-right hidden-xs" style="text-align: right">Submit at</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% verbatim %}
+                    <tr v-for="item in items">
+                        <td :class="item.resultType">{{ item.resultText }}<span v-if="item.result<4"><img style="height: 20px;margin-left: 5px" alt="loading img" :src="loadingImg" /></span></td>
+                        <td class="hidden-xs">{{ item.memory }} K</td>
+                        <td class="hidden-xs">{{ item.time }} ms</td>
+                        <td>{{ item.user_id }}</td>
+                        <td>{{ item.language }}</td>
+                        <td class="hidden-xs">{{ item.code_length }}</td>
+                        <td class="hidden-xs" style="text-align: right">{{ datetime(item.in_date) }}</td>
+                    </tr>
+                    {% endverbatim %}
+                </tbody>
+            </table>
+            <nav class="table-page">
+                {% verbatim %}
+                <ul class="pagination"  id="pagination">
+                    <li v-for="item in items" :class="item[0]">
+                        <a href="javascript:void(0);" v-html="item[2]" :data-offset="item[1]"
+                           v-on:click="loadContent"></a>
+                    </li>
+                </ul>
+                {% endverbatim %}
+            </nav>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="pull-left hidden-xs">Query used&nbsp;:&nbsp;<span id="usedTime">{{ used_time }}</span> ms</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://source.droomo.top/static/js/vue.min.js"></script>
+<script>
+var problem_id = {{ problem.problem_id }};
+var problemStatusUrl = "{% url 'status_list' %}";
+var rootUrl = "{{ request.get_absolute_url }}/";
+</script>
+<script src="https://source.droomo.top/static/js/problem.action.js"></script>
+{% endblock %}
+
+
+

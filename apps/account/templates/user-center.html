@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block title %}
+ACMORE {{ request.user.username }}.
+{% endblock %}
+
+{% block style %}
+<style>
+.submit-data{
+    background-color: #ccc;
+    padding: 5px 15px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+.editor-launcher {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #5F9EA0;
+    margin-left: 10px;
+}
+</style>
+{% endblock %}
+
+{% block mystyle %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="main-body clearfix">
+        <div >
+            <div class="clearfix">
+                <label class="col-sm-2 col-xs-4">User Name:</label>
+                <div class="col-sm-10 col-xs-8">
+                    <p>{{ request.user.username }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="form-group clearfix">
+                <label class="col-sm-2">E-mail:</label>
+                <div class="col-sm-10">
+                    <div class="">
+                    {%  if request.user.email == "" %}
+                        No Email Address
+                    {% else %}
+                        <span class="email-content">{{ request.user.email }}</span>
+                        {% if user.is_email_check %}
+                        <span class="label label-success">Verified</span>
+                        {% else %}
+                        <span class="label label-danger verify-email">Not verified</span>
+                        <a href="javascript:void(0)"  style="margin-left: 15px" id="verifyEmailLauncher"><span class="glyphicon glyphicon-edit"></span>Verify email now</a>
+                        <div class="form-group clearfix row" style="display: none;margin-top: 10px" id="verifyEmailArea">
+                            <div class="col-sm-12 col-lg-7 col-md-9">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Verify email address</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>We will send an email with a verification code to your mailbox.</p>
+                                        <p>Please check email and enter the verification code in the box below.</p>
+                                        <div class="clearfix">
+                                            <label class="col-sm-4 col-xs-12">EmailAddress:</label>
+                                            <div class="form-group">
+                                                <div class="">
+                                                    <div>
+                                                        <span class="email-content">{{ request.user.email }}</span>
+                                                        <span class="verification-get-email submit-data">SendEmail</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="" style="color: #9d9d9d">
+                                                    <p>This E-mail is incorrect?<a class="modifyEmilLauncher" href="#">Modify now.</a></p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <label class="col-sm-4 col-xs-12">VerificationCode:</label>
+                                            <div class="form-group">
+                                                <div class="pull-left col-xs-12">
+                                                    <input type="text" class="form-control" placeholder="Verification Code" id="VerificationCode">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="col-sm-10" style="text-align: center;margin-top: 15px">
+                                                <button type="button" class="btn btn-default close-email-verify">Verify later</button>
+                                                <button type="button" class="btn btn-diy check-email-verify-code">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group clearfix row" style="display: none;margin-top: 10px" id="modifyEmailArea">
+                            <div class="col-sm-12 col-lg-7 col-md-9">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Modify email address</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="clearfix">
+                                            <p>
+                                                <span class="pull-left">Modify email <b class="email-content">{{ request.user.email }}</b> to&nbsp;&nbsp;</span>
+                                                <input type="text" class="pull-left" placeholder="Modify Email" id="ModifyEmail">
+                                            </p>
+
+                                        </div>
+                                        <div class="clearfix">
+                                            <div class="col-sm-9" style="text-align: center;margin-top: 15px">
+                                                <button type="button" class="btn btn-default close-email-modify">Modify later</button>
+                                                <button type="button" class="btn btn-diy modify-email">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="clearfix">
+                <label class="col-sm-2 col-xs-4">Nick Name:</label>
+                <div class="col-sm-10 col-xs-8">
+                    <span id="userNick"
+                          data-action="{% url 'user_modify_information' %}" data-name="nick">{{ request.user.u_info.nick }}</span>
+                    <span class="editor-launcher" data-for="userNick"><span class="glyphicon glyphicon-edit"></span>Edit</span>
+                </div>
+            </div>
+            <hr>
+            <div class="clearfix">
+                <label class="col-sm-2 col-xs-4">School:</label>
+                <div class="col-sm-10 col-xs-8">
+                    <span id="userSchool"
+                        data-action="{% url 'user_modify_information' %}" data-name="school">{{ request.user.u_info.school }}</span>
+                    <span class="editor-launcher" data-for="userSchool"><span class="glyphicon glyphicon-edit"></span>Edit</span>
+                </div>
+            </div>
+            <hr>
+            <div class="clearfix">
+                <div class="col-sm-6 row">
+                    <label class="col-xs-5 col-md-3">First Name:</label>
+                    <div class="col-xs-7 col-md-9">
+                        <span id="firstName"
+                            data-action="{% url 'user_modify_information' %}" data-name="firstName">{{ request.user.first_name }}</span>
+                        <span class="editor-launcher" data-for="firstName"><span class="glyphicon glyphicon-edit"></span>Edit</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 row">
+                    <label class="col-xs-5 col-md-3">Last Name:</label>
+                    <div class="col-xs-7 col-md-9">
+                        <span id="lastName"
+                            data-action="{% url 'user_modify_information' %}" data-name="lastName">{{ request.user.last_name }}</span>
+                        <span class="editor-launcher" data-for="lastName"><span class="glyphicon glyphicon-edit"></span>Edit</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="clearfix">
+                <div class="col-sm-6 row">
+                    <label class="col-xs-5 col-md-3">Registration:</label>
+                    <div class="col-xs-7 col-md-9">
+                        <p class="">{{ request.user.date_joined|date:'Y-m-d h:i' }}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 row">
+                    <label class="col-xs-5 col-md-3">Last Login:</label>
+                    <div class="col-xs-7 col-md-9">
+                        <p class="">{{ request.user.last_login|date:'Y-m-d h:i' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block script %}
+<script>
+var sendEmailButton = $(".verification-get-email");
+var sendMail = function() {
+    sendEmailButton.off("click").css({"cursor": "not-allowed"}).html("Retry after <span id='verifyTime'></span>s");
+    timer = function(now) {
+        if (now < 1) {
+            sendEmailButton.on("click", sendMail).css({"cursor": "pointer"}).text("Send Email");
+            return false;
+        }
+        $("#verifyTime").text(now);
+        setTimeout(function() {
+            timer(--now);
+        }, 1000);
+    };
+    timer(60);
+    $.ajax({
+        url: "{% url 'user_check_email' %}",
+        type: "POST",
+        data: {
+            user: "{{ request.user.username }}",
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(data) {
+            if (data.status == 200) {
+
+            }else {
+                sendEmailButton.text(data.message + " please refresh page and retry.");
+            }
+        }
+    });
+};
+
+sendEmailButton.on("click", sendMail);
+
+$(".check-email-verify-code").on("click", function() {
+    $.ajax({
+        url: "{% url 'user_check_email' %}",
+        type: "POST",
+        data: {
+            code: $("#VerificationCode").val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                $(".verify-email.label").removeClass("label-danger").addClass("label-success").text("Verified");
+                $("#verifyEmailArea").fadeOut();
+                $("#verifyEmailLauncher").hide();
+            }else {
+                var $alert = '<div style="margin-top: 20px;" class="alert alert-danger alert-dismissible fade in" role="alert" id="checkEmailAlert">\
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>\
+                                <span>'+data.message+'</span>\
+                            </div>';
+                $(".check-email-verify-code").parent().parent().parent().append($alert);
+                setTimeout(function () {
+                    $("#checkEmailAlert").alert("close");
+                }, 5000);
+            }
+        }
+    });
+});
+$(".close-email-verify").on("click", function () {
+    $("#verifyEmailArea").hide();
+    $("#verifyEmailLauncher").show();
+});
+$("#verifyEmailLauncher").on("click", function () {
+    $("#verifyEmailLauncher").fadeOut();
+
+    $("#verifyEmailArea").fadeIn();
+});
+$(".modifyEmilLauncher").on("click", function() {
+    $("#verifyEmailArea").hide();
+
+    $("#modifyEmailArea").fadeIn();
+});
+$(".close-email-modify").on("click", function () {
+    $("#modifyEmailArea").hide();
+
+    $("#verifyEmailLauncher").fadeIn();
+});
+$(".modify-email").on("click", function () {
+    var email = $("#ModifyEmail").val();
+    if (!checkEmailFormat(email)) {
+         var $alert = '<div style="margin-top: 20px;" class="alert alert-danger alert-dismissible fade in" role="alert" id="checkEmailAlert">\
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>\
+                        <span>Email format error.</span>\
+                    </div>';
+        $(".modify-email").parent().parent().parent().append($alert);
+        setTimeout(function () {
+            $("#checkEmailAlert").alert("close");
+        }, 3000);
+    }else {
+        $.ajax({
+            url: "{% url 'user_modify_information' %}",
+            type: "POST",
+            data: {
+                action: "email",
+                email: email,
+                csrfmiddlewaretoken: $("meta[name='csrf']").attr("content")
+            },
+            success: function(data) {
+                if (data.status == 200) {
+                    $(".email-content").text(email);
+                    $("#verifyEmailLauncher").fadeIn();
+                    $("#modifyEmailArea").fadeOut();
+                }else {
+                    var $alert = '<div style="margin-top: 20px;" class="alert alert-danger alert-dismissible fade in" role="alert" id="checkEmailAlert">\
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>\
+                                    <span>'+data.message+'</span>\
+                                </div>';
+                    $(".modify-email").parent().parent().parent().append($alert);
+                    setTimeout(function () {
+                        $("#checkEmailAlert").alert("close");
+                    }, 5000);
+                }
+            }
+        });
+    }
+});
+
+var editLaunchers = document.getElementsByClassName("editor-launcher");
+for (var i = 0; i < editLaunchers.length; i++) {
+    editLaunchers[i].onclick = function () {
+        var _this = this;
+        var forEditor = _this.getAttribute('data-for');
+        var editorElement = document.getElementById(forEditor);
+
+        var form = document.createElement("form");
+        form.action = editorElement.getAttribute("data-action");
+        var input = document.createElement("input");
+        input.value = editorElement.innerText;
+        input.name = editorElement.getAttribute("data-name");
+        var button = document.createElement("button");
+        button.type = "submit";
+        button.innerText = "Submit";
+
+        form.appendChild(input);
+        form.appendChild(button);
+
+        var thisBlockStyleDisplay = editorElement.style.display;
+        var launcherStyleDisplay = _this.style.display;
+
+        $(form).submit(function (event) {
+            event.preventDefault();
+            var $form = $(form);
+            var postData = {};
+            postData["csrfmiddlewaretoken"] = $("meta[name='csrf']").attr("content");
+
+            var typeName = $form.children("input")[0].name;
+            postData[typeName] = $form.children("input")[0].value;
+            postData['action'] = typeName;
+
+            var url = $form.attr('action');
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: postData,
+                success: function(data) {
+                    console.log(data);
+                    editorElement.innerText = postData[typeName];
+                    editorElement.style.display = thisBlockStyleDisplay;
+                    _this.style.display = launcherStyleDisplay;
+                    $form.remove();
+                }
+            });
+        });
+
+        editorElement.style.display = "none";
+        _this.style.display = "none";
+        editorElement.parentNode.insertBefore(form, editorElement.nextSibling);
+        input.focus();
+    }
+}
+
+
+</script>
+{% endblock %}
+

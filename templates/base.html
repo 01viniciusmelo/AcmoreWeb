@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="csrf" content="{{ csrf_token }}">
+    {% block meta %}
+    {% endblock %}
+    <title>{% block title %}ACMORE Online Judge{% endblock %}</title>
+
+    {% block commonstyle %}
+    {% load static %}
+    <link href="https://source.droomo.top/static/css/bootstrap.min.css" rel="stylesheet">
+    {% endblock %}
+
+    {% block style %}
+
+    {% endblock %}
+<style>
+.bg {
+    position: fixed;
+    z-index:4;
+    left: 0;
+    top:0;
+}
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index:999;
+}
+.navbar {
+    border-radius: 0!important;
+}
+body{
+    background: url("https://source.droomo.top/static/img/bg.png");
+}
+.wrapper{
+    position: relative;
+    z-index: 5;
+}
+div.body.container {
+    background-color:rgb(255,255,255);
+    box-shadow: 0 0 10px 0 #dbdbdb;
+    margin-top: 75px;
+    margin-bottom: 75px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-radius: 4px;
+}
+
+.navbar-default {
+    background-color: rgb(255,255,255);
+    box-shadow: 0 0 10px 0 #dbdbdb;
+}
+footer{
+    width:100%;
+    background-color:#f8f8f8;
+    box-shadow: 0 0 10px 0 #dbdbdb;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 5px 0;
+    z-index:999;
+}
+.btn-diy:hover,.btn-diy:focus,.btn-diy:active {
+    background-color: #7cbac5;
+    border-color: #7cbac5;
+    color: #fff;
+}
+.btn-diy  {
+    background-color: cadetblue;
+    border-color: cadetblue;
+    color: #fff;
+}
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus{
+    background-color: cadetblue;
+}
+a{
+    color: cadetblue;
+}
+.loading{
+    width:160px;
+    height:56px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    line-height:56px;
+    color:#fff;
+    padding-left:60px;
+    font-size:15px;
+    background: #000 url(images/loader.gif) no-repeat 10px 50%;
+    opacity: 0.7;
+    z-index:9999;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
+    border-radius:20px;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+}
+</style>
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/respond.js' %}"></script>
+    <script src="{% static 'js/html5shiv.min.js' %}"></script>
+    <![endif]-->
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'index' %}">ACMORE</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">change nav</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        {% url 'put_source' as put_source_url %}
+                        <li class="{% if request.path == put_source_url %}active{% endif %}"><a href="{% url 'put_source' %}">Paste</a></li>
+
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        {% url 'oj_problem_list' as problem_url %}
+                        {% url 'oj_problem_list_by_search' as oj_problem_list_by_search_url %}
+                        <li class="{% if 'problem' in request.path %}active{% endif %} dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Problems<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li class="{% if 'problem/oj' in request.path %}active{% endif %}"><a href="{% url 'oj_problem_list' %}">Local Problems</a></li>
+                            </ul>
+                        </li>
+                        {% url 'status_list' as status_list_url %}
+                        <li class="{% if 'status' in request.path %}active{% endif %}"><a href="{% url 'status_list' %}">Realtime Status</a></li>
+
+                        {% url 'contest_list' as status_list_url %}
+                        <li class="{% if '/contest' in request.path %}active{% endif %}"><a href="{% url 'contest_list' %}">Contest</a></li>
+
+                        {% url 'user_list' as user_list_url %}
+                        <li class="{% if request.path == user_list_url %}active{% endif %}"><a href="{% url 'user_list' %}">Rank List</a></li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{% url 'user_center' %}">My Account</a></li>
+                                <li><a href="{% url 'account_logout' %}?from_url={{ request.path }}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'account_login' %}?from_url={{ request.path }}"><span>Log in</span></a></li>
+                        <li><a href="{% url 'account_register' %}?from_url={{ request.path }}"><span>Sign up</span></a></li>
+                    {% endif %}
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </header>
+    <div class="container body">
+        <!--<div class="bg">
+            <canvas id="animationCanvas"></canvas>
+        </div>-->
+        <div class="wrapper">
+            <div class="clearfix">
+                {% block main %}
+		<div class="text-center">
+                   <h2>Welcome to Acmore Online Judge.</h2>
+		   <p>蓝桥杯题目前往<a href="https://acmore.cc/problem/oj/search?content=%E8%93%9D%E6%A1%A5%E6%9D%AF&type=author" target="_self">蓝桥杯</a></p>
+                   <p>Report BUG / 帮助报告问题前往<a href="https://www.droomo.top/guestbook#comment-form" target="_blank">GUESTBOOK</a></p>
+		<p style="    color: #CC0000;
+    font-size: 68px;
+    font-weight: 500;
+    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">新年快乐</p>
+                <p style="    color: cadetblue;
+    font-size: 45px;
+    font-weight: 500;
+    font-family: PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans;">Happy Chinese new year</p>
+		<p>IE8及以下版本浏览器请<a href="http://browsehappy.com/" target="_blank">升级浏览器</a></p>
+		<p><a target="_self" href="{% url 'thanks' %}">Thanks</a></p>
+		</div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container clearfix text-center">
+            <span class="hidden-xs">Webmaster : <a target="_blank" href="http://www.droomo.top/">TH</a>.&nbsp;&nbsp;</span>
+            <span class="">E-mail : <a href="mailto:th@droomo.com">th@droomo.com</a>&nbsp;&nbsp;</span>
+            <span class="" style="display: none">China ICP : <a target="_blank" href="http://www.miitbeian.gov.cn/">鲁ICP备14037679号-2</a>&nbsp;&nbsp;</span>
+            {% block footer %}
+
+            {% endblock %}
+        </div>
+    </footer>
+{% block modal %}
+{% endblock %}
+
+<script src="https://source.droomo.top/static/js/common.js"></script>
+
+{% block script %}
+
+{% endblock %}
+<!--<script src="{% static 'js/animate.js' %}"></script>-->
+
+</body>
+</html>

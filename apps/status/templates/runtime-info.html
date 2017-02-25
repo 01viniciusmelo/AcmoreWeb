@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block style %}
+<style>
+.content{
+    text-align: left
+}
+h3 {
+    text-align: center;
+    margin: 20px 0;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+    <div class="content">
+        <h3><small>Run ID: </small>{{ run_id }}</h3>
+        <pre>
+            {{ run_info.error }}
+        </pre>
+    </div>
+{% endblock %}

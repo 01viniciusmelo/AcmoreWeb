@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+Problem List.
+{% endblock %}
+
+{% block style %}
+<style type="text/css">
+table {
+    width:100%;
+    text-align: left
+}
+thead {
+    color:cadetblue;
+}
+form{
+    margin-bottom:15px;
+}
+.page-nav{
+    margin-bottom:15px;
+}
+.page-nav .active{
+    color: darkgoldenrod
+}
+</style>
+{% endblock %}
+
+{% block main %}
+
+    {% if users|length %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="26%">UserName</th>
+                <th width="26%">NickName</th>
+                <th width="16%">AC</th>
+                <th width="16%">Submited</th>
+                <th width="16%">Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td><a href="{% url 'one_user_info' user.user_id %}" target="_self">{{ user.user_id }}</a></td>
+                <td>{{ user.nick }}</td>
+                <td>{{ user.solved }}</td>
+                <td>{{ user.submit }}</td>
+                <td><span>{{ user.submited }}</span> %</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    No such Result!
+    {% endif %}
+    <div>Page {{ offset }}</div>
+    {% if offset %}
+        <a href="?offset=0{{ page_param }}">First Page</a>
+        <a href="?offset={{ offset|add:-1 }}{{ page_param }}">Previous Page</a>
+    {% else %}
+        <span>Already first page.</a>
+    {% endif %}
+    {% if has_next_page %}
+        <a href="?offset={{ offset|add:1 }}{{ page_param }}">Next Page</a>
+    {% else %}
+        <span>Already last page.</span>
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $.each($("tbody tr"), function(index, item) {
+        var $tds = $(item).find("td");
+        $($tds[4]).find("span")[0].innerText = ($tds[3].innerText == "0") ? "-":
+                (parseInt($tds[2].innerText) * 100 / parseInt($tds[3].innerText)).toFixed(2);
+
+    });
+</script>
+{% endblock %}

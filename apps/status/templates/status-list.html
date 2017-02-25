@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+{% block title %}
+Run Status List.
+{% endblock %}
+
+{% block style %}
+
+<style type="text/css">
+table {
+    text-align: left;
+    width:100%;
+}
+thead, .page-info{
+    color:cadetblue;
+}
+.page-info>span{
+    color:goldenrod;
+}
+form {
+    margin-bottom:15px;
+}
+.page-nav>a {
+    margin: 0 5px 0 0;
+    color:cadetblue;
+}
+.level-one-index>th{
+    text-align:center;
+    border-bottom:0!important;
+}
+.table-border-left {
+    border-left: 1px dashed #ccc!important;
+}
+.table-border-right {
+    border-right: 1px dashed #ccc!important;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+    <form action="{% url 'status_list' %}" method="get" enctype="application/x-www-form-urlencoded" class="form-inline" role="form">
+        <div class="form-group">
+            <label for="search_problem_by_id">Problem ID:</label>
+            <input type="text" name="problem" class="form-control" id="search_problem_by_id" value="{{ problem }}" placeholder="Problem ID">
+        </div>
+        <div class="form-group">
+            <label for="search_problem_by_user">User:</label>
+            <input type="text" name="user_id" class="form-control" id="search_problem_by_user" value="{{ user_id }}" placeholder="User">
+        </div>
+        <div class="form-group">
+            <label for="search_problem_by_language">Language:</label>
+            <select name="language" class="form-control" id="search_problem_by_language">
+                <option value="" selected="">All</option>
+                {% for language_name in support_language %}
+                {% ifequal language language_name.0 %}
+                <option value="{{ language_name.0 }}" selected="selected">{{ language_name.1 }}</option>
+                {% else %}
+                <option value="{{ language_name.0 }}">{{ language_name.1 }}</option>
+                {% endifequal %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="search_problem_by_result">Result:</label>
+            <select name="result" class="form-control" id="search_problem_by_result">
+                <option value="" selected="">All</option>
+                {% for item in judge_result %}
+                    {% if 3 < forloop.counter0 and forloop.counter0 < 12 %}
+                        {% ifequal result item %}
+                        <option value="{{ forloop.counter0 }}" selected="selected">{{ item }}</option>
+                        {% else %}
+                        <option value="{{ forloop.counter0 }}">{{ item }}</option>
+                        {% endifequal %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-default">Find.</button>
+    </form>
+
+    {% if solutions|length %}
+    <table class="table table-striped table-condensed">
+        <thead>
+            <tr class="level-one-index">
+                <td></td>
+                <th class="table-border-left table-border-right hidden-xs" colspan="3">Run Info</th>
+                <th class="table-border-right hidden-xs" colspan="4">Code Info</th>
+            </tr>
+            <tr>
+                <th width="">Problem</th>
+
+                <th width="" class="table-border-left">Result</th>
+                <th class="hidden-xs" width="">Mem used</th>
+                <th class="hidden-xs" width="">Time used</th>
+
+                <th width="" class="table-border-left">User</th>
+                <th class="hidden-xs">Language</th>
+                <th class="hidden-xs" width="">Size</th>
+                <th width="" class="table-border-right hidden-xs hidden-sm">Submit at</th>
+
+                <th class="hidden-xs" width="">Judger</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for solution in solutions %}
+            <tr>
+                <td><a href="{% url 'oj_one_problem' solution.problem_id %}" target="_self">{{ solution.problem_id }}</a></td>
+
+                {% if solution.moreinfo %}
+                <td class="table-border-left {{ solution.result_type }}"><a href="{% url 'runtime_info' solution.solution_id %}?result={{ solution.result }}" target="_self">{{ solution.result_text }}</a></td>
+                {% else %}
+                <td class="table-border-left {{ solution.result_type }}">{{ solution.result_text }}</td>
+                {% endif %}
+
+                <td class="hidden-xs">{{ solution.memory }} K</td>
+                <td class="table-border-right hidden-xs">{{ solution.time }} ms</td>
+
+                <td class="table-border-left"><a href="{% url 'one_user_info' solution.user_id %}" target="_self">{{ solution.user_id }}</a></td>
+                {% if user.is_authenticated %}
+                    {% if user.username == solution.user_id %}
+                    <td><a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language }}</a></td>
+                    {% else %}
+                    <td>{{ solution.language }}</td>
+                    {% endif %}
+                {% else %}
+                <td  class="hidden-xs">{{ solution.language }}</td>
+                {% endif %}
+                <td class="hidden-xs">{{ solution.code_length }}</td>
+                <td class="table-border-right hidden-xs hidden-sm" data-time="{{ solution.in_date_timestamp }}">{{ solution.in_date|date:"Y-m-d H:i:s T" }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                <td class="hidden-xs">{{ solution.judger }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    No such Result!
+    {% endif %}
+
+    <div class="clearfix">
+        <div class="pull-left page-info">Page <span>{{ offset }}</span></div>
+        <div class="pull-right page-nav">
+        {% if offset %}
+            <a href="{% url 'status_list' %}?offset=0{{ page_param }}">First Page</a>
+            <a href="?offset={{ offset|add:-1 }}{{ page_param }}">Previous Page</a>
+        {% else %}
+            <!--
+            <span disabled="disabled">First Page</span>
+            <span disabled="disabled">Previous Page</span>
+            -->
+        {% endif %}
+
+        {% ifequal solutions|length limit %}
+            <a href="?offset={{ offset|add:1 }}{{ page_param }}">Next Page</a>
+        {% endifequal %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+<div class="pull-left hidden-xs">Query used  :  {{ used_time }} ms&nbsp;&nbsp;</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(function(){
+    $("form select").on('change', function() {
+        $("form").submit();
+    });
+    $("form input").on('change', function() {
+        $("form").submit();
+    });
+
+    $("td[data-time]").each(function() {
+        $(this).text(timestamp2time(parseInt($(this).attr("data-time"))));
+    });
+
+});
+</script>
+{% endblock %}

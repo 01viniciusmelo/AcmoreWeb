@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}
+Show Source.
+{% endblock %}
+
+{% block commonstyle %}
+<link href="https://source.droomo.top/static/css/bootstrap-no-pre-style.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block style %}
+<style>
+{{ style_sheet }}
+.linenoss{
+    position:absolute;
+}
+pre{
+    background-color:transparent;
+}
+.code-wrapper{
+    overflow: auto;
+}
+.code-wrapper>table.highlighttable{
+    border-spacing: 0;
+    border-collapse: separate;
+    width: 100%;
+    padding: 10px;
+}
+.code-wrapper>table td{
+    padding: 0;
+}
+pre {
+    font-family: 'Consolas', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    font-size: 15px;
+    letter-spacing: 0.015em;
+    line-height: 120%;
+    border: 1px solid #ccc;
+}
+.highlight pre{
+    border-left: 0;
+    width: 100%;
+    padding: 20px 10px;
+}
+.highlight{
+    padding-right: 5px;
+}
+.linenodiv>pre{
+    padding: 20px 4px 20px 8px;
+    float: right;
+    background-color: #eee;
+}
+.modal-body .qrcode{
+    text-align: center;
+}
+.functions, .poster-info{
+    margin: 10px 0 20px 0;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+    <div>
+        <div class="clearfix functions">
+            <a class="pull-left" href="./{{ self_url }}?file=as_txt_file"><span class="glyphicon glyphicon-download-alt"></span>As txt file download</a>
+            <a class="pull-right" href="#" data-toggle="modal" data-target="#qrCode">Share with Qrcode<span class="glyphicon glyphicon-qrcode"></span></a>
+            <!--<a href="./{{ self_url }}?file=as_file">As text file download</a>-->
+        </div>
+        <form action="./{{ self_url }}" method="get" class="form clearfix">
+            <div class="form-group">
+                <label for="heightLightStyle" class="col-sm-2" style="line-height: 34px;">Height light style</label>
+                <div class="col-sm-8">
+                    <select name="style" class="form-control" id="heightLightStyle">
+                    {% for style in styles  %}
+                        {% ifequal style this_style %}
+                        <option value="{{ style }}" selected="selected">{{ style }}</option>
+                        {% else %}
+                        <option value="{{ style }}">{{ style }}</option>
+                        {% endifequal %}
+                    {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <noscript>
+            <button type="submit">Submit</button>
+            </noscript>
+        </form>
+        <div class="form-group poster-info clearfix">
+            <label class="col-sm-2">Post information</label>
+            <div class="col-sm-10">
+                <p>{{ poster }}</p>
+                <p>Submitted on {{ time|date:"Y-m-d h:i:s" }} </p>
+                <p>Language: {{ lang }}. </p>
+                <p>Code size: {{ size }} kb (utf-8 encode).</p>
+            </div>
+        </div>
+
+        <div class="code-wrapper">
+        {{ source|safe }}
+        </div>
+        <p>Snippet took {{ use_time }} ms to highlight</p>
+    </div>
+{% endblock %}
+
+{% block modal %}
+<!-- Modal -->
+<div class="modal fade" id="qrCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Qrcode.</h4>
+      </div>
+      <div class="modal-body">
+          <div class="qrcode">
+            <img src="{{ request.get_full_path }}?&qrcode" style="width: 100%">
+          </div>
+          <div class="form-group">
+                <label for="fullUrl">URL:</label>
+                <input type="text" value="{{ url }}"  class="form-control" id="fullUrl" />
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(function(){
+    $("form select[name='style']").on('change', function() {
+        $("form").submit();
+    });
+});
+</script>
+{% endblock %}

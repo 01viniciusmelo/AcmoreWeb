@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}
+Problem List.
+{% endblock %}
+
+{% block style %}
+<style type="text/css">
+table {
+    width:100%;
+    text-align: left
+}
+thead {
+    color:cadetblue;
+}
+form{
+    margin-bottom:15px;
+}
+.page-nav{
+    margin-bottom:15px;
+}
+.page-nav .active{
+    color: darkgoldenrod
+}
+</style>
+{% endblock %}
+
+{% block main %}
+
+    <form action="{% url 'only_problem' %}" method="get" class="form-inline" role="form">
+        <input type="hidden" name="type" value="problem" />
+        <input type="hidden" name="name" value="oj" />
+        <label for="redirect_problem_oj">Problem ID:</label>
+        <input type="text" name="problem_id" class="form-control" id="redirect_problem_oj" placeholder="Problem ID" />
+        <input type="submit" value="GO" class="btn btn-default"/>
+    </form>
+    <form action="{% url 'oj_problem_list_by_search' %}" method="get" class="form-inline" role="form">
+        <label for="search_problem">Search problem in keyword:</label>
+        <input type="text" name="content" value="{{ search.content }}" class="form-control" id="search_problem" />
+        <spen> by </spen>
+        <select name="type" class="form-control">
+            <option value="keyword" {% if search.type == 'keyword' %}selected="selected"{% endif %}>Title and Content</option>
+            <option value="author" {% if search.type == 'author' %}selected="selected"{% endif %}>Author</option>
+        </select>
+        <input type="submit" value="Search" class="btn btn-default" />
+    </form>
+    <div class="page-nav clearfix">
+        <label class="pull-left">Show problem from:</label>
+        <div class="pull-left">
+            <div>
+            {% for page in pages %}
+                <a href="{{ page.url }}" class="{{ page.status }}" target="_self">{ {{ page.name }} }</a>
+            {% if forloop.counter|divisibleby:10 %}
+            </div>
+            <div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <form action="{{ limit_url }}" method="get" class="form-inline" role="form">
+        {% if search %}
+        <input type="hidden" name="content" value="{{ search.content }}">
+        <input type="hidden" name="type" value="{{ search.type }}">
+        {% endif %}
+        <input type="hidden" name="offset" value="{{ this_offset }}">
+        <label for="limit">Show</label>
+        <select name="limit" id="limit" class="form-control">
+            <option value="25" {% if this_limit == 25 %}selected="selected"{% endif %}>25</option>
+            <option value="50" {% if this_limit == 50 %}selected="selected"{% endif %}>50</option>
+            <option value="100" {% if this_limit == 100 %}selected="selected"{% endif %}>100</option>
+        </select>
+        item per page.
+        <noscript><input type="submit"></noscript>
+    </form>
+    {% if len %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="hidden-xs" style="min-width: 80px;">ID</th>
+                <th>Title</th>
+                <th class="hidden-xs">Author</th>
+                <th>AC</th>
+                <th>Submit</th>
+                <th class="hidden-xs">Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for problem in problems %}
+            <tr>
+                <td class="hidden-xs">{{ problem.problem_id }}
+                    {% ifequal problem.user_status 2 %}<span class="glyphicon glyphicon-ok text-success"></span>
+                    {% else %}
+                    {% ifequal problem.user_status 1 %}<span class="glyphicon glyphicon-remove text-danger"></span>
+                    {% endifequal %}
+                    {% endifequal %}
+                </td>
+                <td><a href="{% url 'oj_one_problem' problem.problem_id %}" target="_self">{{ problem.title }}</a></td>
+                <td class="hidden-xs"><a href="{% url 'oj_problem_list_by_search' %}?type=author&content={{ problem.source }}" target="_self">{{ problem.source }}</a></td>
+                <td>{{ problem.accepted }}</td>
+                <td>{{ problem.submit }}</td>
+                <td  class="hidden-xs">{{ problem.rate }}%</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="page-nav clearfix">
+        <label class="pull-left">Show problem from:</label>
+        <div class="pull-left">
+            <div>
+            {% for page in pages %}
+                <a href="{{ page.url }}" class="{{ page.status }}" target="_self">{ {{ page.name }} }</a>
+            {% if forloop.counter|divisibleby:10 %}
+            </div>
+            <div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    No such problem!
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+$(function(){
+    $("select[name='limit']").on('change', function() {
+        $(this).parent().submit();
+    });
+});
+</script>
+{% endblock %}

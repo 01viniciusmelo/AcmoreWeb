@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Contest List.
+{% endblock %}
+
+{% block style %}
+<style>
+.tools {
+    margin: 10px 0 20px 0;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="table-responsive">
+    <div class="clearfix tools" style="display: none">
+        {% if request.user.is_authenticated %}
+        <a class="btn btn-diy pull-right" href="{% url 'create_contest' %}">Create Contest</a>
+        {% else %}
+        <a class="btn btn-diy pull-right" href="{% url 'account_login' %}?from_url={% url 'create_contest' %}">Login and Create Contest</a>
+        {% endif %}
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Start(ed) at</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Permission</th>
+                <th>Creator</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contest in contests %}
+            <tr>
+                <td>{{ contest.0.contest_id }}</td>
+                <td><a href="{% url 'one_contest' contest.0.contest_id %}" target="_self">{{ contest.0.title }}</a></td>
+                <td>{{ contest.0.start_time|date:"Y-m-d H:m:s" }} GMT+8</td>
+                <td>{{ contest.1.duration }}</td>
+                <td>{{ contest.1.status }}</td>
+                <td>{{ contest.1.permissions }}</td>
+                <td>{{ contest.0.user_id }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
