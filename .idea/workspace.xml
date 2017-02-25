@@ -1,122 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5f5e988d-3c86-4897-a68c-e7d80cdfdf1c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/test.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/webServers.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/migrations/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/models.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/templates/login-form.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/templates/register-form.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/templates/user-center.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/account/views.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/migrations/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/models.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/templates/contest-list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/templates/create-contest.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/views/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/contest/views/contests.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/models.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/migrations/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/models/OJproblem.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/models/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/templates/no-problem.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/templates/one-problem.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/templates/problem-list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/urls.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/views/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/views/oj_problem_views.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/problem/views/problem_views.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/migrations/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/models.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/templates/put-source.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/templates/show-source.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/test/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/test/tests.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/source/views.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/migrations/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/models/Solution.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/models/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/templates/runtime-info.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/templates/status-list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/views/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/status/views/status.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/migrations/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/models/OldUser.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/models/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/templates/one-user.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/templates/user-list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/views/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/user/views/user.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/const.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/judge/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/judge/settings.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/judge/urls.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/judge/wsgi.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/manage.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap-no-pre-style.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap-theme.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap-theme.css.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap-theme.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap-toggle.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap.css.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/css/daterangepicker.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/fonts/glyphicons-halflings-regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/fonts/glyphicons-halflings-regular.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/fonts/glyphicons-halflings-regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/fonts/glyphicons-halflings-regular.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/img/bg.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/img/loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/animate.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/bootstrap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/bootstrap.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/common.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/contest.action.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/daterangepicker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/echarts.common.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/html5shiv.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/jquery.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/moment.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/npm.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/problem.action.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/respond.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/roma.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/vue.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/static/js/vue.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/404.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/base-single.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/error.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/thanks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/tests.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/views.py" afterPath="" />
-    </list>
+    <list default="true" id="5f5e988d-3c86-4897-a68c-e7d80cdfdf1c" name="Default" comment="" />
     <ignored path="test.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -199,17 +84,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/judge/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state relative-caret-position="389">
+              <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="40">
@@ -286,8 +171,8 @@
         <option value="$PROJECT_DIR$/static/js/common.js" />
         <option value="$PROJECT_DIR$/apps/problem/templates/one-problem.html" />
         <option value="$PROJECT_DIR$/apps/account/views.py" />
-        <option value="$PROJECT_DIR$/judge/settings.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/judge/settings.py" />
       </list>
     </option>
   </component>
@@ -825,7 +710,7 @@
     <frame x="0" y="28" width="1440" height="838" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19819193" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19819193" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44134077" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1219,18 +1104,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/judge/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/judge/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
           <folding />
         </state>
       </provider>
