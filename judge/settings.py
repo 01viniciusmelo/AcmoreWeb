@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')0y(lnz5opak_gzy1-8$#%@f9lqqn9@l2ozsoxew%-@&@rfuy4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['acmore.cc']
 
 
 # Application definition
@@ -86,8 +86,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'judgeonline',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'judgeonline',
+        'PASSWORD': '1123581321',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
