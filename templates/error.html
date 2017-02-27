@@ -33,7 +33,7 @@ ERROR.
 <script>
 timer = function(now) {
     if (now <= 0) {
-        history.go(-1)
+        history.go(-1);
     }
     document.getElementById("timer").innerText = now;
     setTimeout(function() {
