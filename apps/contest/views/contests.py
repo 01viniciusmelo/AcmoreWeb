@@ -110,7 +110,7 @@ def one_contest(request, contest_id):
 
     cursor.execute(sql, [contest_id,contest_id,contest_id,contest_id,user_name,contest_id,user_name])
     raw = cursor.fetchall()
-    print((raw))
+    # print((raw))
 
     order = map(lambda x:index_order[x[2]], raw)
 

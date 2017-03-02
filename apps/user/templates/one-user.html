@@ -105,9 +105,11 @@
     {% endif %}
 
 {% endblock %}
+
+{% load static %}
 {% block script %}
-<script src="https://source.droomo.top/static/js/echarts.common.min.js"></script>
-<script src="https://source.droomo.top/static/js/roma.js"></script>
+<script src="{% static '/js/echarts.common.min.js' %}"></script>
+<script src="{% static '/js/roma.js' %}"></script>
 <script>
 var chart = echarts.init(document.getElementById('chart'), 'roma');
 option = {
