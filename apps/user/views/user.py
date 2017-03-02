@@ -1,16 +1,9 @@
 from django.http import HttpResponse
-from django.core.exceptions import *
-from django.db.models import Q
 from django.db.models import Count
+from django.db.models import Q
 from django.shortcuts import render
-from apps.status.models.Solution import RunTimeInfo
-from apps.status.models.Solution import CompileInfo
 from apps.status.models.Solution import Solution
-from apps.account.models import User
 from apps.user.models.OldUser import OldUser
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
 from const import language_name, language_enable, judge_result_color, judge_result
 
 import math
@@ -20,7 +13,7 @@ def user_info(request, username):
     try:
         user = OldUser.objects.get(user_id=username)
 
-    except User.DoesNotExist:
+    except OldUser.DoesNotExist:
         return HttpResponse('User not found.')
 
     total_solved_number = Solution.objects.filter(result=4).filter(user_id=username).values('problem_id').distinct().count()
@@ -50,8 +43,15 @@ def user_info(request, username):
             total_others_number += result['count']
             total_others.append(result)
 
+    solutions_ac = Solution.objects.filter(user_id=username).filter(~Q(problem_id=0)).filter(result=4)\
+        .order_by('problem_id').values('problem_id').distinct()
+    solutions_wa = Solution.objects.filter(user_id=username).filter(~Q(problem_id=0)).filter(~Q(result=4)).filter(~Q(problem_id__in=solutions_ac))\
+        .order_by('problem_id').values('problem_id').distinct()
+
     context = dict(
         u=user,
+        solutions_ac=solutions_ac,
+        solutions_wa=solutions_wa,
         total_solved_number=total_solved_number,
         total_ac_number=total_ac_number,
         total_wrong_number=total_wrong_number,

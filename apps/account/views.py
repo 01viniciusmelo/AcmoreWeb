@@ -222,32 +222,39 @@ def check_email(request):
         user_id = request.POST.get('user', False)
         if user_id and user_id == request.user.username:
             user = User.objects.get(username=user_id)
-            verify_code = shortuuid.uuid()[:6]
+            if User.objects.filter(email=user.email).filter(is_email_check=1).exists():
+                context = dict(
+                    status=400,
+                    message=u'This Email address is already in used, username is '
+                            + User.objects.filter(email=user.email).filter(is_email_check=1).get().username
+                )
+            else:
+                verify_code = shortuuid.uuid()[:6]
 
-            template = u'<div style="font-size: 16px;">Your verification code is:<div style="color: #c12e2a">' \
-                       u'<b>'+ verify_code + u'</b>' \
-                       u'</div><br>Do not tell anyone this verification code! Please don\'t reply to this email.</div>'
+                template = u'<div style="font-size: 16px;">Your verification code is:<div style="color: #c12e2a">' \
+                           u'<b>'+ verify_code + u'</b>' \
+                           u'</div><br>Do not tell anyone this verification code! Please don\'t reply to this email.</div>'
 
-            try:
-                email = EmailMessage('ACMORE verify email', template, to=[user.email])
-                email.content_subtype = "html"
-                if email.send() == 1:
-                    request.session['verify_code'] = verify_code
+                try:
+                    email = EmailMessage('ACMORE verify email', template, to=[user.email])
+                    email.content_subtype = "html"
+                    if email.send() == 1:
+                        request.session['verify_code'] = verify_code
 
-                    context = dict(
-                        status=200,
-                        message=u'ok'
-                    )
-                else:
+                        context = dict(
+                            status=200,
+                            message=u'ok'
+                        )
+                    else:
+                        context = dict(
+                            status=500,
+                            message=u'Sorry, Email Server error. please refresh page and retry.'
+                        )
+                except:
                     context = dict(
                         status=500,
-                        message=u'Sorry, Email Server error.'
+                        message=u'Sorry, Unknown error happened. please refresh page and retry.'
                     )
-            except:
-                context = dict(
-                    status=500,
-                    message=u'Sorry, Unknown error happened.'
-                )
         elif 'code' in request.POST:
             context = dict(
                 status=400,
@@ -332,7 +339,7 @@ def modify_information(request):
             if not request.user.is_email_check:
                 email = request.POST.get('email', False)
                 if email:
-                    if User.objects.filter(email=email).exists():
+                    if User.objects.filter(email=email).filter(is_email_check=1).exists():
                         context = dict(
                             status=400,
                             message=u'This Email address is already in used.'

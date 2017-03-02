@@ -1,29 +1,46 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ u.user_id }} -- ACMORE .
+{{ u.user_id }} - ACMORE .
 {% endblock %}
 
 {% block style %}
 <style>
-.panel>.panel-body>.row {
+.panel>.panel-body .row {
     margin-top: 10px;
+}
+.block-title{
+    margin-top: 20px;
 }
 </style>
 {% endblock %}
 {% block main %}
-    <h3>{{ u.user_id }} <small>{{ u.nick }}</small></h3>
-    <div class="panel panel-default">
+    <h3 class="text-center">{{ u.user_id }} <small>{{ u.nick }}</small></h3>
+    <div class="panel">
         <div class="panel-body">
+            <div class="user-info col-md-5 col-sm-12">
+            <h4 class="text-center text-primary block-title">User information</h4>
             {% if user.is_authenticated %}
                 {% if user.is_email_check %}
                     <div class="row">
-                        <div class="col-xs-3">School:</div>
-                        <div class="col-xs-9">{{ u.school }}</div>
+                        <div class="col-xs-4">Username:</div>
+                        <div class="col-xs-8">{{ u.user_id }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-3">Email:</div>
+                        <div class="col-xs-4">Nick name:</div>
+                        <div class="col-xs-8">{{ u.nick }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">School:</div>
+                        <div class="col-xs-8">{{ u.school }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Email:</div>
                         <div class="col-xs-8">{{ u.email }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">Registered on:</div>
+                        <div class="col-xs-8">{{ u.reg_time }}</div>
                     </div>
                 {% else %}
                     <div class="row text-center">
@@ -36,9 +53,56 @@
                     <a href="{% url 'account_login' %}?from_url={{ request.path }}"><span>Log in</span></a> to view more information.
                 </div>
             {% endif %}
+            </div>
+            <div class="submit-info col-md-7 col-sm-12" style="border-left: 2px dashed #ddd;">
+                <h4 class="text-center text-primary block-title">Submit information</h4>
+                <div class="row text-success">
+                    <div class="col-xs-4">Solved:</div>
+                    <div class="col-xs-8">{{ total_solved_number }}</div>
+                </div>
+                <div class="row text-success">
+                    <div class="col-xs-4">Accepted total:</div>
+                    <div class="col-xs-8">{{ total_ac_number }}</div>
+                </div>
+                <div class="row" style="border-top: 1px dashed #ddd">
+                    <div class="col-xs-10 text-danger">Wrong total: {{ total_wrong_number }} as list:</div>
+                    <div class="col-xs-2"></div>
+                </div>
+                {% for result in total_wrong %}
+                    <div class="row text-warning">
+                        <div class="col-xs-6">{{ result.name }}:</div>
+                        <div class="col-xs-6">{{ result.count }}</div>
+                    </div>
+                {% endfor %}
+                {% for result in total_others %}
+                    <div class="row">
+                        <div class="col-xs-6">{{ result.name }}:</div>
+                        <div class="col-xs-6">{{ result.count }}</div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+    {% if solutions_ac %}
+    <div class="text-center">
+        <h4 class="text-center text-primary block-title">List of solved problems</h4>
+        {% for solution in solutions_ac %}
+            <a target="_blank" href="{% url 'status_list' %}?user_id={{ u.user_id }}&problem={{ solution.problem_id }}">{{ solution.problem_id }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if solutions_wa %}
+    <div class="text-center">
+        <h4 class="text-center text-primary block-title">Have submitted but unsolved</h4>
+        {% for solution in solutions_wa %}
+            <a target="_blank" href="{% url 'status_list' %}?user_id={{ u.user_id }}&problem={{ solution.problem_id }}">{{ solution.problem_id }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if solutions_ac %}
+    <h4 class="text-center text-primary block-title">Chart of all submissions</h4>
     <div id="chart" style="width: 100%;height:550px;"></div>
+    {% endif %}
 
 {% endblock %}
 {% block script %}

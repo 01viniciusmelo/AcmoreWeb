@@ -39,17 +39,23 @@ ACMORE {{ request.user.username }}.
                 <label class="col-sm-2">E-mail:</label>
                 <div class="col-sm-10">
                     <div class="">
-                    {%  if request.user.email == "" %}
-                        No Email Address
-                    {% else %}
+
                         <span class="email-content">{{ request.user.email }}</span>
                         {% if user.is_email_check %}
                         <span class="label label-success">Verified</span>
                         {% else %}
-                        <span class="label label-danger verify-email">Not verified</span>
-                        <a href="javascript:void(0)"  style="margin-left: 15px" id="verifyEmailLauncher"><span class="glyphicon glyphicon-edit"></span>Verify email now</a>
+
+
+                        {%  if request.user.email != "" %}
+                            <span class="label label-danger verify-email">Not verified</span>
+                            <a href="javascript:void(0)"  style="margin-left: 15px" id="verifyEmailLauncher"><span class="glyphicon glyphicon-edit"></span>Verify email now</a>
+                        {% else %}
+                            <span class="label label-danger verify-email">No Email</span>
+                            <a href="javascript:void(0)"  style="margin-left: 15px" id="fillEmailLauncher"><span class="glyphicon glyphicon-edit"></span>Fill now</a>
+                            <a href="javascript:void(0)"  style="margin-left: 15px;display: none" id="verifyEmailLauncher"><span class="glyphicon glyphicon-edit"></span>Verify email now</a>
+                        {% endif %}
                         <div class="form-group clearfix row" style="display: none;margin-top: 10px" id="verifyEmailArea">
-                            <div class="col-sm-12 col-lg-7 col-md-9">
+                            <div class="col-sm-12 col-lg-8 col-md-10">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Verify email address</h3>
@@ -118,7 +124,6 @@ ACMORE {{ request.user.username }}.
                         </div>
 
                         {% endif %}
-                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -209,7 +214,7 @@ var sendMail = function() {
             if (data.status == 200) {
 
             }else {
-                sendEmailButton.text(data.message + " please refresh page and retry.");
+                sendEmailButton.text(data.message);
             }
         }
     });
@@ -249,17 +254,20 @@ $(".close-email-verify").on("click", function () {
 });
 $("#verifyEmailLauncher").on("click", function () {
     $("#verifyEmailLauncher").fadeOut();
-
     $("#verifyEmailArea").fadeIn();
 });
 $(".modifyEmilLauncher").on("click", function() {
     $("#verifyEmailArea").hide();
-
+    $("#modifyEmailArea").fadeIn();
+});
+$("#fillEmailLauncher").on("click", function() {
+    $("#verifyEmailArea").hide();
+    $(".verify-email").text("Not verified");
+    $("#fillEmailLauncher").remove();
     $("#modifyEmailArea").fadeIn();
 });
 $(".close-email-modify").on("click", function () {
     $("#modifyEmailArea").hide();
-
     $("#verifyEmailLauncher").fadeIn();
 });
 $(".modify-email").on("click", function () {
