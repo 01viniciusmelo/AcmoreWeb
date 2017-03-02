@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Problem List.
+user rank list.
 {% endblock %}
 
 {% block style %}
@@ -31,6 +31,13 @@ form{
 {% endblock %}
 
 {% block main %}
+    <form action="{% url 'user_list' %}" method="GET" enctype="application/x-www-form-urlencoded" class="form-inline" role="form">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" name="content" class="form-control" value="{{ content }}" placeholder="Username">
+        </div>
+        <button type="submit" class="btn btn-default">Find.</button>
+    </form>
 
     {% if users|length %}
     <table class="table table-striped">
@@ -62,9 +69,9 @@ form{
     Page:
         {% for index in page_number %}
             {% ifequal offset index %}
-                <a class="active" href="?offset={{ index }}{{ page_param }}">{{ index }}</a>
+                <a class="active" href="?offset={{ index }}{{ query_param }}">{{ index }}</a>
             {% else %}
-                <a href="?offset={{ index }}{{ page_param }}">{{ index }}</a>
+                <a href="?offset={{ index }}{{ query_param }}">{{ index }}</a>
             {% endifequal %}
         {% endfor %}
     </div>

@@ -1,16 +1,9 @@
 from django.http import HttpResponse
-from django.core.exceptions import *
-from django.db.models import Q
 from django.db.models import Count
+from django.db.models import Q
 from django.shortcuts import render
-from apps.status.models.Solution import RunTimeInfo
-from apps.status.models.Solution import CompileInfo
 from apps.status.models.Solution import Solution
-from apps.account.models import User
 from apps.user.models.OldUser import OldUser
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
 from const import language_name, language_enable, judge_result_color, judge_result
 
 import math
@@ -20,7 +13,7 @@ def user_info(request, username):
     try:
         user = OldUser.objects.get(user_id=username)
 
-    except User.DoesNotExist:
+    except OldUser.DoesNotExist:
         return HttpResponse('User not found.')
 
     total_solved_number = Solution.objects.filter(result=4).filter(user_id=username).values('problem_id').distinct().count()
@@ -50,8 +43,15 @@ def user_info(request, username):
             total_others_number += result['count']
             total_others.append(result)
 
+    solutions_ac = Solution.objects.filter(user_id=username).filter(~Q(problem_id=0)).filter(result=4)\
+        .order_by('problem_id').values('problem_id').distinct()
+    solutions_wa = Solution.objects.filter(user_id=username).filter(~Q(problem_id=0)).filter(~Q(result=4)).filter(~Q(problem_id__in=solutions_ac))\
+        .order_by('problem_id').values('problem_id').distinct()
+
     context = dict(
         u=user,
+        solutions_ac=solutions_ac,
+        solutions_wa=solutions_wa,
         total_solved_number=total_solved_number,
         total_ac_number=total_ac_number,
         total_wrong_number=total_wrong_number,
@@ -64,9 +64,12 @@ def user_info(request, username):
 
 
 def user_list(request):
+    query_param = ''
+
     try:
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 50))
+        query_param = query_param + '&limit=' + str(limit)
     except ValueError:
         return HttpResponse('404', status=404)
 
@@ -74,8 +77,18 @@ def user_list(request):
         limit = 50
 
     start_record = offset * limit
-    users = OldUser.objects.order_by('-solved', 'submit')[start_record: start_record + limit]
-    user_number = OldUser.objects.count()
+
+    content = request.GET.get('content', False)
+
+    if content:
+        query_param = query_param + '&content=' + content
+        users = OldUser.objects.filter(user_id__contains=content).order_by('-solved', 'submit')
+    else:
+        users = OldUser.objects.order_by('-solved', 'submit')
+
+    user_number = users.count()
+
+    users = users[start_record: start_record + limit]
     page_number = int(math.ceil(user_number / limit))
 
     context = dict(
@@ -83,6 +96,8 @@ def user_list(request):
         offset=offset,
         page_number=range(0, page_number + 1),
         has_next_page=(start_record + limit) < user_number,
+        query_param=query_param,
+        content=content if content else ''
     )
     return render(request, 'user-list.html', context=context)
 
