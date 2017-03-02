@@ -64,9 +64,12 @@ def user_info(request, username):
 
 
 def user_list(request):
+    query_param = ''
+
     try:
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 50))
+        query_param = query_param + '&limit=' + str(limit)
     except ValueError:
         return HttpResponse('404', status=404)
 
@@ -74,8 +77,18 @@ def user_list(request):
         limit = 50
 
     start_record = offset * limit
-    users = OldUser.objects.order_by('-solved', 'submit')[start_record: start_record + limit]
-    user_number = OldUser.objects.count()
+
+    content = request.GET.get('content', False)
+
+    if content:
+        query_param = query_param + '&content=' + content
+        users = OldUser.objects.filter(user_id__contains=content).order_by('-solved', 'submit')
+    else:
+        users = OldUser.objects.order_by('-solved', 'submit')
+
+    user_number = users.count()
+
+    users = users[start_record: start_record + limit]
     page_number = int(math.ceil(user_number / limit))
 
     context = dict(
@@ -83,6 +96,8 @@ def user_list(request):
         offset=offset,
         page_number=range(0, page_number + 1),
         has_next_page=(start_record + limit) < user_number,
+        query_param=query_param,
+        content=content if content else ''
     )
     return render(request, 'user-list.html', context=context)
 
