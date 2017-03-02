@@ -73,8 +73,8 @@ def status_list(request):
         if 'result' in request.GET and request.GET.get('result') != '':
             result = request.GET.get('result')
             page_param = page_param + "&result=" + result
-            context['result'] = judge_result[int(result)]
-            solutions = solutions.filter(result=result)
+            context['result'] = judge_result[int(result)] if int(result) < 100  else 'Others'
+            solutions = solutions.filter(result=result) if int(result) < 100  else solutions.filter(result__lt=4)
     except ValueError:
         return HttpResponse('404', status=404)
 
