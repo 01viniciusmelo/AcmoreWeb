@@ -140,7 +140,8 @@ def one_contest(request, contest_id):
         contest_status=contest_status,
         protected_status=protected_status,
         support_language=support_language,
-        is_running = timezone.now() <= contest.end_time
+        is_running = timezone.now() <= contest.end_time,
+        show_rank=contest.show_rank,
     )
     return render(request, 'one-contest.html', context=context)
 

@@ -69,6 +69,7 @@ def submit_contest(request):
                 description=data['desc'],
                 private=data['permission'],
                 password=data['password'],
+                show_rank=data['showRank'],
                 langmask=0
             )
 

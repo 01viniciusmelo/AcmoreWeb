@@ -12,6 +12,7 @@ class Contest(models.Model):
     private = models.IntegerField()
     langmask = models.IntegerField()
     password = models.CharField(max_length=16)
+    show_rank = models.CharField(max_length=1)
 
     class Meta:
         managed = False
