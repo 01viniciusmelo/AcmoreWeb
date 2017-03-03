@@ -1,4 +1,4 @@
-from django.core.exceptions import *
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
 

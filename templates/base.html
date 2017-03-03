@@ -163,7 +163,10 @@ a{
     </header>
     <div class="container page-message">
         <div id="page-message">
-            <noscript><marquee scrollamount="8" style="color: red;font-size: 18px;">当前浏览器不支持Javacript，将无法获取重要实时通知。</marquee></noscript>
+            <noscript>
+                <marquee scrollamount="8" style="color: red;font-size: 18px;">当前浏览器不支持JavaScript，将无法获取重要实时通知，时区信息将无法正常显示。</marquee>
+                <marquee scrollamount="8" style="color: red;font-size: 18px;">Your browser does not support JavaScript, as result you can't get news form server and Local Timezone does not display normal.</marquee>
+            </noscript>
         </div>
     </div>
     <div class="container body">
@@ -227,7 +230,7 @@ function getMessage() {
         }
     });
 }
-setInterval("getMessage()",10000);
+setInterval("getMessage()",60000);
 
 </script>
 </body>

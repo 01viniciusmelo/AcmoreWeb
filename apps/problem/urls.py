@@ -9,5 +9,4 @@ urlpatterns = [
     url(r'oj/$', oj_problem_views.problem_list, name='oj_problem_list'),
     url(r'oj/search$', oj_problem_views.problem_list_by_search, name='oj_problem_list_by_search'),
 
-    url(r'c$', problem_views.problem_content, name='only_problem_by_id'),
 ]

@@ -10,6 +10,15 @@ class User(AbstractUser):
 
 admin.site.register(User)
 
+class Privilege(models.Model):
+    user_id = models.CharField(max_length=48)
+    rightstr = models.CharField(max_length=30)
+    defunct = models.CharField(max_length=1)
+
+    class Meta:
+        managed = False
+        db_table = 'privilege'
+
 class Loginlog(models.Model):
     user_id = models.CharField(max_length=48)
     password = models.CharField(max_length=40, blank=True, null=True)
