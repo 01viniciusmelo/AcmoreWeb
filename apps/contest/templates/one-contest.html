@@ -63,7 +63,7 @@ nav.table-page {
 .time {
     font-size: 16px;
 }
-.time.server-now-time{
+.time.service-time{
     text-align: center;
 }
 .progress-bar {
@@ -86,7 +86,7 @@ nav.table-page {
         <h3 id="contestName" style="text-align: center" data-contest-id="{{ contest.contest_id }}">{{ contest.title }}</h3>
         <div class="clearfix">
             {% verbatim %}
-            <p class="time server-now-time">Server time: <span>{{ dateTime }}</span></p>
+            <p class="time service-time">Server time: <span>{{ dateTime }}</span></p>
             {% endverbatim %}
             <p class="pull-left time">Begin: <time class="utc-time-to-local-time">{{ contest.start_time|date:"Y/m/d H:i:s T" }}</time></p>
             <p class="pull-right time">End: <time class="utc-time-to-local-time">{{ contest.end_time|date:"Y/m/d H:i:s T" }}</time></p>
@@ -100,8 +100,8 @@ nav.table-page {
                 </div>
             </div>
             <div class="clearfix">
-                <p class="pull-left time server-now-time">Passed: <span>{{ passedTime }}</span></p>
-                <p class="pull-right time server-now-time">Remainder: <span>{{ remainderTime }}</span></p>
+                <p class="pull-left time service-time">Passed: <span>{{ passedTime }}</span></p>
+                <p class="pull-right time service-time">Remainder: <span>{{ remainderTime }}</span></p>
             </div>
         </div>
         {% endverbatim %}
@@ -114,7 +114,7 @@ nav.table-page {
         <li role="presentation"><a id="problemNav" href="#problem" role="tab" data-toggle="tab">Problems</a></li>
 
         <li role="presentation"><a href="#status" role="tab" data-toggle="tab">Status</a></li>
-        {% if show_rank == 1 or request.user.is_superuser %}
+        {% if contest.show_rank == "1" or request.user.is_superuser %}
             <li role="presentation"><a href="#rank" role="tab" data-toggle="tab">Rank</a></li>
         {% endif %}
         {% if is_running %}
@@ -418,11 +418,8 @@ var statusRequestUrl = "{% url 'status_list' %}";
 var rankRequestUrl = "{% url 'contest_rank' %}";
 var contestOnlyProblemById = "{% url 'only_problem_by_id' %}";
 
-$(".utc-time-to-local-time").each(function (index, item) {
-    item.innerText = timestamp2time(item.innerText);
-});
 </script>
 <link href="{% static 'css/bootstrap-toggle.min.css' %}" rel="stylesheet">
 <script src="{% static '/js/vue.min.js'%}"></script>
-<script src="{% static '/js/contest.action.js'%}"></script>
+<script src="{% static '/js/contest.action.js'%}?_ver=1.0.1"></script>
 {% endblock %}

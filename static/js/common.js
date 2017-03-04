@@ -65,8 +65,9 @@ var sec2time = function(secNum, type) {
         hour = Math.floor((secNum-day*86400)/3600);
         minute = Math.floor((secNum-day*86400-hour*3600)/60);
         second = secNum-day*86400-hour*3600-minute*60;
-        if (day != 0) {
-            result += day+ (day==1)?" day ":" days ";
+        if (day > 0) {
+            result += day;
+            result += (day==1)?" day ":" days ";
         }
         result += hour+" hours " + minute+" minutes "+second+" seconds";
     }else {

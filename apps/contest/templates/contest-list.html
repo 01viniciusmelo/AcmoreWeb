@@ -38,7 +38,7 @@ Contest List.
             <tr>
                 <td>{{ contest.0.contest_id }}</td>
                 <td><a href="{% url 'one_contest' contest.0.contest_id %}" target="_self">{{ contest.0.title }}</a></td>
-                <td class="start-time">{{ contest.0.start_time|date:"c" }}</td>
+                <td class="start-time utc-time-to-local-time">{{ contest.0.start_time|date:"c" }}</td>
                 <td>{{ contest.1.duration }}</td>
                 {% ifequal contest.1.status 0 %}
                     <td class="info">Scheduled</td>
@@ -56,12 +56,4 @@ Contest List.
         </tbody>
     </table>
 </div>
-{% endblock %}
-
-{% block script %}
-<script>
-$(".start-time").each(function (index, item) {
-    item.innerText = timestamp2time(item.innerText);
-});
-</script>
 {% endblock %}

@@ -40,7 +40,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">Registered on:</div>
-                        <div class="col-xs-8">{{ u.reg_time }}</div>
+                        <div class="col-xs-8 utc-time-to-local-time">{{ u.reg_time|date:'c' }}</div>
                     </div>
                 {% else %}
                     <div class="row text-center">

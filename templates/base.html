@@ -207,13 +207,17 @@ a{
 {% block modal %}
 {% endblock %}
 
-<script src="{% static '/js/common.js' %}"></script>
+<script src="{% static '/js/common.js' %}?_ver=1.0.1"></script>
 
 {% block script %}
 
 {% endblock %}
 <!--<script src="{% static 'js/animate.js' %}"></script>-->
 <script>
+
+$(".utc-time-to-local-time").each(function (index, item) {
+    item.innerText = timestamp2time(item.innerText);
+});
 
 var cacheMessage = "";
 function getMessage() {

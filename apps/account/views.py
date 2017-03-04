@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -152,9 +153,9 @@ def register(request):
 
             old_user = OldUser(
                 user_id=username,
-                email=email,
                 volume=1,
                 language=1,
+                reg_time=timezone.now()
             )
             old_user.save()
 
@@ -277,6 +278,10 @@ def check_email(request):
                         user = User.objects.get(username=request.user.username)
                         user.is_email_check = 1
                         user.save()
+
+                        old_user = OldUser.objects.get(user_id=user.username)
+                        old_user.email = user.email
+                        old_user.save()
 
                         context = dict(
                             status=200,
