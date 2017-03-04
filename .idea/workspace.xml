@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f5e988d-3c86-4897-a68c-e7d80cdfdf1c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/account/views.py" afterPath="$PROJECT_DIR$/apps/account/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/templates/contest-list.html" afterPath="$PROJECT_DIR$/apps/contest/templates/contest-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/templates/create-contest.html" afterPath="$PROJECT_DIR$/apps/contest/templates/create-contest.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" afterPath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/user/templates/one-user.html" afterPath="$PROJECT_DIR$/apps/user/templates/one-user.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/common.js" afterPath="$PROJECT_DIR$/static/js/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/views/contests.py" afterPath="$PROJECT_DIR$/apps/contest/views/contests.py" />
     </list>
     <ignored path="test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,22 +30,22 @@
     <favorites_list name="test" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="contest-list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/contest/templates/contest-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="0">
               <caret line="40" column="60" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="209" column="52" selection-start-line="209" selection-start-column="52" selection-end-line="209" selection-end-column="52" />
+            <state relative-caret-position="161">
+              <caret line="214" column="59" selection-start-line="214" selection-start-column="59" selection-end-line="214" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -58,8 +54,8 @@
       <file leaf-file-name="one-user.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/user/templates/one-user.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
+            <state relative-caret-position="180">
+              <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -68,11 +64,78 @@
       <file leaf-file-name="one-contest.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="402" column="19" selection-start-line="402" selection-start-column="19" selection-end-line="402" selection-end-column="19" />
+            <state relative-caret-position="335">
+              <caret line="219" column="93" selection-start-line="219" selection-start-column="78" selection-end-line="219" selection-end-column="93" />
               <folding>
-                <marker date="1488602508496" expanded="false" signature="10195:10210" ph="..." />
+                <marker date="1488637615078" expanded="false" signature="10195:10210" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contest.action.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="262">
+              <caret line="353" column="31" selection-start-line="353" selection-start-column="31" selection-end-line="353" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/judge/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contests.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="267" column="15" selection-start-line="267" selection-start-column="15" selection-end-line="267" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
+                <marker date="1488638627805" expanded="true" signature="790:1115" ph="select * fro... contest" />
+                <marker date="1488638627805" expanded="true" signature="899:948" ph="select * fro... privilege" />
+                <marker date="1488638627805" expanded="true" signature="3384:4767" ph="SELECT title... title" />
+                <marker date="1488638627805" expanded="true" signature="3485:3812" ph="SELECT `prob... contest_problem" />
+                <marker date="1488638627805" expanded="true" signature="3890:4021" ph="SELECT probl... solution" />
+                <marker date="1488638627805" expanded="true" signature="4114:4230" ph="SELECT probl... solution" />
+                <marker date="1488638627805" expanded="true" signature="4323:4485" ph="SELECT probl... solution" />
+                <marker date="1488638627805" expanded="true" signature="4578:4722" ph="SELECT probl... solution" />
+                <marker date="1488638627805" expanded="true" signature="5962:6901" ph="SELECT solut... user_id" />
+                <marker date="1488638627805" expanded="true" signature="6147:6417" ph="SELECT users... *" />
+                <marker date="1488638627805" expanded="true" signature="6253:6332" ph="SELECT * FRO... solution" />
+                <marker date="1488638627805" expanded="true" signature="6499:6702" ph="SELECT num,u... num" />
+                <marker date="1488638627805" expanded="true" signature="6546:6654" ph="SELECT num,u... solution" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="status.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="110" column="45" selection-start-line="110" selection-start-column="45" selection-end-line="110" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="const.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/const.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="938">
+              <caret line="48" column="16" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -137,15 +200,15 @@
         <option value="$PROJECT_DIR$/apps/account/models.py" />
         <option value="$PROJECT_DIR$/apps/contest/models.py" />
         <option value="$PROJECT_DIR$/apps/contest/views/add_contest.py" />
-        <option value="$PROJECT_DIR$/apps/contest/views/contests.py" />
         <option value="$PROJECT_DIR$/apps/contest/templates/create-contest.html" />
         <option value="$PROJECT_DIR$/apps/account/views.py" />
         <option value="$PROJECT_DIR$/apps/contest/templates/contest-list.html" />
         <option value="$PROJECT_DIR$/apps/user/templates/one-user.html" />
         <option value="$PROJECT_DIR$/static/js/contest.action.js" />
         <option value="$PROJECT_DIR$/static/js/common.js" />
-        <option value="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
+        <option value="$PROJECT_DIR$/apps/contest/views/contests.py" />
       </list>
     </option>
   </component>
@@ -191,6 +254,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -236,10 +301,6 @@
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -251,7 +312,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
+              <option name="myItemId" value="judge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -283,7 +344,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
+              <option name="myItemId" value="status" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -301,18 +362,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
+              <option name="myItemId" value="status" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -973,20 +1032,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="97" column="55" selection-start-line="97" selection-start-column="55" selection-end-line="97" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/const.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base-single.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="417">
@@ -1132,9 +1177,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#28#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1153,42 +1195,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/judge/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/user/migrations/0001_initial.py" />
     <entry file="file://$PROJECT_DIR$/apps/contest/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="8" column="58" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3213">
-          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-            <marker date="1488569968161" expanded="true" signature="790:1115" ph="select * fro... contest" />
-            <marker date="1488569968161" expanded="true" signature="899:948" ph="select * fro... privilege" />
-            <marker date="1488569968161" expanded="true" signature="3384:4767" ph="SELECT title... title" />
-            <marker date="1488569968161" expanded="true" signature="3485:3812" ph="SELECT `prob... contest_problem" />
-            <marker date="1488569968161" expanded="true" signature="3890:4021" ph="SELECT probl... solution" />
-            <marker date="1488569968161" expanded="true" signature="4114:4230" ph="SELECT probl... solution" />
-            <marker date="1488569968161" expanded="true" signature="4323:4485" ph="SELECT probl... solution" />
-            <marker date="1488569968161" expanded="true" signature="4578:4722" ph="SELECT probl... solution" />
-            <marker date="1488569968161" expanded="true" signature="5962:6901" ph="SELECT solut... user_id" />
-            <marker date="1488569968161" expanded="true" signature="6147:6417" ph="SELECT users... *" />
-            <marker date="1488569968161" expanded="true" signature="6253:6332" ph="SELECT * FRO... solution" />
-            <marker date="1488569968161" expanded="true" signature="6499:6702" ph="SELECT num,u... num" />
-            <marker date="1488569968161" expanded="true" signature="6546:6654" ph="SELECT num,u... solution" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1204,7 +1216,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
           <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1212,22 +1223,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/templates/contest-list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state relative-caret-position="0">
           <caret line="40" column="60" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1236,33 +1238,89 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="402" column="19" selection-start-line="402" selection-start-column="19" selection-end-line="402" selection-end-column="19" />
-          <folding>
-            <marker date="1488602508496" expanded="false" signature="10195:10210" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/user/templates/one-user.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="42" column="67" selection-start-line="42" selection-start-column="67" selection-end-line="42" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="209" column="52" selection-start-line="209" selection-start-column="52" selection-end-line="209" selection-end-column="52" />
+        <state relative-caret-position="161">
+          <caret line="214" column="59" selection-start-line="214" selection-start-column="59" selection-end-line="214" selection-end-column="59" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/judge/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/user/templates/one-user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="353" column="31" selection-start-line="353" selection-start-column="31" selection-end-line="353" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/const.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="938">
+          <caret line="48" column="16" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="110" column="45" selection-start-line="110" selection-start-column="45" selection-end-line="110" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="219" column="93" selection-start-line="219" selection-start-column="78" selection-end-line="219" selection-end-column="93" />
+          <folding>
+            <marker date="1488637615078" expanded="false" signature="10195:10210" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="267" column="15" selection-start-line="267" selection-start-column="15" selection-end-line="267" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+            <marker date="1488638627805" expanded="true" signature="790:1115" ph="select * fro... contest" />
+            <marker date="1488638627805" expanded="true" signature="899:948" ph="select * fro... privilege" />
+            <marker date="1488638627805" expanded="true" signature="3384:4767" ph="SELECT title... title" />
+            <marker date="1488638627805" expanded="true" signature="3485:3812" ph="SELECT `prob... contest_problem" />
+            <marker date="1488638627805" expanded="true" signature="3890:4021" ph="SELECT probl... solution" />
+            <marker date="1488638627805" expanded="true" signature="4114:4230" ph="SELECT probl... solution" />
+            <marker date="1488638627805" expanded="true" signature="4323:4485" ph="SELECT probl... solution" />
+            <marker date="1488638627805" expanded="true" signature="4578:4722" ph="SELECT probl... solution" />
+            <marker date="1488638627805" expanded="true" signature="5962:6901" ph="SELECT solut... user_id" />
+            <marker date="1488638627805" expanded="true" signature="6147:6417" ph="SELECT users... *" />
+            <marker date="1488638627805" expanded="true" signature="6253:6332" ph="SELECT * FRO... solution" />
+            <marker date="1488638627805" expanded="true" signature="6499:6702" ph="SELECT num,u... num" />
+            <marker date="1488638627805" expanded="true" signature="6546:6654" ph="SELECT num,u... solution" />
+          </folding>
         </state>
       </provider>
     </entry>
