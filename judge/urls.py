@@ -21,6 +21,7 @@ from apps.user.views import user
 from apps.account import views as account
 from apps.source.test import tests
 from apps.contest.views import contests as contest_common
+from apps.contest.views import add_contest
 import views as index_view
 
 
@@ -56,7 +57,12 @@ urlpatterns = [
     url(r'^contest/(\d+)$', contest_common.one_contest, name='one_contest'),
     url(r'^contest/submit/(\d+)$', contest_common.submit_problem, name='submit_contest_problem'),
     url(r'^contest/rank/$', contest_common.contest_rank, name='contest_rank'),
-    url(r'^contest/manage/add/$', contest_common.create_contest, name='create_contest'),
+    url(r'^contest/problem/$', contest_common.problem_content, name='only_problem_by_id'),
+    url(r'^contest/check-password$', contest_common.check_contest_password, name='check_contest_password'),
+
+    url(r'^contest/manage/add/$', add_contest.create_contest, name='create_contest'),
+    url(r'^add-contest/problem/check$', add_contest.check_problem, name='check_contest_problem'),
+    url(r'^add-contest/submit$', add_contest.submit_contest, name='add_contest_submit'),
 
     url(r'^thanks$', index_view.thanks, name='thanks'),
     url(r'^help$', index_view.help, name='help'),

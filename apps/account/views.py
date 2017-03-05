@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,7 @@ from django.core.mail import EmailMessage
 
 from apps.account.models import User
 from apps.user.models.OldUser import OldUser
+from apps.account.models import Privilege
 
 import base64
 import hashlib
@@ -76,9 +78,18 @@ def login(request):
                 return login_error(from_url, username)
 
         user = auth.authenticate(username=username, password=password)
+
         #print user
         if user and user.is_active:
             auth.login(request, user)
+            try:
+                Privilege.objects.filter(user_id=username).filter(rightstr='administrator').get()
+            except Privilege.DoesNotExist:
+                pass
+            else:
+                user.is_superuser = 1
+                user.save()
+
             #print from_url
             return HttpResponseRedirect(from_url)
         else:
@@ -142,9 +153,9 @@ def register(request):
 
             old_user = OldUser(
                 user_id=username,
-                email=email,
                 volume=1,
                 language=1,
+                reg_time=timezone.now()
             )
             old_user.save()
 
@@ -267,6 +278,10 @@ def check_email(request):
                         user = User.objects.get(username=request.user.username)
                         user.is_email_check = 1
                         user.save()
+
+                        old_user = OldUser.objects.get(user_id=user.username)
+                        old_user.email = user.email
+                        old_user.save()
 
                         context = dict(
                             status=200,

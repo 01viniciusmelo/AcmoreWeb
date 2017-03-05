@@ -40,7 +40,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">Registered on:</div>
-                        <div class="col-xs-8">{{ u.reg_time }}</div>
+                        <div class="col-xs-8 utc-time-to-local-time">{{ u.reg_time|date:'c' }}</div>
                     </div>
                 {% else %}
                     <div class="row text-center">
@@ -105,9 +105,11 @@
     {% endif %}
 
 {% endblock %}
+
+{% load static %}
 {% block script %}
-<script src="https://source.droomo.top/static/js/echarts.common.min.js"></script>
-<script src="https://source.droomo.top/static/js/roma.js"></script>
+<script src="{% static '/js/echarts.common.min.js' %}"></script>
+<script src="{% static '/js/roma.js' %}"></script>
 <script>
 var chart = echarts.init(document.getElementById('chart'), 'roma');
 option = {

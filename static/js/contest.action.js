@@ -366,7 +366,7 @@ function showProblem(problem_id) {
             $.ajax({
                 url:contestOnlyProblemById,
                 data: {
-                    problem: dataProblemPid[problem_id],
+                    problem:problem_id,
                     contest:contestId
                 },
                 async:false,
@@ -374,6 +374,7 @@ function showProblem(problem_id) {
                     if (data.status == 200) {
                         dataProblemCache[problem_id] = data;
                         result = data;
+                        console.log(result);
                     }
                 }
             });

@@ -14,11 +14,11 @@ Contest List.
 
 {% block main %}
 <div class="table-responsive">
-    <div class="clearfix tools" style="display: none">
+    <div class="clearfix tools">
         {% if request.user.is_authenticated %}
-        <a class="btn btn-diy pull-right" href="{% url 'create_contest' %}">Create Contest</a>
+        <a class="btn btn-diy" href="{% url 'create_contest' %}">Create Contest</a>
         {% else %}
-        <a class="btn btn-diy pull-right" href="{% url 'account_login' %}?from_url={% url 'create_contest' %}">Login and Create Contest</a>
+        <a class="btn btn-diy" href="{% url 'account_login' %}?from_url={% url 'create_contest' %}">Login and Create Contest</a>
         {% endif %}
     </div>
     <table class="table table-striped">
@@ -38,9 +38,17 @@ Contest List.
             <tr>
                 <td>{{ contest.0.contest_id }}</td>
                 <td><a href="{% url 'one_contest' contest.0.contest_id %}" target="_self">{{ contest.0.title }}</a></td>
-                <td>{{ contest.0.start_time|date:"Y-m-d H:m:s" }} GMT+8</td>
+                <td class="start-time utc-time-to-local-time">{{ contest.0.start_time|date:"c" }}</td>
                 <td>{{ contest.1.duration }}</td>
-                <td>{{ contest.1.status }}</td>
+                {% ifequal contest.1.status 0 %}
+                    <td class="info">Scheduled</td>
+                {% else %}
+                    {% ifequal contest.1.status 1 %}
+                        <td class="success">Running</td>
+                    {% else %}
+                        <td class="danger">Ended</td>
+                    {% endifequal%}
+                {% endifequal %}
                 <td>{{ contest.1.permissions }}</td>
                 <td>{{ contest.0.user_id }}</td>
             </tr>

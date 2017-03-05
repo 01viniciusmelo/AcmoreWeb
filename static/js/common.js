@@ -1,25 +1,27 @@
 /**
  * Created by moon on 16-12-10.
  */
-languageName = ["C", "C++", "Pascal", "Java 1.7", "Ruby",
+const languageName = ["C", "C++", "Pascal", "Java 1.7", "Ruby",
                  "Bash", "Python 2.7", "PHP", "Perl", "C#",
                  "Obj-C", "Free Basic", "Schema", "Clang", "Clang++",
                  "Lua", "JavaScript (ES6)", "Python 3.5", "Go", "Other Language"];
 
-judgeResult = ["Waiting...",      "Waiting Rejudging",    "Compiling",    "Running",
+const judgeResult = ["Waiting...",      "Waiting Rejudging",    "Compiling",    "Running",
                 "Accepted",     "Presentation Error",   "Wrong Answer", "Time Limit Exceed",
                 "Memory Limit Exceed", "Output Limit Exceed", "Runtime Error", "Compile Error",
                 "Compile Completed"];
 
-judgeResultType = [
+const judgeResultType = [
                     "active",   "active",   "active",     "active",
                     "success",  "info",  "danger",   "info",
                     "info",  "info",  "warning",   "warning",
                     ""];
 
-var staticUrl = "static/";
+const orderNumber = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-var loadingImg = staticUrl + "img/loading.gif";
+const staticUrl = "static/";
+
+const loadingImg = staticUrl + "img/loading.gif";
 
 var isMobile = function() {
     return (screen.width < 768);
@@ -63,8 +65,9 @@ var sec2time = function(secNum, type) {
         hour = Math.floor((secNum-day*86400)/3600);
         minute = Math.floor((secNum-day*86400-hour*3600)/60);
         second = secNum-day*86400-hour*3600-minute*60;
-        if (day != 0) {
-            result += day+ (day==1)?" day ":" days ";
+        if (day > 0) {
+            result += day;
+            result += (day==1)?" day ":" days ";
         }
         result += hour+" hours " + minute+" minutes "+second+" seconds";
     }else {

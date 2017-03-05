@@ -83,7 +83,6 @@ class Online(models.Model):
     class Meta:
         managed = False
         db_table = 'online'
-'''
 
 class Privilege(models.Model):
     user_id = models.CharField(max_length=48)
@@ -94,8 +93,6 @@ class Privilege(models.Model):
         managed = False
         db_table = 'privilege'
 
-
-'''
 class Reply(models.Model):
     rid = models.AutoField(primary_key=True)
     author_id = models.CharField(max_length=48)

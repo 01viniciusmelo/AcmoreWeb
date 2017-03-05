@@ -14,13 +14,13 @@
 
     {% block commonstyle %}
     {% load static %}
-    <link href="https://source.droomo.top/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">
     {% endblock %}
 
     {% block style %}
 
     {% endblock %}
-{% load staticfiles %}
+
 <style>
 .bg {
     position: fixed;
@@ -90,24 +90,6 @@ footer{
 }
 a{
     color: cadetblue;
-}
-.loading{
-    width:160px;
-    height:56px;
-    position: absolute;
-    top:50%;
-    left:50%;
-    line-height:56px;
-    color:#fff;
-    padding-left:60px;
-    font-size:15px;
-    background: #000 url(images/loader.gif) no-repeat 10px 50%;
-    opacity: 0.7;
-    z-index:9999;
-    -moz-border-radius:20px;
-    -webkit-border-radius:20px;
-    border-radius:20px;
-    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
 }
 </style>
     <!--[if lt IE 9]>
@@ -181,7 +163,10 @@ a{
     </header>
     <div class="container page-message">
         <div id="page-message">
-            <noscript><marquee scrollamount="8" style="color: red;font-size: 18px;">当前浏览器不支持Javacript，将无法获取重要实时通知。</marquee></noscript>
+            <noscript>
+                <marquee scrollamount="8" style="color: red;font-size: 18px;">当前浏览器不支持JavaScript，将无法获取重要实时通知，时区信息将无法正常显示。</marquee>
+                <marquee scrollamount="8" style="color: red;font-size: 18px;">Your browser does not support JavaScript, as result you can't get news form server and Local Timezone does not display normal.</marquee>
+            </noscript>
         </div>
     </div>
     <div class="container body">
@@ -222,13 +207,17 @@ a{
 {% block modal %}
 {% endblock %}
 
-<script src="https://source.droomo.top/static/js/common.js"></script>
+<script src="{% static '/js/common.js' %}?_ver=1.0.1"></script>
 
 {% block script %}
 
 {% endblock %}
 <!--<script src="{% static 'js/animate.js' %}"></script>-->
 <script>
+
+$(".utc-time-to-local-time").each(function (index, item) {
+    item.innerText = timestamp2time(item.innerText);
+});
 
 var cacheMessage = "";
 function getMessage() {
@@ -245,7 +234,7 @@ function getMessage() {
         }
     });
 }
-setInterval("getMessage()",10000);
+setInterval("getMessage()",60000);
 
 </script>
 </body>

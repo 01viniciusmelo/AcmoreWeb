@@ -1,26 +1,22 @@
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.contrib import auth
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.db import connection, transaction
+from django.db import connection
 from django.core.serializers.json import DjangoJSONEncoder
-from django.forms.models import model_to_dict
-from django.views.decorators.gzip import gzip_page
 
 from apps.contest.models import Contest
-from apps.models import Privilege
 from apps.contest.models import ContestProblem
 from apps.status.models.Solution import Solution
 from apps.source.models import SourceCode
 from apps.source.models import OjSourceCode
+from apps.problem.models.OJproblem import Problem as OJproblem
+from apps.account.models import Privilege
 
 from const import index_order, support_language
 import json
 import time
-import base64
-import hashlib
 
 
 def contest_list(request):
@@ -34,19 +30,22 @@ def contest_list(request):
     for contest in contests:
         temp = dict()
         temp['duration'] = contest.end_time - contest.start_time
-        if contest.password == '':
-            if contest.private:
-                temp['permissions'] = 'Private'
-            else:
-                temp['permissions'] = 'Public'
-        else:
+
+        if contest.private == 0:
+            temp['permissions'] = 'Public'
+        elif contest.private == 1:
             temp['permissions'] = 'Protected'
-        if now_time < contest.start_time:
-            temp['status'] = 'Scheduled'
-        elif now_time < contest.end_time:
-            temp['status'] = 'Running'
+        elif contest.private == 2:
+            temp['permissions'] = 'Private'
         else:
-            temp['status'] = 'Ended'
+            temp['permissions'] = 'Other'
+
+        if now_time < contest.start_time:
+            temp['status'] = 0
+        elif now_time < contest.end_time:
+            temp['status'] = 1
+        else:
+            temp['status'] = 2
         _contests.append(temp)
 
 
@@ -58,6 +57,9 @@ def contest_list(request):
 
 
 def one_contest(request, contest_id):
+    contest_status = 1
+    protected_status = 0
+
     try:
         contest = Contest.objects.get(contest_id=contest_id)
     except Contest.DoesNotExist:
@@ -70,16 +72,34 @@ def one_contest(request, contest_id):
 
     if timezone.now() < contest.start_time:
         context = dict(
-            contest_status=False,
+            contest_status=2,#not start
             contest=contest,
         )
         return render(request, 'one-contest.html', context=context)
+
+    if contest.private != 0:
+        try:
+            p_str = 'c'+str(contest_id)
+            Privilege.objects.filter(user_id=request.user.username).filter(rightstr=p_str).get()
+        except Privilege.DoesNotExist:
+            if contest.private == 2:
+                contest_status = 3#private with password
+                context = dict(
+                    contest_status=contest_status,
+                    contest=contest,
+                )
+                return render(request, 'one-contest.html', context=context)
+            else:
+                protected_status = 1 #protected with password not passed
+        else:
+            protected_status = 0 #protected with password already passed
+
 
     contest.total_time = contest.end_time - contest.start_time
 
     sql =   "SELECT title, pid, pnum,accepted,submit,has_ac,has_submit FROM "\
             "( "\
-            "    SELECT `problem`.`title` AS `title`,`problem`.`problem_id` AS `pid`,contest_problem.num AS pnum "\
+            "    SELECT `contest_problem`.`title` AS `title`,`problem`.`problem_id` AS `pid`,contest_problem.num AS pnum "\
             "    FROM `contest_problem`,`problem` "\
             "    WHERE `contest_problem`.`problem_id`=`problem`.`problem_id` "\
             "    AND `contest_problem`.`contest_id`=%s ORDER BY `contest_problem`.`num` "\
@@ -110,15 +130,18 @@ def one_contest(request, contest_id):
 
     cursor.execute(sql, [contest_id,contest_id,contest_id,contest_id,user_name,contest_id,user_name])
     raw = cursor.fetchall()
-    print((raw))
+    # print((raw))
 
     order = map(lambda x:index_order[x[2]], raw)
 
     context = dict(
         contest=contest,
         problems=zip(order, raw),
-        contest_status=True,
-        support_language=support_language
+        contest_status=contest_status,
+        protected_status=protected_status,
+        support_language=support_language,
+        is_running = timezone.now() <= contest.end_time,
+        show_rank=contest.show_rank,
     )
     return render(request, 'one-contest.html', context=context)
 
@@ -217,16 +240,13 @@ def contest_rank(request):
     return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
 
 
-@login_required(redirect_field_name='from_url')
-def create_contest(request):
-
-    context = dict()
-
-    return render(request, 'create-contest.html', context=context)
-
-
 @login_required
 def submit_problem(request, contest_id):
+    contest = Contest.objects.get(contest_id=contest_id)
+
+    if timezone.now() > contest.end_time:
+        return HttpResponseRedirect(reverse('one_contest', args=[contest_id, ]))
+
     if request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip_address = request.META['HTTP_X_FORWARDED_FOR']
     else:
@@ -274,4 +294,165 @@ def submit_problem(request, contest_id):
     sss.save()
 
     return HttpResponseRedirect(reverse('one_contest', args=[contest_id, ]) + '#status')
+
+
+def problem_content(request):
+    contest_id = request.GET.get('contest', 0)
+
+    try:
+        contest = Contest.objects.get(contest_id=contest_id)
+    except Contest.DoesNotExist:
+        context = dict(
+            status=400,
+            message='no such contest'
+        )
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+    if timezone.now() < contest.start_time:
+        context = dict(
+            status=400,
+            message='contest not start.'
+        )
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+    judge_name = request.GET.get('name', 'oj')
+    problem_order_number = request.GET.get('problem', '')
+    type = request.GET.get('type', 'json')
+
+    if problem_order_number == '':
+        return HttpResponse('no such problem')
+
+    if judge_name == 'oj':
+        if 'A' <= problem_order_number <= 'Z':
+            contest_problem_num = ord(problem_order_number) - ord('A')
+        elif 'a' <= problem_order_number <= 'z':
+            contest_problem_num = ord(problem_order_number) - ord('a') + 26
+        else:
+            return HttpResponse('no such problem')
+
+        contest_problem_info = ContestProblem.objects.values('problem_id','title') \
+                                .filter(num=contest_problem_num).filter(contest_id=contest_id).get()
+        real_problem_id = contest_problem_info['problem_id']
+
+        _problem = OJproblem.objects.values('title','description','input','output',
+                                            'sample_input','sample_output','spj','hint','time_limit','memory_limit'
+                                            ).get(problem_id=real_problem_id)
+
+        problem = dict()
+        problem['a'] = list() #with attributes, t:1 show value, 2 not show value and strong attr
+        problem['d'] = list() #in description, t:1 text, 2 html
+        problem['type'] = 'text'
+
+        problem['a'].append(dict(
+            k='Time Limit',
+            v=str(_problem['time_limit']) + ' s',
+            t='1'
+        ))
+        problem['a'].append(dict(
+            k='Memory limit',
+            v=str(_problem['memory_limit']).encode('utf-8') + 'MB',
+            t='1'
+        ))
+        if _problem['spj'] == 1:
+            problem['a'].append(dict(
+                k='Special Judge',
+                t='2'
+            ))
+
+        problem['title'] = contest_problem_info['title']
+
+        problem['d'].append(dict(
+            k='Description',
+            v=_problem['description'],
+            t='2'
+        ))
+        problem['d'].append(dict(
+            k='Input',
+            v=_problem['input'],
+            t='2'
+        ))
+        problem['d'].append(dict(
+            k='Output',
+            v=_problem['output'],
+            t='2'
+        ))
+        problem['d'].append(dict(
+            k='Sample input',
+            v=_problem['sample_input'],
+            t='1'
+        ))
+        problem['d'].append(dict(
+            k='Sample output',
+            v=_problem['sample_output'],
+            t='1'
+        ))
+        problem['d'].append(dict(
+            k='Hint',
+            v=_problem['hint'],
+            t='2'
+        ))
+
+        context = dict(
+            problem=problem,
+            status=200
+        )
+        return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@login_required
+def check_contest_password(request):
+    response = dict()
+    try:
+        contest_id = int(request.POST.get('contest_id', 0))
+    except ValueError:
+        response = dict(
+            status=400,
+            message='error'
+        )
+    else:
+        contest = Contest.objects.get(contest_id=contest_id)
+
+        password = request.POST.get('contestPassword', False)
+        if contest.private != 0:
+            if password and password == contest.password:
+                privilege = Privilege(
+                    user_id=request.user.username,
+                    rightstr='c'+str(contest.contest_id),
+                    defunct='N'
+                )
+                privilege.save()
+                response = dict(
+                    status=200,
+                    message='update permission success'
+                )
+            else:
+                response = dict(
+                    status=304,
+                    message='password error'
+                )
+        else:
+            response = dict(
+                status=204,
+                message='password is unnecessary'
+            )
+
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

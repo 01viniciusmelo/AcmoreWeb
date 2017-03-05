@@ -16,7 +16,7 @@ for index, item in enumerate(language_enable):
 judger_name = dict([
     ('HDU','HDU'),
     ('judger_01','a'),
-    ('judger_02','b'),
+    ('judger_02','Own computer'),
     ('judger_03','Almond Blossom'),
     ('judger_04','d'),
     ('judger_05','e'),
