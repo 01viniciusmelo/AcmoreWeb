@@ -209,8 +209,7 @@ nav.table-page {
                         <th class="hidden-xs" width="">Mem used</th>
                         <th class="hidden-xs" width="">Time used</th>
                         <th width="" class="table-border-left">User</th>
-                        <th class="hidden-xs" width="">Language</th>
-                        <th class="hidden-xs" width="">Size</th>
+                        <th class="hidden-xs" width="">Lang /size/</th>
                         <th width="" class="table-border-right hidden-xs" style="text-align: right">Submit at</th>
                     </tr>
                 </thead>
@@ -218,12 +217,17 @@ nav.table-page {
                     {% verbatim %}
                     <tr v-for="item in items">
                         <td><a v-bind:href="'#problem/' + item.problem_id">{{ item.problem_id }}</a></td>
-                        <td :class="item.resultType">{{ item.result }}</td>
+                        <td :class="item.resultType">
+                            <a target="_blank" v-bind:href="item.runtime_info" v-if="item.runtime_info!=0">{{ item.result }}</a>
+                            <span v-else>{{ item.result }}</span>
+                        </td>
                         <td class="hidden-xs">{{ item.memory }} K</td>
                         <td class="hidden-xs">{{ item.time }} ms</td>
                         <td>{{ item.user_id }}</td>
-                        <td class="hidden-xs">{{ item.language }}</td>
-                        <td class="hidden-xs">{{ item.code_length }}</td>
+                        <td class="hidden-xs">
+                            <a v-if="item.source_code!=0" target="_blank" v-bind:href="item.source_code">{{ item.language }}&nbsp;/ {{ item.code_length }}B/</a>
+                            <span v-else>{{ item.language }}&nbsp;/ {{ item.code_length }}B/</span>
+                        </td>
                         <td class="hidden-xs" style="text-align: right">{{ timestamp2time(item.in_date) }}</td>
                     </tr>
                     {% endverbatim %}
@@ -302,7 +306,7 @@ nav.table-page {
                         <div class="col-xs-5">
                             <select id="problem" name="problem" class="form-control" >
                             {% for problem in problems %}
-                                <option value="{{ problem.1.1 }}" data-num-id="{{ problem.0 }}">{{ problem.0 }} -- {{ problem.1.0 }}</option>
+                                <option value="{{ problem.0 }}" data-num-id="{{ problem.0 }}">{{ problem.0 }} -- {{ problem.1.0 }}</option>
                             {% endfor %}
                             </select>
                         </div>
@@ -420,6 +424,6 @@ var contestOnlyProblemById = "{% url 'only_problem_by_id' %}";
 
 </script>
 <link href="{% static 'css/bootstrap-toggle.min.css' %}" rel="stylesheet">
-<script src="{% static '/js/vue.min.js'%}"></script>
+<script src="{% static '/js/vue.js'%}"></script>
 <script src="{% static '/js/contest.action.js'%}?_ver=1.0.1"></script>
 {% endblock %}

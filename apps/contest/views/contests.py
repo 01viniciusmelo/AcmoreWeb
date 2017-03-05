@@ -253,13 +253,25 @@ def submit_problem(request, contest_id):
         ip_address = request.META['REMOTE_ADDR']
 
     try:
-        problem_id = int(request.POST.get("problem", False))
+        problem_order_number = request.POST.get('problem', 'A')
+        if 'A' <= problem_order_number <= 'Z':
+            problem_order_number = ord(problem_order_number) - ord('A')
+        elif 'a' <= problem_order_number <= 'z':
+            problem_order_number = ord(problem_order_number) - ord('a')
+        else:
+            return HttpResponse('some error happened')
+
+        contest_problem = ContestProblem.objects.values('problem_id', 'num')\
+                        .filter(contest_id=contest_id).filter(num=problem_order_number).get()
+
         lang = int(request.POST.get('language', ''))
     except ValueError:
         return HttpResponse('some error happened')
 
     source_code = request.POST.get('source', '')
-    pnum = request.POST.get('problemNumber', 0)
+
+    problem_id = contest_problem['problem_id']
+    pnum = contest_problem['num']
 
     solution = Solution(
         problem_id=problem_id,
