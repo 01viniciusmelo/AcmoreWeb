@@ -23,6 +23,8 @@ const staticUrl = "static/";
 
 const loadingImg = staticUrl + "img/loading.gif";
 
+const sourceCodeOj = "/s/oj/";
+
 var isMobile = function() {
     return (screen.width < 768);
 }();

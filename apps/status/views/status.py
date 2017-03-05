@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core.exceptions import *
 from django.core.cache import cache
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.urlresolvers import reverse
 from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -106,9 +107,19 @@ def status_list(request):
     if content_type == 'json':
         context['page_number'] = page_number
         if is_contest:
-            context['solutions'] = list(solutions.values('num', 'user_id', 'time', 'memory', 'in_date',
+            context['solutions'] = list(solutions.values('solution_id','num', 'user_id', 'time', 'memory', 'in_date',
                                                  'result', 'language', 'code_length'))
             def change_problem_id_to_used(x):
+                if x['user_id'] == request.user.username:
+                    x['source_code'] = reverse('only_source_by_run_id', args=[x['solution_id']])
+                else:
+                    x['source_code'] = 0
+
+                if 10 <= x['result'] <= 11:
+                    x['runtime_info'] = reverse('runtime_info', args=[x['solution_id']]) + '?result=' + str(x['result'])
+                else:
+                    x['runtime_info'] = 0
+
                 x['problem_id'] = index_order[x['num']]
                 x.pop('num')
             map(change_problem_id_to_used, context['solutions'])
