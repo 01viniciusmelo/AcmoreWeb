@@ -2,8 +2,10 @@ from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.db import connection
+from django.db.models import Q
+from django.core.cache import cache
+from django.core.urlresolvers import reverse
 from django.core.serializers.json import DjangoJSONEncoder
 
 from apps.contest.models import Contest
@@ -14,7 +16,8 @@ from apps.source.models import OjSourceCode
 from apps.problem.models.OJproblem import Problem as OJproblem
 from apps.account.models import Privilege
 
-from const import index_order, support_language
+from const import language_name, support_language, judger_name, judge_result, judge_result_type, index_order
+
 import json
 import time
 
@@ -61,7 +64,7 @@ def one_contest(request, contest_id):
     protected_status = 0
 
     try:
-        contest = Contest.objects.get(contest_id=contest_id)
+        contest = cache.get_or_set('one_contest_'+str(contest_id), Contest.objects.get(contest_id=contest_id), 5)
     except Contest.DoesNotExist:
         return render(request, 'error.html', status=404)
 
@@ -79,8 +82,7 @@ def one_contest(request, contest_id):
 
     if contest.private != 0:
         try:
-            p_str = 'c'+str(contest_id)
-            Privilege.objects.filter(user_id=request.user.username).filter(rightstr=p_str).get()
+            Privilege.objects.filter(user_id=request.user.username).filter(rightstr='c'+str(contest_id)).get()
         except Privilege.DoesNotExist:
             if contest.private == 2:
                 contest_status = 3#private with password
@@ -142,6 +144,8 @@ def one_contest(request, contest_id):
         support_language=support_language,
         is_running = timezone.now() <= contest.end_time,
         show_rank=contest.show_rank,
+        creator=cache.get_or_set('one_contest_creator_'+str(contest_id),
+                                 Privilege.objects.values('user_id').get(rightstr='m'+str(contest_id))['user_id'], 60)
     )
     return render(request, 'one-contest.html', context=context)
 
@@ -241,178 +245,6 @@ def contest_rank(request):
 
 
 @login_required
-def submit_problem(request, contest_id):
-    contest = Contest.objects.get(contest_id=contest_id)
-
-    if timezone.now() > contest.end_time:
-        return HttpResponseRedirect(reverse('one_contest', args=[contest_id, ]))
-
-    if request.META.has_key('HTTP_X_FORWARDED_FOR'):
-        ip_address = request.META['HTTP_X_FORWARDED_FOR']
-    else:
-        ip_address = request.META['REMOTE_ADDR']
-
-    try:
-        problem_order_number = request.POST.get('problem', 'A')
-        if 'A' <= problem_order_number <= 'Z':
-            problem_order_number = ord(problem_order_number) - ord('A')
-        elif 'a' <= problem_order_number <= 'z':
-            problem_order_number = ord(problem_order_number) - ord('a')
-        else:
-            return HttpResponse('some error happened')
-
-        contest_problem = ContestProblem.objects.values('problem_id', 'num')\
-                        .filter(contest_id=contest_id).filter(num=problem_order_number).get()
-
-        lang = int(request.POST.get('language', ''))
-    except ValueError:
-        return HttpResponse('some error happened')
-
-    source_code = request.POST.get('source', '')
-
-    problem_id = contest_problem['problem_id']
-    pnum = contest_problem['num']
-
-    solution = Solution(
-        problem_id=problem_id,
-        user_id=request.user.username,
-        language=lang,
-        ip=ip_address,
-        code_length=int(len(source_code.encode("utf-8"))),
-        in_date=timezone.now(),
-        result=0,
-        time=0,
-        memory=0,
-        valid=1,
-        num=pnum,
-        pass_rate=0,
-        lint_error=0,
-        judger='waiting',
-        contest_id=contest_id
-    )
-
-    solution.save()
-
-    ss = SourceCode(
-        solution_id=solution.solution_id,
-        source=source_code
-    )
-    ss.save()
-
-    sss = OjSourceCode(
-        solution_id=solution.solution_id,
-        source=source_code
-    )
-    sss.save()
-
-    return HttpResponseRedirect(reverse('one_contest', args=[contest_id, ]) + '#status')
-
-
-def problem_content(request):
-    contest_id = request.GET.get('contest', 0)
-
-    try:
-        contest = Contest.objects.get(contest_id=contest_id)
-    except Contest.DoesNotExist:
-        context = dict(
-            status=400,
-            message='no such contest'
-        )
-        return HttpResponse(json.dumps(context), content_type="application/json")
-
-    if timezone.now() < contest.start_time:
-        context = dict(
-            status=400,
-            message='contest not start.'
-        )
-        return HttpResponse(json.dumps(context), content_type="application/json")
-
-
-    judge_name = request.GET.get('name', 'oj')
-    problem_order_number = request.GET.get('problem', '')
-    type = request.GET.get('type', 'json')
-
-    if problem_order_number == '':
-        return HttpResponse('no such problem')
-
-    if judge_name == 'oj':
-        if 'A' <= problem_order_number <= 'Z':
-            contest_problem_num = ord(problem_order_number) - ord('A')
-        elif 'a' <= problem_order_number <= 'z':
-            contest_problem_num = ord(problem_order_number) - ord('a') + 26
-        else:
-            return HttpResponse('no such problem')
-
-        contest_problem_info = ContestProblem.objects.values('problem_id','title') \
-                                .filter(num=contest_problem_num).filter(contest_id=contest_id).get()
-        real_problem_id = contest_problem_info['problem_id']
-
-        _problem = OJproblem.objects.values('title','description','input','output',
-                                            'sample_input','sample_output','spj','hint','time_limit','memory_limit'
-                                            ).get(problem_id=real_problem_id)
-
-        problem = dict()
-        problem['a'] = list() #with attributes, t:1 show value, 2 not show value and strong attr
-        problem['d'] = list() #in description, t:1 text, 2 html
-        problem['type'] = 'text'
-
-        problem['a'].append(dict(
-            k='Time Limit',
-            v=str(_problem['time_limit']) + ' s',
-            t='1'
-        ))
-        problem['a'].append(dict(
-            k='Memory limit',
-            v=str(_problem['memory_limit']).encode('utf-8') + 'MB',
-            t='1'
-        ))
-        if _problem['spj'] == 1:
-            problem['a'].append(dict(
-                k='Special Judge',
-                t='2'
-            ))
-
-        problem['title'] = contest_problem_info['title']
-
-        problem['d'].append(dict(
-            k='Description',
-            v=_problem['description'],
-            t='2'
-        ))
-        problem['d'].append(dict(
-            k='Input',
-            v=_problem['input'],
-            t='2'
-        ))
-        problem['d'].append(dict(
-            k='Output',
-            v=_problem['output'],
-            t='2'
-        ))
-        problem['d'].append(dict(
-            k='Sample input',
-            v=_problem['sample_input'],
-            t='1'
-        ))
-        problem['d'].append(dict(
-            k='Sample output',
-            v=_problem['sample_output'],
-            t='1'
-        ))
-        problem['d'].append(dict(
-            k='Hint',
-            v=_problem['hint'],
-            t='2'
-        ))
-
-        context = dict(
-            problem=problem,
-            status=200
-        )
-        return HttpResponse(json.dumps(context), content_type="application/json")
-
-
-@login_required
 def check_contest_password(request):
     response = dict()
     try:
@@ -452,8 +284,89 @@ def check_contest_password(request):
     return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
 
 
+def contest_status(request):
+    context = dict()
+    limit = 20
+    page_param = ''
+    offset = int(request.GET.get('offset', 0))
+    only_user_code = request.GET.get('only', False)
+    user_id = ''
+    if only_user_code:
+        try:
+            only_user_code = int(only_user_code)
+        except ValueError:
+            return HttpResponse('haha')
+        user_id = request.user.username if only_user_code == 1 else ''
+        print only_user_code
 
 
+    contest_id = request.GET.get('contest')
+    contest = Contest.objects.get(contest_id=contest_id)
+
+    solutions = Solution.objects.values('solution_id','num', 'user_id', 'time', 'memory', 'in_date',
+                                        'result', 'language', 'code_length')\
+                                        .filter(~Q(problem_id=0))\
+                                        .filter(contest_id=contest_id).filter(in_date__gte=contest.start_time) \
+                                        .filter(in_date__lte=contest.end_time).order_by('-solution_id')
+
+    page_param += '&contest=' + contest_id
+
+    if user_id != '':
+        page_param = page_param + "&user_id=" + str(user_id)
+        context['user_id'] = user_id
+        solutions = solutions.filter(user_id=user_id)
+
+    page_number = cache.get_or_set('solutions_count_' +page_param, solutions.count(), 3)
+    solutions = solutions[offset * limit:(offset + 1) * limit]
+
+
+    def change_info_to_used(x):
+        if x['user_id'] == request.user.username or request.user.is_superuser:
+            x['source_code'] = reverse('only_source_by_run_id', args=[x['solution_id']])
+        else:
+            x['source_code'] = 0
+
+        if 10 <= x['result'] <= 11:
+            x['runtime_info'] = reverse('runtime_info', args=[x['solution_id']]) + '?result=' + str(x['result'])
+        else:
+            x['runtime_info'] = 0
+
+        x['problem_id'] = index_order[x['num']]
+        x.pop('num')
+    map(change_info_to_used, solutions)
+
+    context['page_number'] = page_number
+    context['solutions'] = list(solutions)
+    context['offset'] = offset
+    context['limit'] = limit
+
+    return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
+
+
+@login_required
+def delete_one_contest(request, contest_id):
+    response = dict(
+        status=200,
+        message='success',
+        next_page=reverse('contest_list')
+    )
+    if str(contest_id) in request.META['HTTP_REFERER'] and request.POST.get('contest_id', -1) == contest_id:
+        if request.user.is_superuser or request.user.username == Privilege.objects.values('user_id').get(rightstr='m'+str(contest_id))['user_id']:
+            contest = Contest.objects.get(contest_id=contest_id)
+            contest.defunct = 'Y'
+            contest.save()
+        else:
+            response = dict(
+                status=304,
+                message='perission error',
+                next_page=reverse('contest_list')
+            )
+    else:
+        response = dict(
+            status=403,
+            message='error'
+        )
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
 
 
 

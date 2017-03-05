@@ -60,6 +60,17 @@ $('#autoLoadContestRank').on('change', function () {
     }
 });
 
+$("input[name='onlyMyCode']").on("change", function () {
+    if ($(this).is(':checked')) {
+        $('#autoLoadContestStatus').bootstrapToggle('off');
+        table.query.only = 1;
+    }else {
+        $('#autoLoadContestStatus').bootstrapToggle('on');
+        table.query.only = 0;
+    }
+    autoLoadContestStatus();
+});
+
 var autoLoadControl = function () {
     if (window.location.hash == "#status") {
         $('#autoLoadContestStatus').bootstrapToggle('on');
@@ -79,8 +90,6 @@ $(window).bind('hashchange', function() {
 $(function() {
     autoLoadControl();
 });
-
-
 
 var timer = new Vue({
     el: '#timeProgress',
@@ -230,8 +239,8 @@ var table = new Vue({
     data: {
         items: [],
         query: {
-            "content":"json",
-            "contest": contestId
+            "contest": contestId,
+            "only": $("input[name='onlyMyCode']").is(":checked")?1:0
         }
     },
     methods: {
@@ -405,3 +414,26 @@ $("select[name='problem']").on("change", function() {
     var problemNumber = $(this)[0].selectedIndex;
     $("input[name='problemNumber']").val(problemNumber);
 });
+
+
+$(".delete-contest-launcher").on("click", function () {
+    $("#alertModal").modal("show");
+});
+$("#deleteContest").on("click", function () {
+    $.ajax({
+        url:deleteContestUrl,
+        data:{
+            contest_id:$(".delete-contest-launcher").attr("data-contest-id"),
+            csrfmiddlewaretoken:$("meta[name='csrf']").attr("content"),
+        },
+        type:'post',
+        success:function (result) {
+            if (result.status == 200)
+                window.location.href = result.next_page;
+            else {
+                alert(result.message);
+            }
+        }
+    });
+});
+

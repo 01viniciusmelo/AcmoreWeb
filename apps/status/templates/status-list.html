@@ -99,8 +99,7 @@ form {
                 <th class="hidden-xs" width="">Time used</th>
 
                 <th width="" class="table-border-left">User</th>
-                <th class="hidden-xs">Language</th>
-                <th class="hidden-xs" width="">Size</th>
+                <th class="hidden-xs">Language /Size/</th>
                 <th width="" class="table-border-right hidden-xs hidden-sm">Submit at</th>
 
                 <th class="hidden-xs" width="">Judger</th>
@@ -121,17 +120,12 @@ form {
                 <td class="table-border-right hidden-xs">{{ solution.time }} ms</td>
 
                 <td class="table-border-left"><a href="{% url 'one_user_info' solution.user_id %}" target="_self">{{ solution.user_id }}</a></td>
-                {% if user.is_authenticated %}
-                    {% if user.username == solution.user_id %}
-                    <td><a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language }}</a></td>
-                    {% else %}
-                    <td>{{ solution.language }}</td>
-                    {% endif %}
+                {% if request.user.username == solution.user_id or request.user.is_superuser %}
+                <td><a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language }} /{{ solution.code_length }} B/</a></td>
                 {% else %}
-                <td  class="hidden-xs">{{ solution.language }}</td>
+                <td>{{ solution.language }} /{{ solution.code_length }} B/</td>
                 {% endif %}
-                <td class="hidden-xs">{{ solution.code_length }}</td>
-                <td class="table-border-right hidden-xs hidden-sm" data-time="{{ solution.in_date_timestamp }}">{{ solution.in_date|date:"Y-m-d H:i:s T" }}&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="table-border-right utc-time-to-local-time">{{ solution.in_date|date:'c' }}</td>
 
                 <td class="hidden-xs">{{ solution.judger }}</td>
             </tr>
@@ -175,11 +169,6 @@ $(function(){
     $("form input").on('change', function() {
         $("form").submit();
     });
-
-    $("td[data-time]").each(function() {
-        $(this).text(timestamp2time(parseInt($(this).attr("data-time"))));
-    });
-
 });
 </script>
 {% endblock %}

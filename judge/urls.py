@@ -21,7 +21,6 @@ from apps.user.views import user
 from apps.account import views as account
 from apps.source.test import tests
 from apps.contest.views import contests as contest_common
-from apps.contest.views import add_contest
 import views as index_view
 
 
@@ -29,7 +28,6 @@ urlpatterns = [
     url(r'^$', index_view.index, name="index"),
 
     url(r'^problem/', include('apps.problem.urls'), name='problems'),
-    url(r'^problem$', problem_views.only_problem, name='only_problem'),
 
     url(r'^s/(?P<user_uuid>[^/]+)$', source_views.source_by_uuid, name='only_source_by_uuid'),
     url(r'^s/oj/(\d+)$', source_views.source_by_run_id, name='only_source_by_run_id'),
@@ -52,17 +50,7 @@ urlpatterns = [
     url(r'^account/action/check-email$', account.check_email, name='user_check_email'),
     url(r'^account/action/information$', account.modify_information, name='user_modify_information'),
 
-
-    url(r'^contest/$', contest_common.contest_list, name='contest_list'),
-    url(r'^contest/(\d+)$', contest_common.one_contest, name='one_contest'),
-    url(r'^contest/submit/(\d+)$', contest_common.submit_problem, name='submit_contest_problem'),
-    url(r'^contest/rank/$', contest_common.contest_rank, name='contest_rank'),
-    url(r'^contest/problem/$', contest_common.problem_content, name='only_problem_by_id'),
-    url(r'^contest/check-password$', contest_common.check_contest_password, name='check_contest_password'),
-
-    url(r'^contest/manage/add/$', add_contest.create_contest, name='create_contest'),
-    url(r'^add-contest/problem/check$', add_contest.check_problem, name='check_contest_problem'),
-    url(r'^add-contest/submit$', add_contest.submit_contest, name='add_contest_submit'),
+    url(r'^contest/', include('apps.contest.urls')),
 
     url(r'^thanks$', index_view.thanks, name='thanks'),
     url(r'^help$', index_view.help, name='help'),

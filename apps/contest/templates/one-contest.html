@@ -75,6 +75,14 @@ nav.table-page {
 #submit {
     padding-top: 15px;
 }
+.info-danger{
+    background-color: crimson!important;
+    color: #fff!important;
+}
+.tools>button{
+    margin-left: 8px;
+}
+
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
 }
@@ -88,8 +96,8 @@ nav.table-page {
             {% verbatim %}
             <p class="time service-time">Server time: <span>{{ dateTime }}</span></p>
             {% endverbatim %}
-            <p class="pull-left time">Begin: <time class="utc-time-to-local-time">{{ contest.start_time|date:"Y/m/d H:i:s T" }}</time></p>
-            <p class="pull-right time">End: <time class="utc-time-to-local-time">{{ contest.end_time|date:"Y/m/d H:i:s T" }}</time></p>
+            <p class="pull-left time">Begin: <time class="utc-time-to-local-time">{{ contest.start_time|date:'c' }}</time></p>
+            <p class="pull-right time">End: <time class="utc-time-to-local-time">{{ contest.end_time|date:'c' }}</time></p>
         </div>
 
         {% verbatim %}
@@ -123,6 +131,12 @@ nav.table-page {
             {% else %}
             <li role="presentation"><a href="{% url 'account_login' %}?from_url={{ request.get_full_path }}">Login and Submit</a></li>
             {% endif %}
+        {% endif %}
+        {% if request.user.username == creator or request.user.is_superuser%}
+            <div class="tools">
+                <button class="btn btn-danger pull-right delete-contest-launcher" data-contest-id="{{ contest.contest_id }}">Delete</button>
+                <!--<button class="btn pull-right"><a id="problemNav" href="#problem" role="tab" data-toggle="tab">Edit</a></button>-->
+            </div>
         {% endif %}
     </ul>
     <!-- Tab panes -->
@@ -197,10 +211,17 @@ nav.table-page {
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="status">
+            {% if is_running %}
             <label for="autoLoadContestStatus" style="margin: 25px 0;">Auto refresh status:</label>
             <input type="checkbox" id="autoLoadContestStatus" data-toggle="toggle"
                    data-on="ON<img style='height: 20px;margin-left:5px' src='{% static '/img/loading.gif' %}'/>"
                    data-off="OFF" data-width="70" data-onstyle="diy" data-size="small"/>
+            {% endif %}
+            <div class="checkbox pull-right" style="margin: 25px 10px;">
+                <label>
+                    <input type="checkbox" {% if request.user.is_authenticated and not request.user.is_superuser %}checked="checked"{% endif %} name="onlyMyCode"> <span style="font-size:17px;">Only show my submission</span>
+                </label>
+            </div>
             <table class="table table-striped table-condensed">
                 <thead>
                     <tr>
@@ -246,12 +267,12 @@ nav.table-page {
         </div>
         <div role="tabpanel" class="tab-pane" id="rank">
             <div class="table-responsive">
-                <!--
+                {% if is_running %}
                 <label for="autoLoadContestRank" style="margin: 25px 0;">Auto refresh rank list:</label>
                 <input type="checkbox" id="autoLoadContestRank" data-toggle="toggle"
                        data-on="ON<img style='height: 20px;margin-left:5px' src='{% static '/img/loading.gif' %}'/>"
                        data-off="OFF" data-width="70" data-onstyle="diy" data-size="small"/>
-                -->
+                {% endif %}
                 <table class="table table-striped table-condensed table-bordered">
                     <thead>
                         <tr>
@@ -387,6 +408,27 @@ nav.table-page {
 {% endblock %}
 
 {% block script %}
+{% if request.user.username == creator or request.user.is_superuser%}
+<div class="modal" tabindex="-1" role="dialog" id="alertModal">
+    <div class="modal-dialog" role="document">
+
+                <div class="alert alert-danger alert-dismissible clearfix" role="alert">
+                    <h4>Pay attention!</h4>
+                    <p>All submissions in the contest will be orphaned.</p>
+                    <p>Are you sure to delete this contest?</p>
+                    <p class="pull-right">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
+                        <button type="button" class="btn btn-danger" id="deleteContest">I'm sure to do that</button>
+                    </p>
+                </div>
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+var deleteContestUrl = "{% url 'delete_one_contest' contest.contest_id %}";
+</script>
+{% endif %}
+
 <script>
 {% if contest_status == 3 or protected_status == 1%}
 $("form#checkPassword").submit(function() {
@@ -418,12 +460,12 @@ $("form#checkPassword button[type='button']").on("click", function () {
 });
 {% endif %}
 
-var statusRequestUrl = "{% url 'status_list' %}";
+var statusRequestUrl = "{% url 'contest_status' %}";
 var rankRequestUrl = "{% url 'contest_rank' %}";
 var contestOnlyProblemById = "{% url 'only_problem_by_id' %}";
 
 </script>
 <link href="{% static 'css/bootstrap-toggle.min.css' %}" rel="stylesheet">
 <script src="{% static '/js/vue.js'%}"></script>
-<script src="{% static '/js/contest.action.js'%}?_ver=1.0.1"></script>
+<script src="{% static '/js/contest.action.js'%}?_ver=1.0.2"></script>
 {% endblock %}

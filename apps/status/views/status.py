@@ -38,46 +38,42 @@ def status_list(request):
     else:
         solutions = Solution.objects.filter(~Q(problem_id=0)).order_by('-solution_id')
 
-    is_contest = request.GET.get('contest', 0) != 0
-    if is_contest:
-        contest_id = request.GET.get('contest')
-        contest = Contest.objects.get(contest_id=contest_id)
-        page_param += '&contest=' + contest_id
-        solutions = solutions.filter(contest_id=contest_id).filter(in_date__gte=contest.start_time)\
-                    .filter(in_date__lte=contest.end_time)
-
     page_number = 0
 
-    try:
-        offset = int(request.GET.get('offset', 0))
+    offset = int(request.GET.get('offset', 0))
+    problem = request.GET.get('problem', '').encode('utf-8')
+    user_id = request.GET.get('user_id', '').encode('utf-8')
+    language = request.GET.get('language', '').encode('utf-8')
+    result = request.GET.get('result', '').encode('utf-8')
 
-        if 'problem' in request.GET and request.GET.get('problem') != '':
-            problem = request.GET.get('problem')
-            page_param = page_param + "&problem=" + problem
-            context['problem'] = problem
-
-            try:
-                problem = int(problem)
-                solutions = solutions.filter(problem_id=problem)
-            except ValueError:
-                solutions = solutions.filter(problem_id=0)
-        if 'user_id' in request.GET and request.GET.get('user_id') != '':
-            user_id = str(request.GET.get('user_id').encode('utf-8'))
-            page_param = page_param + "&user_id=" + user_id
-            context['user_id'] = user_id
-            solutions = solutions.filter(user_id=user_id)
-        if 'language' in request.GET and request.GET.get('language') != '':
-            language = request.GET.get('language')
-            page_param = page_param + "&language=" + language
-            context['language'] = int(language)
-            solutions = solutions.filter(language=language)
-        if 'result' in request.GET and request.GET.get('result') != '':
-            result = request.GET.get('result')
-            page_param = page_param + "&result=" + result
-            context['result'] = judge_result[int(result)] if int(result) < 100  else 'Others'
-            solutions = solutions.filter(result=result) if int(result) < 100  else solutions.filter(result__lt=4)
-    except ValueError:
-        return HttpResponse('404', status=404)
+    if problem != '':
+        page_param = page_param + "&problem=" + str(problem)
+        context['problem'] = problem
+        try:
+            problem = int(problem)
+        except ValueError:
+            problem = 0
+        solutions = solutions.filter(problem_id=problem)
+    if user_id != '':
+        page_param = page_param + "&user_id=" + str(user_id)
+        context['user_id'] = user_id
+        solutions = solutions.filter(user_id=user_id)
+    if language != '':
+        page_param = page_param + "&language=" + language
+        try:
+            language = int(language)
+        except ValueError:
+            language = -1
+        context['language'] = int(language)
+        solutions = solutions.filter(language=language)
+    if result != '':
+        page_param = page_param + "&result=" + result
+        try:
+            result = int(result)
+        except ValueError:
+            result = -1
+        context['result'] = judge_result[int(result)] if int(result) < 100  else 'Others'
+        solutions = solutions.filter(result=result) if int(result) < 100  else solutions.filter(result__lt=4)
 
     start_time = time.time()
 
@@ -87,8 +83,7 @@ def status_list(request):
     if content_type == 'json':
         page_number = cache.get_or_set('solutions_count_' +page_param, solutions.count(), 3)
 
-    solutions = cache.get_or_set('solutions' + page_param + str(offset),
-                                 solutions[offset * limit:(offset + 1) * limit], 3)
+    solutions = solutions[offset * limit:(offset + 1) * limit]
 
     used_time = round((time.time() - start_time)*1000, 2)
 
@@ -106,26 +101,8 @@ def status_list(request):
 
     if content_type == 'json':
         context['page_number'] = page_number
-        if is_contest:
-            context['solutions'] = list(solutions.values('solution_id','num', 'user_id', 'time', 'memory', 'in_date',
-                                                 'result', 'language', 'code_length'))
-            def change_problem_id_to_used(x):
-                if x['user_id'] == request.user.username or request.user.is_superuser:
-                    x['source_code'] = reverse('only_source_by_run_id', args=[x['solution_id']])
-                else:
-                    x['source_code'] = 0
-
-                if 10 <= x['result'] <= 11:
-                    x['runtime_info'] = reverse('runtime_info', args=[x['solution_id']]) + '?result=' + str(x['result'])
-                else:
-                    x['runtime_info'] = 0
-
-                x['problem_id'] = index_order[x['num']]
-                x.pop('num')
-            map(change_problem_id_to_used, context['solutions'])
-        else:
-            context['solutions'] = list(solutions.values('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'in_date',
-                                             'result', 'language', 'code_length'))
+        context['solutions'] = list(solutions.values('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'in_date',
+                                     'result', 'language', 'code_length'))
 
         return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
     else:
@@ -137,7 +114,6 @@ def status_list(request):
         return render(request, 'status-list.html', context=context)
 
 
-@cache_page(10)
 @login_required(redirect_field_name='from_url')
 def runtime_info(request, run_id):
     result = int(request.GET['result'])
