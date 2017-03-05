@@ -110,7 +110,7 @@ def status_list(request):
             context['solutions'] = list(solutions.values('solution_id','num', 'user_id', 'time', 'memory', 'in_date',
                                                  'result', 'language', 'code_length'))
             def change_problem_id_to_used(x):
-                if x['user_id'] == request.user.username:
+                if x['user_id'] == request.user.username or request.user.is_superuser:
                     x['source_code'] = reverse('only_source_by_run_id', args=[x['solution_id']])
                 else:
                     x['source_code'] = 0

@@ -119,7 +119,7 @@ def source_by_uuid(request, user_uuid):
     return render_source_page(request, poster, user_uuid, height_style, style_sheet,
                               source, lang, only_source_code.created_at, used_time, _url)
 
-@cache_page(10)
+@cache_page(3)
 @login_required(redirect_field_name='from_url')
 def source_by_run_id(request, run_id):
     try:
@@ -127,8 +127,8 @@ def source_by_run_id(request, run_id):
     except Solution.DoesNotExist:
         return HttpResponse('not found such solution', status=404)
 
-    if solution.user_id != request.user.username:
-        return HttpResponse('do not have permissions', status=403)
+    if solution.user_id != request.user.username and not request.user.is_superuser:
+        return HttpResponse('do not have permissions', status=304)
 
     height_style = request.GET.get('style', 'monokai')
 
