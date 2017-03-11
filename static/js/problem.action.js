@@ -88,7 +88,7 @@ var table = new Vue({
         query: {
             "content":"json",
             "problem":problem_id,
-            "judge_name":$("#judgeName").text()
+            "judge_name":$("#judge_name").val()
         },
         type: 0,//1 record, 2 rank
         table: [],

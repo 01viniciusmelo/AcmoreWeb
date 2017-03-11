@@ -86,8 +86,9 @@ form {
 <div>
     <div class="problem-title">
         <h2>{{ problem.problem_id }}:{{ problem.title }}</h2>
-        {% if v_problem_url == '' %}<strong class="label label-default" id="judgeName">{{ problem.judge_name }}</strong>{% else %}
-        <strong class="label label-info" id="judgeName"><a href="{{ v_problem_url }}" target="_blank" style="color: beige">{{ problem.judge_name }} - {{ problem.problem_id }}  <span class="glyphicon glyphicon-new-window"></span></a></strong>{% endif %}
+        <input type="hidden" value="{{ problem.judge_name }}" id="judge_name">
+        {% if v_problem_url == '' %}<strong class="label label-default">{{ problem.judge_name }}</strong>{% else %}
+        <strong class="label label-info"><a href="{{ v_problem_url }}" target="_blank" style="color: beige">{{ problem.judge_name }} - {{ problem.problem_id }}  <span class="glyphicon glyphicon-new-window"></span></a></strong>{% endif %}
         {% if problem.spj == '1' %}<span class="label label-danger">Special Judge</span>{% endif %}
     </div>
     <div class="clearfix judge-info">
@@ -196,7 +197,7 @@ var problem_id = {{ problem.problem_id }};
 var problemStatusUrl = "{% url 'status_list' %}";
 var rootUrl = "{{ request.get_absolute_url }}/";
 </script>
-<script src="{% static '/js/problem.action.js' %}"></script>
+<script src="{% static '/js/problem.action.js' %}?_v=1.0.1"></script>
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
