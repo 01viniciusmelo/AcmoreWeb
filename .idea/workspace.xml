@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f5e988d-3c86-4897-a68c-e7d80cdfdf1c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/templates/create-contest.html" afterPath="$PROJECT_DIR$/apps/contest/templates/create-contest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" afterPath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/views/add_contest.py" afterPath="$PROJECT_DIR$/apps/contest/views/add_contest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/views/contest_problem.py" afterPath="$PROJECT_DIR$/apps/contest/views/contest_problem.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/views/contests.py" afterPath="$PROJECT_DIR$/apps/contest/views/contests.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/models.py" afterPath="$PROJECT_DIR$/apps/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/models/Problem.py" afterPath="$PROJECT_DIR$/apps/problem/models/Problem.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/templates/one-problem.html" afterPath="$PROJECT_DIR$/apps/problem/templates/one-problem.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/templates/problem-list.html" afterPath="$PROJECT_DIR$/apps/problem/templates/problem-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/urls.py" afterPath="$PROJECT_DIR$/apps/problem/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/views/problem_views.py" afterPath="$PROJECT_DIR$/apps/problem/views/problem_views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/views/show_problem_views.py" afterPath="$PROJECT_DIR$/apps/problem/views/show_problem_views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/source/views.py" afterPath="$PROJECT_DIR$/apps/source/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/status/models/Solution.py" afterPath="$PROJECT_DIR$/apps/status/models/Solution.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/status/templates/runtime-info.html" afterPath="$PROJECT_DIR$/apps/status/templates/runtime-info.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/status/templates/status-list.html" afterPath="$PROJECT_DIR$/apps/status/templates/status-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/status/views/status.py" afterPath="$PROJECT_DIR$/apps/status/views/status.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/const.py" afterPath="$PROJECT_DIR$/const.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/common.js" afterPath="$PROJECT_DIR$/static/js/common.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/contest.action.js" afterPath="$PROJECT_DIR$/static/js/contest.action.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/libs.js" afterPath="$PROJECT_DIR$/static/js/libs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/problem.action.js" afterPath="$PROJECT_DIR$/static/js/problem.action.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
     </list>
     <ignored path="test.iws" />
@@ -55,7 +33,7 @@
       <file leaf-file-name="contest.action.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
+            <state relative-caret-position="0">
               <caret line="413" column="22" selection-start-line="413" selection-start-column="22" selection-end-line="413" selection-end-column="22" />
               <folding />
             </state>
@@ -65,7 +43,7 @@
       <file leaf-file-name="one-contest.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
+            <state relative-caret-position="0">
               <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#1;n#!!top" expanded="true" />
@@ -78,7 +56,7 @@
       <file leaf-file-name="problem-list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
+            <state relative-caret-position="0">
               <caret line="108" column="51" selection-start-line="108" selection-start-column="51" selection-end-line="108" selection-end-column="51" />
               <folding />
             </state>
@@ -88,7 +66,7 @@
       <file leaf-file-name="contests.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="0">
               <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
@@ -110,11 +88,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="123" column="166" selection-start-line="123" selection-start-column="166" selection-end-line="123" selection-end-column="166" />
+            <state relative-caret-position="240">
+              <caret line="188" column="52" selection-start-line="188" selection-start-column="52" selection-end-line="188" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="status.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="75" column="57" selection-start-line="75" selection-start-column="57" selection-end-line="75" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -123,7 +111,7 @@
       <file leaf-file-name="contest_problem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/contest/views/contest_problem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
+            <state relative-caret-position="0">
               <caret line="113" column="30" selection-start-line="113" selection-start-column="30" selection-end-line="113" selection-end-column="30" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
@@ -188,7 +176,6 @@
         <option value="$PROJECT_DIR$/static/js/problem.action.js" />
         <option value="$PROJECT_DIR$/const.py" />
         <option value="$PROJECT_DIR$/apps/status/templates/status-list.html" />
-        <option value="$PROJECT_DIR$/apps/status/views/status.py" />
         <option value="$PROJECT_DIR$/apps/contest/views/add_contest.py" />
         <option value="$PROJECT_DIR$/apps/contest/templates/create-contest.html" />
         <option value="$PROJECT_DIR$/apps/problem/views/problem_views.py" />
@@ -201,6 +188,7 @@
         <option value="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
         <option value="$PROJECT_DIR$/apps/contest/views/contests.py" />
         <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/apps/status/views/status.py" />
       </list>
     </option>
   </component>
@@ -246,7 +234,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -590,6 +577,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1085,7 +1073,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="28" width="1922" height="1019" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19635417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1093,7 +1081,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32552955" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28762543" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1345,14 +1333,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list-test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="41" column="2" selection-start-line="41" selection-start-column="2" selection-end-line="41" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list-test.html" />
     <entry file="file://$PROJECT_DIR$/apps/problem/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1379,7 +1360,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1387,7 +1367,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="118" column="46" selection-start-line="118" selection-start-column="46" selection-end-line="118" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1403,7 +1382,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
           <caret line="22" column="10" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1415,23 +1393,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="111" column="80" selection-start-line="111" selection-start-column="80" selection-end-line="111" selection-end-column="80" />
-          <folding>
-            <element signature="e#0#36#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/views/add_contest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
           <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#33#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1447,7 +1412,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="176" column="30" selection-start-line="176" selection-start-column="30" selection-end-line="176" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1455,7 +1419,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,9 +1426,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="41" column="79" selection-start-line="41" selection-start-column="79" selection-end-line="41" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1473,15 +1433,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-671">
           <caret line="187" column="14" selection-start-line="187" selection-start-column="14" selection-end-line="187" selection-end-column="14" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#strong#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
+        <state relative-caret-position="0">
           <caret line="413" column="22" selection-start-line="413" selection-start-column="22" selection-end-line="413" selection-end-column="22" />
           <folding />
         </state>
@@ -1489,7 +1447,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
+        <state relative-caret-position="0">
           <caret line="108" column="51" selection-start-line="108" selection-start-column="51" selection-end-line="108" selection-end-column="51" />
           <folding />
         </state>
@@ -1497,7 +1455,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
+        <state relative-caret-position="0">
           <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#1;n#!!top" expanded="true" />
@@ -1510,13 +1468,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-300">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/views/contest_problem.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
+        <state relative-caret-position="0">
           <caret line="113" column="30" selection-start-line="113" selection-start-column="30" selection-end-line="113" selection-end-column="30" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
@@ -1526,7 +1483,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
+        <state relative-caret-position="0">
           <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
@@ -1549,8 +1506,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="123" column="166" selection-start-line="123" selection-start-column="166" selection-end-line="123" selection-end-column="166" />
+        <state relative-caret-position="240">
+          <caret line="188" column="52" selection-start-line="188" selection-start-column="52" selection-end-line="188" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="75" column="57" selection-start-line="75" selection-start-column="57" selection-end-line="75" selection-end-column="57" />
           <folding />
         </state>
       </provider>
