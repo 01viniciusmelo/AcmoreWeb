@@ -97,7 +97,7 @@ def status_list(request):
         context['solutions'] = list(solutions.values('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'in_date',
                                                  'result', 'result_name', 'language_name', 'code_length'))
         for item in context['solutions']:
-            if item['result_name'] == '':
+            if item['result_name'] == '' or item['result_name'] == None:
                 item['result_name'] = judge_result[item['result']]
 
         return JsonResponse(context)
