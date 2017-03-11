@@ -133,16 +133,15 @@ Create Contest.
                 </div>
                 <div class="modal-body row">
                     <form class="form-horizontal">
-                        <!--
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Problem from</label>
-                            <div class="col-sm-9">
-                                <select name="judgeType" class="form-control">
-                                    <option value="oj">Local problems.</option>
+                            <label class="col-sm-3 control-label" for="judgeName">Problem from</label>
+                            <div class="col-sm-7">
+                                <select name="judge_name" class="form-control" id="judgeName">
+                                    <option value="LOCAL">LOCAL</option>
+                                    <option value="HDU">HDU</option>
                                 </select>
                             </div>
                         </div>
-                        -->
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Problem Number</label>
                             <div class="col-sm-9">
@@ -150,9 +149,9 @@ Create Contest.
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Problem Real ID</label>
+                            <label class="col-sm-3 control-label" for="problemID">Problem Real ID</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="problemID" />
+                                <input type="text" class="form-control" name="problemID" id="problemID"/>
                             </div>
                             <div class="col-sm-3">
                                 <span id="problemChecked" data-checked="0" class="glyphicon glyphicon-remove form-control-static text-danger"></span>
@@ -165,11 +164,12 @@ Create Contest.
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Alias title</label>
+                            <label class="col-sm-3 control-label" for="aliasTitle">Alias title</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="aliasTitle" />
+                                <input type="text" class="form-control" name="aliasTitle" id="aliasTitle" />
                             </div>
                         </div>
+                        <input name="rec_id" type="hidden" id="problem-rec-id">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -217,10 +217,19 @@ $(function() {
     var problemNumber = 0;
 
     var problemIDInput = $("input[name='problemID']");
-    problemIDInput.bind('input propertychange', function() {
+    problemIDInput.on('input propertychange', function () {
+        checkProblem();
+    });
+
+    var judgeNameSelecter = $("#judgeName");
+    judgeNameSelecter.on('change', function () {
+        checkProblem();
+    });
+
+    function checkProblem() {
         var postData = {
             problemID : problemIDInput.val(),
-            type: 'oj',
+            judge_name: $("#judgeName").val(),
             csrfmiddlewaretoken: '{{ csrf_token }}'
         };
         $.ajax({
@@ -235,6 +244,7 @@ $(function() {
                         $("#problemChecked").removeClass("text-danger glyphicon glyphicon-remove")
                                 .addClass("text-success glyphicon glyphicon-ok").attr("data-checked", 1);
                         problemTitleText.text(result.problem.title);
+                        $("#problem-rec-id").val(result.problem.rec_id);
                     }else {
                         problemTitleText.css('color','crimson');
                         $("#problemChecked").removeClass("text-success glyphicon glyphicon-ok")
@@ -250,7 +260,7 @@ $(function() {
             },
             dataType:'json'
         });
-    });
+    }
 
     $(".add-problem-action").on("click", function () {
         $("#problemNumber").text(orderNumber[problemNumber]);
@@ -279,6 +289,7 @@ $(function() {
 
         var problemID = problemIDInput.val();
         var aliasTitle = aliasTitleInput.val();
+        var problemRecordID = $("#problem-rec-id").val();
 
         var $tr = $("<tr>");
         $tr.append($("<td>").addClass("problem-order-number").text(orderNumber[problemNumber]));
@@ -289,6 +300,7 @@ $(function() {
         }else {
             $tr.append($("<td>").text(aliasTitle));
         }
+        $tr.append($("<input type='hidden' name='rec-id'>").val(problemRecordID));
 
         var $removeProblemButton = $("<button>").addClass("btn btn-danger").text("Remove").attr('type', 'button').attr('data-problem-id', problemID).one("click", function () {
             $(this).parent().parent().remove();
@@ -323,13 +335,12 @@ $(function() {
             alert("Please add at least one problem.");
             return false;
         }
-
         var getProblems = function() {
             var $trs = $("#problemList").children();
             var response = [];
             $($trs).each(function(index, item) {
                 response.push({
-                    'id':item.childNodes[1].innerText,
+                    'id':item.getElementsByTagName('input')[0].value,
                     'alias':item.childNodes[3].innerText
                 });
             });
@@ -362,10 +373,7 @@ $(function() {
 
             }
         });
-
     });
-
-
 });
 
 </script>

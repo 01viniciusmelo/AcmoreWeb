@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db import connection
@@ -11,9 +11,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from apps.contest.models import Contest
 from apps.contest.models import ContestProblem
 from apps.status.models.Solution import Solution
-from apps.source.models import SourceCode
-from apps.source.models import OjSourceCode
-from apps.problem.models.OJproblem import Problem as OJproblem
 from apps.account.models import Privilege
 
 from const import language_name, support_language, judger_name, judge_result, judge_result_type, index_order
@@ -100,39 +97,30 @@ def one_contest(request, contest_id):
     contest.total_time = contest.end_time - contest.start_time
 
     sql =   "SELECT title, pid, pnum,accepted,submit,has_ac,has_submit FROM "\
-            "( "\
-            "    SELECT `contest_problem`.`title` AS `title`,`problem`.`problem_id` AS `pid`,contest_problem.num AS pnum "\
-            "    FROM `contest_problem`,`problem` "\
-            "    WHERE `contest_problem`.`problem_id`=`problem`.`problem_id` "\
+            "(SELECT `contest_problem`.`title` AS `title`,`problem`.`rec_id` AS `pid`,contest_problem.num AS pnum "\
+            "    FROM `contest_problem`,`problem` WHERE `contest_problem`.`problem_id`=`problem`.`rec_id` "\
             "    AND `contest_problem`.`contest_id`=%s ORDER BY `contest_problem`.`num` "\
             ")AS t_problem "\
             "LEFT JOIN "\
-            "    (SELECT problem_id AS pid1,COUNT(1) AS accepted FROM solution "\
-            "        WHERE contest_id=%s AND result=4 GROUP BY pid1) p1 "\
+            "    (SELECT problem_rec_id AS pid1,COUNT(DISTINCT(user_id)) AS accepted "\
+            "FROM solution WHERE contest_id=%s AND result=4 GROUP BY pid1) AS p1 "\
             "ON t_problem.pid=p1.pid1 "\
             "LEFT JOIN "\
-            "    (SELECT problem_id AS pid2,COUNT(1) AS submit FROM solution "\
-            "        WHERE contest_id=%s GROUP BY pid2) p2 "\
+            "    (SELECT problem_rec_id AS pid2,COUNT(1) AS submit FROM solution WHERE contest_id=%s GROUP BY pid2) p2 "\
             "ON t_problem.pid=p2.pid2 "\
             "LEFT JOIN "\
-            "    (SELECT problem_id AS pid3,COUNT(1) AS has_ac from solution "\
-            "        WHERE contest_id=%s AND solution.user_id=%s AND solution.result=4 GROUP BY pid3) p3 "\
+            "    (SELECT problem_rec_id AS pid3,COUNT(1) AS has_ac from solution WHERE contest_id=%s AND solution.user_id=%s AND solution.result=4 GROUP BY pid3) p3 "\
             "ON t_problem.pid=p3.pid3 "\
             "LEFT JOIN "\
-            "    (SELECT problem_id AS pid4,COUNT(1) AS has_submit from solution "\
-            "        WHERE contest_id=%s AND solution.user_id=%s GROUP BY pid4) p4 "\
-            "ON t_problem.pid=p4.pid4;"
-
+            "    (SELECT problem_rec_id AS pid4,COUNT(1) AS has_submit from solution WHERE contest_id=%s AND solution.user_id=%s GROUP BY pid4) p4 "\
+            "ON t_problem.pid=p4.pid4 ORDER BY pnum;"
 
     cursor = connection.cursor()
 
-    user_name = ''
-    if request.user.is_authenticated():
-        user_name = request.user.username
+    user_name = request.user.username
 
-    cursor.execute(sql, [contest_id,contest_id,contest_id,contest_id,user_name,contest_id,user_name])
+    cursor.execute(sql, (contest_id,contest_id,contest_id,contest_id,user_name,contest_id,user_name))
     raw = cursor.fetchall()
-    # print((raw))
 
     order = map(lambda x:index_order[x[2]], raw)
 
@@ -162,8 +150,6 @@ def contest_rank(request):
     contest = Contest.objects.values('start_time','end_time').get(contest_id=contest_id)
 
     problem_number = ContestProblem.objects.filter(contest_id=contest_id).count()
-
-    #print problem_number
 
     sql =   "SELECT "\
             "solutions.user_id, solutions.nick, solutions.result, solutions.num, solutions.in_date, first_solution.user_id AS fir "\
@@ -241,7 +227,7 @@ def contest_rank(request):
     context['problem_number'] = problem_number
     context['users'] = sorted(users, key=lambda user: (-user['solved'], user['used_time']))
 
-    return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
+    return JsonResponse(context)
 
 
 @login_required
@@ -281,7 +267,7 @@ def check_contest_password(request):
                 message='password is unnecessary'
             )
 
-    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
+    return JsonResponse(response)
 
 
 def contest_status(request):
@@ -297,17 +283,15 @@ def contest_status(request):
         except ValueError:
             return HttpResponse('haha')
         user_id = request.user.username if only_user_code == 1 else ''
-        print only_user_code
-
 
     contest_id = request.GET.get('contest')
     contest = Contest.objects.get(contest_id=contest_id)
 
-    solutions = Solution.objects.values('solution_id','num', 'user_id', 'time', 'memory', 'in_date',
-                                        'result', 'language', 'code_length')\
-                                        .filter(~Q(problem_id=0))\
-                                        .filter(contest_id=contest_id).filter(in_date__gte=contest.start_time) \
-                                        .filter(in_date__lte=contest.end_time).order_by('-solution_id')
+    solutions = Solution.objects.values('solution_id','num', 'user_id', 'time', 'memory', 'in_date', 'result',
+                                        'language','language_name','result_name','judge_type','judge_name','code_length')\
+                                        .filter(~Q(problem_id=0)).filter(contest_id=contest_id)\
+                                        .filter(in_date__gte=contest.start_time).filter(in_date__lte=contest.end_time)\
+                                        .order_by('-solution_id')
 
     page_param += '&contest=' + contest_id
 
@@ -326,13 +310,29 @@ def contest_status(request):
         else:
             x['source_code'] = 0
 
-        if 10 <= x['result'] <= 11:
-            x['runtime_info'] = reverse('runtime_info', args=[x['solution_id']]) + '?result=' + str(x['result'])
-        else:
-            x['runtime_info'] = 0
+        if x['judge_type'] == 0:
+            if 10 <= x['result'] <= 11:
+                x['runtime_info'] = reverse('runtime_info', args=[x['solution_id']]) + '?result=' + str(x['result'])
+            else:
+                x['runtime_info'] = 0
+        elif x['judge_name'] == 'HDU':
+            if x['result'] == 11:
+                x['runtime_info'] = reverse('runtime_info', args=[x['solution_id']]) + '?result=' + str(x['result'])
+            else:
+                x['runtime_info'] = 0
+
+        if x['result_name'] == '':
+            x['result_name'] = judge_result[x['result']]
+
+        x['result_type'] = judge_result_type[x['result']]
 
         x['problem_id'] = index_order[x['num']]
-        x.pop('num')
+        del x['num']
+        del x['judge_type']
+        del x['judge_name']
+        del x['result']
+        del x['solution_id']
+
     map(change_info_to_used, solutions)
 
     context['page_number'] = page_number
@@ -340,7 +340,7 @@ def contest_status(request):
     context['offset'] = offset
     context['limit'] = limit
 
-    return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
+    return JsonResponse(context)
 
 
 @login_required
@@ -358,7 +358,7 @@ def delete_one_contest(request, contest_id):
         else:
             response = dict(
                 status=304,
-                message='perission error',
+                message='permission error',
                 next_page=reverse('contest_list')
             )
     else:
@@ -366,7 +366,7 @@ def delete_one_contest(request, contest_id):
             status=403,
             message='error'
         )
-    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
+    return JsonResponse(response)
 
 
 

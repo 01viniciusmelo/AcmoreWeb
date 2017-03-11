@@ -3,6 +3,18 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+class JudgeLanguage(models.Model):
+    id = models.AutoField(primary_key=True)
+    language_id = models.IntegerField()
+    language_name = models.CharField(max_length=48)
+    enabled = models.IntegerField()
+    judge_name = models.CharField(max_length=48)
+
+    class Meta:
+        managed = False
+        db_table = 'judge_language'
+
+
 '''
 class Contest(models.Model):
     contest_id = models.AutoField(primary_key=True)

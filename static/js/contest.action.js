@@ -15,12 +15,6 @@ var loadContestStatus = function () {
         "data": table.query,
         cache:false,
         "success":function(data) {
-            $.each(data.solutions, function(index, item) {
-                item.language = languageName[item.language];
-                var result = item.result;
-                item.result = judgeResult[result];
-                item.resultType = judgeResultType[result];
-            });
             table.showData(data);
         }
     });
@@ -219,13 +213,12 @@ var pagination = new Vue({
             }
             pagination.items = temp;
         },
-        loadContent: function() {
+        loadContent: function(event) {
             var offset = $(event.target).attr("data-offset");
-
-            if (offset == undefined) {
+            if (typeof(offset) == "undefined") {
                 offset = $(event.target).parent().attr("data-offset");
             }
-            if (offset == undefined) {
+            if (typeof(offset) == "undefined") {
                 return false;
             }
 
@@ -315,6 +308,14 @@ var rank = new Vue({
     }
 });
 
+var lang = new Vue({
+    el: "#language",
+    data: {
+        selected:0,
+        support_language: []
+    }
+});
+
 $(function() {
     statusChange();
 
@@ -383,7 +384,6 @@ function showProblem(problem_id) {
                     if (data.status == 200) {
                         dataProblemCache[problem_id] = data;
                         result = data;
-                        console.log(result);
                     }
                 }
             });
@@ -394,27 +394,25 @@ function showProblem(problem_id) {
     }();
 }
 
-$("select[name='language']").on("change", function() {
-    localStorage.setItem("submit-language", $(this).val());
-});
-if (localStorage.getItem("submit-language") != null) {
-    $("option[value="+localStorage.getItem("submit-language")+"]").attr("selected", "selected");
-}
+var $problemSelector = $("select[name='problem']");
 $(".problem-submit-launcher").on("click", function () {
     var problem_id = $(this).attr("data-num-id");
     if (problem_id == "") {
         problem_id = "A";
     }
-    $("select[name='problem']").val($("select[name='problem']>option[data-num-id='"+problem_id+"']").val());
-    var problemNumber = $("select[name='problem']")[0].selectedIndex;
-    console.log(problemNumber);
+    $problemSelector.val($("select[name='problem']>option[data-num-id='"+problem_id+"']").val());
+    var problemNumber = $problemSelector[0].selectedIndex;
     $("input[name='problemNumber']").val(problemNumber);
+
+    lang.support_language = dataProblemCache[$problemSelector.val()]['problem']['l'];
+    lang.selected = 0;
 });
-$("select[name='problem']").on("change", function() {
+$problemSelector.on("change", function() {
     var problemNumber = $(this)[0].selectedIndex;
     $("input[name='problemNumber']").val(problemNumber);
+    lang.support_language = dataProblemCache[$problemSelector.val()]['problem']['l'];
+    lang.selected = 0;
 });
-
 
 $(".delete-contest-launcher").on("click", function () {
     $("#alertModal").modal("show");

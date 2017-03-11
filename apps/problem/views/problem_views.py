@@ -8,30 +8,21 @@ from django.contrib.auth.decorators import login_required
 from apps.status.models.Solution import Solution
 from apps.source.models import SourceCode
 from apps.source.models import OjSourceCode
+from apps.problem.models.Problem import Problem
+from apps.models import JudgeLanguage
 
-import json
-
-
-def only_problem(request):
-    request_type = request.GET.get('type')
-    if request_type == 'problem':
-        name = request.GET.get('name')
-        try:
-            problem_id = int(request.GET.get('problem_id'))
-        except ValueError:
-            return render(request, '404.html', status=404)
-
-        if name == 'oj':
-            return HttpResponseRedirect(reverse('oj_one_problem', args=[problem_id, ]))
+from const import language_name, source_code_length_limit
 
 
 @login_required
 def submit_problem(request, judge_name, problem_id):
-    if judge_name == 'online':
-        return submit_online_problem(request, problem_id)
+    source_code = request.POST.get('source', '')
 
+    if source_code_length_limit[judge_name][0] < len(source_code) < source_code_length_limit[judge_name][1]:
+        pass
+    else:
+        return HttpResponse("Your source code is too long or too short to submit.")
 
-def submit_online_problem(request, problem_id):
     if request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip_address = request.META['HTTP_X_FORWARDED_FOR']
     else:
@@ -43,12 +34,22 @@ def submit_online_problem(request, problem_id):
     except ValueError:
         return HttpResponse('some error happened')
 
-    source_code = request.POST.get('source', '')
+    if judge_name == 'LOCAL':
+        judge_language_name = language_name[lang]
+    else:
+        judge_language_name = JudgeLanguage.objects.filter(judge_name=judge_name).get(language_id=lang).language_name
+
+    try:
+        problem = Problem.objects.filter(judge_name=judge_name).get(problem_id=problem_id)
+    except Problem.DoesNotExist:
+        return HttpResponse('No problem')
 
     solution = Solution(
-        problem_id=problem_id,
+        problem_rec_id=problem.rec_id,
+        problem_id=problem.problem_id,
         user_id=request.user.username,
         language=lang,
+        language_name=judge_language_name,
         ip=ip_address,
         code_length=int(len(source_code.encode("utf-8"))),
         in_date=timezone.now(),
@@ -59,7 +60,9 @@ def submit_online_problem(request, problem_id):
         num=-1,
         pass_rate=0,
         lint_error=0,
-        judger='waiting'
+        judger='waiting',
+        judge_type=0 if judge_name=='LOCAL' else 1,
+        judge_name=judge_name
     )
 
     solution.save()
@@ -76,7 +79,19 @@ def submit_online_problem(request, problem_id):
     )
     sss.save()
 
-    return HttpResponseRedirect(reverse('oj_one_problem', args=[problem_id, ])+'#submissions')
+    ac_submit_number = Solution.objects.filter(problem_id=problem_id).filter(judge_name=judge_name).filter(result=4).count()
+    all_submit_number = Solution.objects.filter(problem_id=problem_id).filter(judge_name=judge_name).count()
+
+    print all_submit_number
+
+    problem = Problem.objects.filter(problem_id=problem_id).filter(judge_name=judge_name).get()
+
+    problem.accepted = ac_submit_number
+    problem.submit = all_submit_number
+
+    problem.save()
+
+    return HttpResponseRedirect(reverse('one_problem', args=[judge_name, problem_id, ])+'#submissions')
 
 
 
