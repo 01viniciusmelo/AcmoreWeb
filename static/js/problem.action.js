@@ -88,6 +88,7 @@ var table = new Vue({
         query: {
             "content":"json",
             "problem":problem_id,
+            "judge_name":$("#judge_name").val()
         },
         type: 0,//1 record, 2 rank
         table: [],
@@ -117,17 +118,15 @@ var table = new Vue({
                     cache:false,
                     "success":function(data) {
                         $.each(data.solutions, function(index, item) {
-                            item.language = languageName[item.language];
                             var result = item.result;
                             if (item.result < 4) {
                                 haveNoJudge = true;
                             }
                             item.result = result;
                             if (result == 11 || result == 12) {
-                                item.resultText = '<a target="_blank" href="/runtime/'+item.solution_id
-                                    +'?result='+result+'">'+judgeResult[result]+'</a>';
+                                item.resultText = '<a target="_blank" href="/runtime/'+item.solution_id+'">'+item.result_name+'</a>';
                             }else {
-                                item.resultText = judgeResult[result];
+                                item.resultText = item.result_name;
                             }
                             item.resultType = judgeResultType[result];
                         });

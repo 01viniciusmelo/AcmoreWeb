@@ -6,51 +6,43 @@ from django.shortcuts import render
 
 from apps.contest.models import Contest
 from apps.contest.models import ContestProblem
-from apps.problem.models.OJproblem import Problem as OJproblem
+from apps.problem.models.Problem import Problem as OJproblem
 from apps.account.models import Privilege
 
 from datetime import datetime
 import json
 
 
-
 @login_required(redirect_field_name='from_url')
 def create_contest(request):
 
     context = dict()
-
     return render(request, 'create-contest.html', context=context)
-
 
 @login_required
 def check_problem(request):
-    judge_type = request.POST.get('type', 'oj')
+    judge_name = request.POST.get('judge_name', 'LOCAL')
     problem_id = request.POST.get('problemID', 1000)
 
-    if judge_type == 'oj':
-        try:
-            problem_id = int(problem_id)
-        except ValueError:
-            return HttpResponse('error')
+    try:
+        problem_id = int(problem_id)
+    except ValueError:
+        return HttpResponse('error')
 
+    response = dict(
+        status=400
+    )
+    try:
+        problem = OJproblem.objects.values('rec_id','problem_id', 'title').filter(judge_name=judge_name).filter(problem_id=problem_id).get()
         response = dict(
-            status=400
+            status=200,
+            message='success',
+            problem=problem
         )
-        try:
-            problem = OJproblem.objects.values('problem_id', 'title').get(problem_id=problem_id)
-            response = dict(
-                status=200,
-                message='success',
-                problem=problem
-            )
-        except OJproblem.DoesNotExist:
-            response['message'] = 'problem with ID ' + str(problem_id) + ' not found.'
+    except OJproblem.DoesNotExist:
+        response['message'] = 'problem with ID ' + str(problem_id) + ' not found.'
 
-
-        return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
-    else:
-        pass
-
+    return HttpResponse(json.dumps(response, cls=DjangoJSONEncoder), content_type="application/json")
 
 @login_required
 def submit_contest(request):

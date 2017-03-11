@@ -1,14 +1,17 @@
 from django.utils import timezone
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
 from apps.contest.models import Contest
 from apps.contest.models import ContestProblem
-from apps.problem.models.OJproblem import Problem as OJproblem
+from apps.problem.models.Problem import Problem
 from apps.status.models.Solution import Solution
 from apps.source.models import SourceCode
 from apps.source.models import OjSourceCode
+from apps.models import JudgeLanguage
+
+from const import language_name, support_language
 
 import json
 
@@ -32,10 +35,8 @@ def problem_content(request):
         )
         return HttpResponse(json.dumps(context), content_type="application/json")
 
-
     judge_name = request.GET.get('name', 'oj')
     problem_order_number = request.GET.get('problem', '')
-    type = request.GET.get('type', 'json')
 
     if problem_order_number == '':
         return HttpResponse('no such problem')
@@ -49,72 +50,79 @@ def problem_content(request):
             return HttpResponse('no such problem')
 
         contest_problem_info = ContestProblem.objects.values('problem_id','title') \
-            .filter(num=contest_problem_num).filter(contest_id=contest_id).get()
+                            .filter(num=contest_problem_num).filter(contest_id=contest_id).get()
         real_problem_id = contest_problem_info['problem_id']
 
-        _problem = OJproblem.objects.values('title','description','input','output',
+        problem = Problem.objects.values('title','description','input','output','judge_name',
                                             'sample_input','sample_output','spj','hint','time_limit','memory_limit'
-                                            ).get(problem_id=real_problem_id)
+                                            ).get(rec_id=real_problem_id)
 
-        problem = dict()
-        problem['a'] = list() #with attributes, t:1 show value, 2 not show value and strong attr
-        problem['d'] = list() #in description, t:1 text, 2 html
-        problem['type'] = 'text'
+        response_problem = dict()
+        response_problem['a'] = list() #with attributes, t:1 show value, 2 not show value and strong attr
+        response_problem['d'] = list() #in description, t:1 text, 2 html
+        response_problem['type'] = 'text'
 
-        problem['a'].append(dict(
+        response_problem['a'].append(dict(
             k='Time Limit',
-            v=str(_problem['time_limit']) + ' s',
+            v=problem['time_limit'] + 's' if problem['judge_name'] == 'LOCAL' else problem['time_limit'],
             t='1'
         ))
-        problem['a'].append(dict(
+        response_problem['a'].append(dict(
             k='Memory limit',
-            v=str(_problem['memory_limit']).encode('utf-8') + 'MB',
+            v=problem['memory_limit'] + 'MB' if problem['judge_name'] == 'LOCAL' else problem['memory_limit'],
             t='1'
         ))
-        if _problem['spj'] == 1:
-            problem['a'].append(dict(
+        if int(problem['spj']) == 1:
+            response_problem['a'].append(dict(
                 k='Special Judge',
                 t='2'
             ))
 
-        problem['title'] = contest_problem_info['title']
+        response_problem['title'] = contest_problem_info['title']
 
-        problem['d'].append(dict(
+        response_problem['d'].append(dict(
             k='Description',
-            v=_problem['description'],
+            v=problem['description'],
             t='2'
         ))
-        problem['d'].append(dict(
+        response_problem['d'].append(dict(
             k='Input',
-            v=_problem['input'],
+            v=problem['input'],
             t='2'
         ))
-        problem['d'].append(dict(
+        response_problem['d'].append(dict(
             k='Output',
-            v=_problem['output'],
+            v=problem['output'],
             t='2'
         ))
-        problem['d'].append(dict(
+        response_problem['d'].append(dict(
             k='Sample input',
-            v=_problem['sample_input'],
+            v=problem['sample_input'],
             t='1'
         ))
-        problem['d'].append(dict(
+        response_problem['d'].append(dict(
             k='Sample output',
-            v=_problem['sample_output'],
+            v=problem['sample_output'],
             t='1'
         ))
-        problem['d'].append(dict(
+        response_problem['d'].append(dict(
             k='Hint',
-            v=_problem['hint'],
+            v=problem['hint'],
             t='2'
         ))
+
+        if problem['judge_name'] == 'LOCAL':
+            permit_languages = support_language
+        else:
+            permit_languages = [[i.language_id, i.language_name] for i in JudgeLanguage.objects.filter(judge_name=problem['judge_name'])]
+
+        response_problem['l'] = permit_languages
 
         context = dict(
-            problem=problem,
+            problem=response_problem,
             status=200
         )
-        return HttpResponse(json.dumps(context), content_type="application/json")
+        return JsonResponse(context)
 
 @login_required
 def submit_problem(request, contest_id):
@@ -129,7 +137,8 @@ def submit_problem(request, contest_id):
         ip_address = request.META['REMOTE_ADDR']
 
     try:
-        problem_order_number = request.POST.get('problem', 'A')
+        lang = int(request.POST.get('language', ''))
+        problem_order_number = request.POST.get('problem', '')
         if 'A' <= problem_order_number <= 'Z':
             problem_order_number = ord(problem_order_number) - ord('A')
         elif 'a' <= problem_order_number <= 'z':
@@ -140,19 +149,23 @@ def submit_problem(request, contest_id):
         contest_problem = ContestProblem.objects.values('problem_id', 'num') \
             .filter(contest_id=contest_id).filter(num=problem_order_number).get()
 
-        lang = int(request.POST.get('language', ''))
-    except ValueError:
+        problem = Problem.objects.get(rec_id=contest_problem['problem_id'])
+    except:
         return HttpResponse('some error happened')
 
     source_code = request.POST.get('source', '')
 
-    problem_id = contest_problem['problem_id']
-    pnum = contest_problem['num']
+    if problem.judge_name == 'LOCAL':
+        judge_language_name = language_name[lang]
+    else:
+        judge_language_name = JudgeLanguage.objects.filter(judge_name=problem.judge_name).get(language_id=lang).language_name
 
     solution = Solution(
-        problem_id=problem_id,
+        problem_id=problem.problem_id,
+        problem_rec_id=problem.rec_id,
         user_id=request.user.username,
         language=lang,
+        language_name=judge_language_name,
         ip=ip_address,
         code_length=int(len(source_code.encode("utf-8"))),
         in_date=timezone.now(),
@@ -160,13 +173,14 @@ def submit_problem(request, contest_id):
         time=0,
         memory=0,
         valid=1,
-        num=pnum,
+        num=contest_problem['num'],
         pass_rate=0,
         lint_error=0,
         judger='waiting',
-        contest_id=contest_id
+        contest_id=contest_id,
+        judge_type=0 if problem.judge_name == 'LOCAL' else 1,
+        judge_name=problem.judge_name
     )
-
     solution.save()
 
     ss = SourceCode(
@@ -182,3 +196,4 @@ def submit_problem(request, contest_id):
     sss.save()
 
     return HttpResponseRedirect(reverse('one_contest', args=[contest_id, ]) + '#status')
+

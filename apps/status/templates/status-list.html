@@ -87,20 +87,20 @@ form {
     <table class="table table-striped table-condensed">
         <thead>
             <tr class="level-one-index">
-                <td></td>
+                <td colspan="2"></td>
                 <th class="table-border-left table-border-right hidden-xs" colspan="3">Run Info</th>
                 <th class="table-border-right hidden-xs" colspan="4">Code Info</th>
             </tr>
             <tr>
                 <th width="">Problem</th>
+                <th class="hidden-xs" width="">From</th>
 
                 <th width="" class="table-border-left">Result</th>
-                <th class="hidden-xs" width="">Mem used</th>
-                <th class="hidden-xs" width="">Time used</th>
+                <th class="hidden-xs" width="">Memory/Time</th>
 
                 <th width="" class="table-border-left">User</th>
-                <th class="hidden-xs">Language /Size/</th>
-                <th width="" class="table-border-right hidden-xs hidden-sm">Submit at</th>
+                <th class="">Language /Size/</th>
+                <th width="" class="table-border-right">Submit at</th>
 
                 <th class="hidden-xs" width="">Judger</th>
             </tr>
@@ -108,22 +108,29 @@ form {
         <tbody>
         {% for solution in solutions %}
             <tr>
-                <td><a href="{% url 'oj_one_problem' solution.problem_id %}" target="_self">{{ solution.problem_id }}</a></td>
+                <td><a href="{% url 'one_problem' solution.judge_name solution.problem_id %}" target="_self">{{ solution.judge_name }}-{{ solution.problem_id }}</a></td>
+                <td class="hidden-xs">
+                    {% if solution.judge_type %}
+                    <a target="_blank" href="{{ solution.vjudge_problem_url }}">{{ solution.judge_name }}</a>
+                    {% else %}
+                        {{ solution.judge_name }}
+                    {% endif %}
+                </td>
 
                 {% if solution.moreinfo %}
-                <td class="table-border-left {{ solution.result_type }}"><a href="{% url 'runtime_info' solution.solution_id %}?result={{ solution.result }}" target="_self">{{ solution.result_text }}</a></td>
+                <td class="table-border-left {{ solution.result_type }}"><a href="{% url 'runtime_info' solution.solution_id %}?result={{ solution.result }}" target="_self">{{ solution.result_name }}</a></td>
                 {% else %}
-                <td class="table-border-left {{ solution.result_type }}">{{ solution.result_text }}</td>
+                <td class="table-border-left {{ solution.result_type }}">{{ solution.result_name }}</td>
                 {% endif %}
 
-                <td class="hidden-xs">{{ solution.memory }} K</td>
-                <td class="table-border-right hidden-xs">{{ solution.time }} ms</td>
+                <td class="hidden-xs">{{ solution.memory }}K / {{ solution.time }}ms</td>
 
                 <td class="table-border-left"><a href="{% url 'one_user_info' solution.user_id %}" target="_self">{{ solution.user_id }}</a></td>
+
                 {% if request.user.username == solution.user_id or request.user.is_superuser %}
-                <td><a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language }} /{{ solution.code_length }} B/</a></td>
+                <td><a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language_name }} /{{ solution.code_length }} B/</a></td>
                 {% else %}
-                <td>{{ solution.language }} /{{ solution.code_length }} B/</td>
+                <td>{{ solution.language_name }} /{{ solution.code_length }} B/</td>
                 {% endif %}
                 <td class="table-border-right utc-time-to-local-time">{{ solution.in_date|date:'c' }}</td>
 

@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f5e988d-3c86-4897-a68c-e7d80cdfdf1c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/contest/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/contest/views/contest_problem.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/IntelliLang.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_linux/git.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_linux/keymap.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_linux/laf.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/colors.scheme.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/colors/Monokai copy.icls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/conda_packages.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/databaseSettings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/debugger.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/diff.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ide.general.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/inspection/Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/packages.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/web-browsers.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" afterPath="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/contest/views/contests.py" afterPath="$PROJECT_DIR$/apps/contest/views/contests.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/urls.py" afterPath="$PROJECT_DIR$/apps/problem/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/status/templates/status-list.html" afterPath="$PROJECT_DIR$/apps/status/templates/status-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/status/views/status.py" afterPath="$PROJECT_DIR$/apps/status/views/status.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/judge/urls.py" afterPath="$PROJECT_DIR$/judge/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/contest.action.js" afterPath="$PROJECT_DIR$/static/js/contest.action.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/problem/templates/one-problem.html" afterPath="$PROJECT_DIR$/apps/problem/templates/one-problem.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/problem.action.js" afterPath="$PROJECT_DIR$/static/js/problem.action.js" />
     </list>
     <ignored path="test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,46 +30,111 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="status-list.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/status/templates/status-list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1844">
-              <caret line="125" column="79" selection-start-line="125" selection-start-column="79" selection-end-line="125" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create-contest.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/contest/templates/create-contest.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="221" column="40" selection-start-line="221" selection-start-column="40" selection-end-line="221" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="contest.action.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="433" column="38" selection-start-line="433" selection-start-column="38" selection-end-line="433" selection-end-column="38" />
+            <state relative-caret-position="0">
+              <caret line="413" column="22" selection-start-line="413" selection-start-column="22" selection-end-line="413" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="one-contest.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="one-contest.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="137" column="135" selection-start-line="137" selection-start-column="135" selection-end-line="137" selection-end-column="135" />
+            <state relative-caret-position="0">
+              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
               <folding>
-                <element signature="n#style#0;n#label#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-                <marker date="1488741585177" expanded="false" signature="11491:11506" ph="..." />
+                <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="problem-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="108" column="51" selection-start-line="108" selection-start-column="51" selection-end-line="108" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contests.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
+                <marker date="1489263364230" expanded="true" signature="762:1087" ph="select * fro... contest" />
+                <marker date="1489263364230" expanded="true" signature="871:920" ph="select * fro... privilege" />
+                <marker date="1489263364230" expanded="true" signature="3383:4686" ph="SELECT title... title" />
+                <marker date="1489263364230" expanded="true" signature="3463:3762" ph="SELECT `cont... contest_problem" />
+                <marker date="1489263364230" expanded="true" signature="3840:3983" ph="SELECT probl... solution" />
+                <marker date="1489263364230" expanded="true" signature="4079:4175" ph="SELECT probl... solution" />
+                <marker date="1489263364230" expanded="true" signature="4268:4410" ph="SELECT probl... solution" />
+                <marker date="1489263364230" expanded="true" signature="4503:4627" ph="SELECT probl... solution" />
+                <marker date="1489263364230" expanded="true" signature="5963:6902" ph="SELECT solut... user_id" />
+                <marker date="1489263364230" expanded="true" signature="6148:6418" ph="SELECT users... *" />
+                <marker date="1489263364230" expanded="true" signature="6254:6333" ph="SELECT * FRO... solution" />
+                <marker date="1489263364230" expanded="true" signature="6500:6703" ph="SELECT num,u... num" />
+                <marker date="1489263364230" expanded="true" signature="6547:6655" ph="SELECT num,u... solution" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="188" column="52" selection-start-line="188" selection-start-column="52" selection-end-line="188" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="status.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="94" column="44" selection-start-line="94" selection-start-column="44" selection-end-line="94" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="one-problem.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/problem/templates/one-problem.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="196" column="49" selection-start-line="196" selection-start-column="49" selection-end-line="196" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="problem.action.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/problem.action.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="223">
+              <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contest_problem.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/contest/views/contest_problem.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="113" column="30" selection-start-line="113" selection-start-column="30" selection-end-line="113" selection-end-column="30" />
+              <folding>
+                <element signature="e#0#33#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,8 +147,8 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -115,21 +158,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/apps/user/models/OldUser.py" />
-        <option value="$PROJECT_DIR$/static/js/animate.js" />
-        <option value="$PROJECT_DIR$/apps/problem/templates/oj-one-problem.html" />
-        <option value="$PROJECT_DIR$/static/js/const.js" />
-        <option value="$PROJECT_DIR$/apps/contest/views.py" />
-        <option value="$PROJECT_DIR$/templates/thanks.html" />
-        <option value="$PROJECT_DIR$/apps/account/templates/login-form.html" />
         <option value="$PROJECT_DIR$/apps/source/templates/put-source.html" />
-        <option value="$PROJECT_DIR$/apps/status/templates/runtime-info.html" />
-        <option value="$PROJECT_DIR$/apps/problem/templates/problem-list.html" />
         <option value="$PROJECT_DIR$/apps/source/models.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/static/js/problem.action.js" />
         <option value="$PROJECT_DIR$/templates/404.html" />
         <option value="$PROJECT_DIR$/views.py" />
         <option value="$PROJECT_DIR$/templates/error.html" />
@@ -138,34 +171,44 @@
         <option value="$PROJECT_DIR$/apps/user/views/user.py" />
         <option value="$PROJECT_DIR$/msg.txt" />
         <option value="$PROJECT_DIR$/apps/account/templates/user-center.html" />
-        <option value="$PROJECT_DIR$/const.py" />
         <option value="$PROJECT_DIR$/apps/account/templates/register-form.html" />
-        <option value="$PROJECT_DIR$/apps/problem/templates/one-problem.html" />
         <option value="$PROJECT_DIR$/apps/source/templates/show-source.html" />
-        <option value="$PROJECT_DIR$/apps/problem/views/oj_problem_views.py" />
-        <option value="$PROJECT_DIR$/apps/problem/views/problem_views.py" />
         <option value="$PROJECT_DIR$/judge/settings.py" />
-        <option value="$PROJECT_DIR$/apps/models.py" />
         <option value="$PROJECT_DIR$/apps/account/models.py" />
         <option value="$PROJECT_DIR$/apps/contest/models.py" />
-        <option value="$PROJECT_DIR$/apps/contest/views/add_contest.py" />
-        <option value="$PROJECT_DIR$/apps/contest/templates/create-contest.html" />
         <option value="$PROJECT_DIR$/apps/account/views.py" />
         <option value="$PROJECT_DIR$/apps/contest/templates/contest-list.html" />
         <option value="$PROJECT_DIR$/apps/user/templates/one-user.html" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
-        <option value="$PROJECT_DIR$/static/js/common.js" />
-        <option value="$PROJECT_DIR$/apps/source/views.py" />
-        <option value="$PROJECT_DIR$/apps/status/templates/status-list.html" />
         <option value="$PROJECT_DIR$/apps/contest/url.py" />
         <option value="$PROJECT_DIR$/judge/urls.py" />
-        <option value="$PROJECT_DIR$/apps/problem/urls.py" />
-        <option value="$PROJECT_DIR$/apps/status/views/status.py" />
-        <option value="$PROJECT_DIR$/apps/contest/views/contest_problem.py" />
         <option value="$PROJECT_DIR$/apps/contest/urls.py" />
+        <option value="$PROJECT_DIR$/apps/problem/models/OJproblem.py" />
+        <option value="$PROJECT_DIR$/apps/problem/views/oj_problem_views.py" />
+        <option value="$PROJECT_DIR$/apps/problem/models/Problem.py" />
+        <option value="$PROJECT_DIR$/apps/models.py" />
+        <option value="$PROJECT_DIR$/apps/status/templates/status-list-test.html" />
+        <option value="$PROJECT_DIR$/apps/status/templates/runtime-info.html" />
+        <option value="$PROJECT_DIR$/apps/problem/templates/problem-list-test.html" />
+        <option value="$PROJECT_DIR$/apps/problem/urls.py" />
+        <option value="$PROJECT_DIR$/apps/status/models/Solution.py" />
+        <option value="$PROJECT_DIR$/static/js/libs.js" />
+        <option value="$PROJECT_DIR$/static/js/common.js" />
+        <option value="$PROJECT_DIR$/const.py" />
+        <option value="$PROJECT_DIR$/apps/status/templates/status-list.html" />
+        <option value="$PROJECT_DIR$/apps/contest/views/add_contest.py" />
+        <option value="$PROJECT_DIR$/apps/contest/templates/create-contest.html" />
+        <option value="$PROJECT_DIR$/apps/problem/views/problem_views.py" />
+        <option value="$PROJECT_DIR$/apps/source/views.py" />
+        <option value="$PROJECT_DIR$/apps/problem/views/show_problem_views.py" />
+        <option value="$PROJECT_DIR$/apps/contest/views/contest_problem.py" />
+        <option value="$PROJECT_DIR$/apps/problem/templates/problem-list.html" />
         <option value="$PROJECT_DIR$/static/js/contest.action.js" />
-        <option value="$PROJECT_DIR$/apps/contest/views/contests.py" />
         <option value="$PROJECT_DIR$/apps/contest/templates/one-contest.html" />
+        <option value="$PROJECT_DIR$/apps/contest/views/contests.py" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/apps/status/views/status.py" />
+        <option value="$PROJECT_DIR$/static/js/problem.action.js" />
+        <option value="$PROJECT_DIR$/apps/problem/templates/one-problem.html" />
       </list>
     </option>
   </component>
@@ -226,6 +269,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -303,6 +360,192 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="status" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="status" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="status" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="status" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="problem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="problem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="problem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="problem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="models" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JudgeWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="contest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -353,12 +596,12 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/run.py" />
+    <property name="last_opened_file_path" value="/var/django/robot" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
@@ -369,11 +612,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/problem/templates" />
+      <recent name="$PROJECT_DIR$/apps/status/templates" />
       <recent name="$PROJECT_DIR$/static/img" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/static/css" />
-      <recent name="$PROJECT_DIR$/apps/contest/templates" />
-      <recent name="$PROJECT_DIR$/static/js" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/contest/views" />
@@ -852,13 +1095,13 @@
     <frame x="-1" y="28" width="1922" height="1019" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1484375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19635417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44035673" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29431438" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15830547" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -931,46 +1174,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/js/bootstrap.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="5" column="10291" selection-start-line="5" selection-start-column="10291" selection-end-line="5" selection-end-column="10291" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/jquery.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="3" column="13975" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/bootstrap-toggle.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-19">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="55" selection-start-line="10" selection-start-column="55" selection-end-line="10" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/problem.action.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/img/bg.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
@@ -1041,20 +1244,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/problem/templates/one-problem.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="177" column="48" selection-start-line="177" selection-start-column="48" selection-end-line="177" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/source/templates/show-source.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
@@ -1066,13 +1255,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
           <caret line="179" column="23" selection-start-line="179" selection-start-column="23" selection-end-line="179" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/status/templates/runtime-info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1090,20 +1272,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/account/templates/register-form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="275" column="71" selection-start-line="275" selection-start-column="71" selection-end-line="275" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/problem/views/oj_problem_views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2592">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/account/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -1112,20 +1280,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/account/migrations/0001_initial.py" />
-    <entry file="file://$PROJECT_DIR$/judge/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="37" column="30" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/user/migrations/0001_initial.py" />
     <entry file="file://$PROJECT_DIR$/apps/contest/models.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1141,13 +1295,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/contest/views/add_contest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/templates/contest-list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1159,23 +1306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1000">
           <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/const.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="48" column="16" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/source/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="130" column="65" selection-start-line="130" selection-start-column="65" selection-end-line="130" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1183,116 +1313,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/common.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="205" column="13" selection-start-line="205" selection-start-column="13" selection-end-line="205" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/judge/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/problem/views/problem_views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/problem/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/status/templates/status-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1844">
-          <caret line="125" column="79" selection-start-line="125" selection-start-column="79" selection-end-line="125" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/contest/templates/create-contest.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="221" column="40" selection-start-line="221" selection-start-column="40" selection-end-line="221" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="433" column="38" selection-start-line="433" selection-start-column="38" selection-end-line="433" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1334">
-          <caret line="366" column="27" selection-start-line="366" selection-start-column="27" selection-end-line="366" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-            <marker date="1488741336320" expanded="true" signature="919:1244" ph="select * fro... contest" />
-            <marker date="1488741336320" expanded="true" signature="1028:1077" ph="select * fro... privilege" />
-            <marker date="1488741336320" expanded="true" signature="3540:4923" ph="SELECT title... title" />
-            <marker date="1488741336320" expanded="true" signature="3641:3968" ph="SELECT `prob... contest_problem" />
-            <marker date="1488741336320" expanded="true" signature="4046:4177" ph="SELECT probl... solution" />
-            <marker date="1488741336320" expanded="true" signature="4270:4386" ph="SELECT probl... solution" />
-            <marker date="1488741336320" expanded="true" signature="4479:4641" ph="SELECT probl... solution" />
-            <marker date="1488741336320" expanded="true" signature="4734:4878" ph="SELECT probl... solution" />
-            <marker date="1488741336320" expanded="true" signature="6310:7249" ph="SELECT solut... user_id" />
-            <marker date="1488741336320" expanded="true" signature="6495:6765" ph="SELECT users... *" />
-            <marker date="1488741336320" expanded="true" signature="6601:6680" ph="SELECT * FRO... solution" />
-            <marker date="1488741336320" expanded="true" signature="6847:7050" ph="SELECT num,u... num" />
-            <marker date="1488741336320" expanded="true" signature="6894:7002" ph="SELECT num,u... solution" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="96" column="36" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/contest/views/contest_problem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-780">
-          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1300,22 +1320,224 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/judge/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/judge/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1840">
+          <caret line="93" column="122" selection-start-line="93" selection-start-column="29" selection-end-line="93" selection-end-column="122" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/status/templates/status-list-test.html" />
+    <entry file="file://$PROJECT_DIR$/apps/status/templates/runtime-info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list-test.html" />
+    <entry file="file://$PROJECT_DIR$/apps/problem/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="9" column="60" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/account/templates/register-form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-156">
+          <caret line="126" column="46" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/libs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="90" column="26" selection-start-line="90" selection-start-column="26" selection-end-line="90" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/status/models/Solution.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="827">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/models/Problem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="22" column="10" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/status/templates/status-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="113" column="75" selection-start-line="113" selection-start-column="75" selection-end-line="113" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/contest/views/add_contest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/contest/templates/create-contest.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="327" column="25" selection-start-line="327" selection-start-column="25" selection-end-line="327" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/source/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="176" column="30" selection-start-line="176" selection-start-column="30" selection-end-line="176" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/views/problem_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/views/show_problem_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="41" column="79" selection-start-line="41" selection-start-column="79" selection-end-line="41" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/contest.action.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="413" column="22" selection-start-line="413" selection-start-column="22" selection-end-line="413" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/templates/problem-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="108" column="51" selection-start-line="108" selection-start-column="51" selection-end-line="108" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/contest/templates/one-contest.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="137" column="135" selection-start-line="137" selection-start-column="135" selection-end-line="137" selection-end-column="135" />
+        <state relative-caret-position="0">
+          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#label#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#2;n#div#1;n#!!top" expanded="true" />
-            <marker date="1488741585177" expanded="false" signature="11491:11506" ph="..." />
+            <element signature="n#style#0;n#th#2;n#tr#0;n#thead#0;n#table#0;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/const.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-300">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/contest/views/contest_problem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="113" column="30" selection-start-line="113" selection-start-column="30" selection-end-line="113" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/contest/views/contests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+            <marker date="1489263364230" expanded="true" signature="762:1087" ph="select * fro... contest" />
+            <marker date="1489263364230" expanded="true" signature="871:920" ph="select * fro... privilege" />
+            <marker date="1489263364230" expanded="true" signature="3383:4686" ph="SELECT title... title" />
+            <marker date="1489263364230" expanded="true" signature="3463:3762" ph="SELECT `cont... contest_problem" />
+            <marker date="1489263364230" expanded="true" signature="3840:3983" ph="SELECT probl... solution" />
+            <marker date="1489263364230" expanded="true" signature="4079:4175" ph="SELECT probl... solution" />
+            <marker date="1489263364230" expanded="true" signature="4268:4410" ph="SELECT probl... solution" />
+            <marker date="1489263364230" expanded="true" signature="4503:4627" ph="SELECT probl... solution" />
+            <marker date="1489263364230" expanded="true" signature="5963:6902" ph="SELECT solut... user_id" />
+            <marker date="1489263364230" expanded="true" signature="6148:6418" ph="SELECT users... *" />
+            <marker date="1489263364230" expanded="true" signature="6254:6333" ph="SELECT * FRO... solution" />
+            <marker date="1489263364230" expanded="true" signature="6500:6703" ph="SELECT num,u... num" />
+            <marker date="1489263364230" expanded="true" signature="6547:6655" ph="SELECT num,u... solution" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/status/views/status.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="94" column="44" selection-start-line="94" selection-start-column="44" selection-end-line="94" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/problem.action.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="188" column="52" selection-start-line="188" selection-start-column="52" selection-end-line="188" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/problem/templates/one-problem.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="196" column="49" selection-start-line="196" selection-start-column="49" selection-end-line="196" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>

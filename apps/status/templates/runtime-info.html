@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block style %}
-<style>
+<style xmlns="http://www.w3.org/1999/html">
 .content{
     text-align: left
 }
@@ -19,6 +19,12 @@ h3 {
 {% block main %}
     <div class="content">
         <h3><small>Run ID: </small>{{ run_id }}</h3>
+
+        <div style="text-align: center">
+            <p>Result: <span class="text-danger">{{ solution.result_name }}</span></p>
+            <p>Language: <span>{{ solution.language_name }}</span></p>
+        </div>
+
         <pre>
             {{ run_info.error }}
         </pre>

@@ -16,13 +16,14 @@ class Problem(models.Model):
     hint = models.TextField(blank=True, null=True)
     source = models.CharField(max_length=200, blank=True, null=True)
     in_date = models.DateTimeField(blank=True, null=True)
-    time_limit = models.IntegerField()
-    memory_limit = models.IntegerField()
+    time_limit = models.CharField(max_length=48)
+    memory_limit = models.CharField(max_length=48)
     defunct = models.CharField(max_length=1)
     accepted = models.IntegerField(blank=True, null=True)
     submit = models.IntegerField(blank=True, null=True)
     solved = models.IntegerField(blank=True, null=True)
     judge_name = models.CharField(max_length=48)
+    attrs = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False

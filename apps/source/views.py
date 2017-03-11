@@ -153,21 +153,30 @@ def source_by_run_id(request, run_id):
     if 'qrcode' in request.GET:
         return render_qrcode(request, _url)
 
-    lang = language_name[solution.language]
-
     poster = solution.user_id
-    if 13 <= solution.language <=14:
-        standard_lang = 'C++'
-    elif solution.language == 6:
-        standard_lang = 'Python'
-    elif solution.language == 3:
-        standard_lang = 'Java'
-    elif solution.language == 16:
-        standard_lang = 'JavaScript'
-    elif solution.language == 17:
-        standard_lang = 'Python3'
+
+    if solution.judge_type ==0:
+        lang = language_name[solution.language]
+        if 13 <= solution.language <=14:
+            standard_lang = 'C++'
+        elif solution.language == 6:
+            standard_lang = 'Python'
+        elif solution.language == 3:
+            standard_lang = 'Java'
+        elif solution.language == 16:
+            standard_lang = 'JavaScript'
+        elif solution.language == 17:
+            standard_lang = 'Python3'
+        else:
+            standard_lang = lang
     else:
-        standard_lang = lang
+        lang = solution.language_name
+        if solution.language_name == 'G++':
+            standard_lang = 'C++'
+        elif solution.language_name == 'GCC':
+            standard_lang = 'C'
+        else:
+            standard_lang = solution.language_name
 
     lexer = get_lexer_by_name(standard_lang)
     source = source_code.source
