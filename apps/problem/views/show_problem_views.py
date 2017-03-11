@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from apps.problem.models.OJproblem import Problem as OJproblem
+from apps.problem.models.Problem import Problem
 from apps.status.models.Solution import Solution
 
 from const import support_language
@@ -15,10 +15,10 @@ import math
 import time
 
 
-def one_problem(request, problem_id):
+def one_problem(request, judge_name, problem_id):
     start_time = time.time()
     try:
-        problem = cache.get_or_set('problem_oj' + str(problem_id), OJproblem.objects.get(problem_id=problem_id), 60)
+        problem = cache.get_or_set('problem_oj' + str(problem_id), Problem.objects.filter(judge_name=judge_name).get(problem_id=problem_id), 60)
     except ObjectDoesNotExist:
         return render(request, 'no-problem.html')
 
@@ -33,7 +33,7 @@ def one_problem(request, problem_id):
 
 def problem_list(request):
     try:
-        offset = int(request.GET.get('offset', 1000))
+        offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 100))
     except ValueError:
         return render(request, '404.html', status=404)
@@ -41,9 +41,7 @@ def problem_list(request):
     if limit > 100:
         limit = 100
 
-    problems = OJproblem.objects \
-        .filter(defunct='N').filter(problem_id__gte=offset).filter(problem_id__lt=offset + limit)\
-        .order_by('problem_id')
+    problems = Problem.objects.filter(defunct='N').order_by('-rec_id')[offset*limit:(offset+1)*limit]
 
     s_submitted = list()
     s_accepted = list()
@@ -74,16 +72,16 @@ def problem_list(request):
         problems=problems
     )
 
-    last_problem_id = OJproblem.objects.all().order_by('-problem_id')[0].problem_id
+    problem_number = Problem.objects.all().count()
 
-    page_total = last_problem_id / limit
+    page_total = problem_number / limit
     pages = []
 
-    for page_number in range(1000/limit, page_total+1):
+    for page_number in range(0, page_total+1):
         page = dict()
-        page['name'] = '~P'+str(page_number*limit)
-        page['url'] = reverse('oj_problem_list')+'?offset='+str(page_number*limit)+'&limit='+str(limit)
-        if page_number*limit == offset:
+        page['name'] = '~Page '+str(page_number)
+        page['url'] = reverse('oj_problem_list')+'?offset='+str(page_number)+'&limit='+str(limit)
+        if page_number == offset:
             page['status'] = 'active'
         pages.append(page)
 
@@ -110,7 +108,7 @@ def problem_list_by_search(request):
     if limit > 100:
         limit = 100
 
-    problems = OJproblem.objects.filter(defunct='N').order_by('problem_id')
+    problems = Problem.objects.filter(defunct='N').order_by('problem_id')
 
     if search_type == 'author':
         problems = problems.filter(source__contains=content.encode('utf-8'))
