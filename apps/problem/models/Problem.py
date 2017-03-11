@@ -4,7 +4,8 @@ from django.contrib import admin
 
 
 class Problem(models.Model):
-    problem_id = models.AutoField(primary_key=True)
+    rec_id = models.AutoField(primary_key=True)
+    problem_id = models.CharField(max_length=48)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     input = models.TextField(blank=True, null=True)
@@ -21,6 +22,7 @@ class Problem(models.Model):
     accepted = models.IntegerField(blank=True, null=True)
     submit = models.IntegerField(blank=True, null=True)
     solved = models.IntegerField(blank=True, null=True)
+    judge_name = models.CharField(max_length=48)
 
     class Meta:
         managed = False
