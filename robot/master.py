@@ -42,7 +42,9 @@ class Master(Submitter):
                         v_judge = HduJudge(solution['vjudge_solution_id'])
                         v_status = list(v_judge.status())
 
-                        self.__update_update_status_mission(solution['solution_id'], v_status[0], v_status[1])
+                        print v_status
+
+                        self.__update_update_status_mission(solution['solution_id'], v_status[0], v_status[1], v_status[2], v_status[3])
                         if v_status[0] == 11:
                             error = v_judge.get_error_info()
                             self.__update_compile_info(solution['solution_id'], error)
@@ -67,9 +69,9 @@ class Master(Submitter):
         cur.execute(sql)
         return cur.fetchone()
 
-    def __update_update_status_mission(self, solution_id, result, result_name):
-        sql = 'UPDATE `solution` SET `result`=%s,`result_name`=%s WHERE `solution_id`=%s;'
-        self.cur.execute(sql, (result, result_name, solution_id))
+    def __update_update_status_mission(self, solution_id, result, result_name, time_used=0, memory_used=0):
+        sql = 'UPDATE `solution` SET `result`=%s,`result_name`=%s, `time`=%s, `memory`=%s WHERE `solution_id`=%s;'
+        self.cur.execute(sql, (result, result_name, time_used, memory_used, solution_id))
 
     def __update_compile_info(self, solution_id, error):
         sql = 'INSERT INTO `compileinfo` (`solution_id`, `error`) VALUES (%s, %s);'
