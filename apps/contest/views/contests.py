@@ -321,7 +321,7 @@ def contest_status(request):
             else:
                 x['runtime_info'] = 0
 
-        if x['result_name'] == '':
+        if x['result_name'] == '' or x['result_name'] == None:
             x['result_name'] = judge_result[x['result']]
 
         x['result_type'] = judge_result_type[x['result']]
