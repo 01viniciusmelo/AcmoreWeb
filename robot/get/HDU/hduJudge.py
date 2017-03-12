@@ -72,7 +72,7 @@ class HduJudge:
                 else:
                     return 'Sorry, get error info failed.'
             else:
-                err_content = BeautifulSoup(response, 'lxml').find('pre').string
+                err_content = BeautifulSoup(response, 'lxml').find('pre').text
                 return err_content
 
 
