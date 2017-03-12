@@ -1,3 +1,4 @@
 *.pyc
 env
 judge/settings.py
+robot/setting.py
