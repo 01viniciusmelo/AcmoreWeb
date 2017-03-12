@@ -61,7 +61,7 @@ class HduJudge:
         request = urllib2.Request(self.view_error_url, headers=self.headers)
         retry_times = 3
         while True:
-            print 'get error info ', retry_times
+            print 'get error info times: ', retry_times
             try:
                 response = self.opener.open(request)
             except:

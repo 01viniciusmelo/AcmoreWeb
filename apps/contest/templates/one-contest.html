@@ -174,9 +174,15 @@ nav.table-page {
                     </div>
                 </div>
                 {% endverbatim %}
-                {% if request.user.is_authenticated and is_running %}
+                {% if is_running %}{% if request.user.is_authenticated %}
                 <div class="text-center">
                     <a class="btn btn-diy problem-submit-launcher" href="#submit" data-num-id="" role="tab" data-toggle="tab">Submit</a>
+                </div>{% else %}
+                <div class="text-center">
+                    <a class="btn btn-diy problem-submit-launcher" href="{% url 'account_login' %}?from_url={{ request.get_full_path }}">Login and Submit</a>
+                </div>{% endif %}{% else %}
+                <div class="text-center">
+                    <a class="btn btn-diy disabled" href="{% url 'account_login' %}">Contest ended</a>
                 </div>{% endif %}
             </div>
         </div>

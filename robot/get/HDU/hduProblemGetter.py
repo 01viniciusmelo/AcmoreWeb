@@ -157,9 +157,3 @@ class HduProblemGetter():
         )
 
         problem.save()
-
-
-for i in xrange(1000, 1100):
-    test = HduProblemGetter(i)
-    test.get()
-    #time.sleep(0.3)
