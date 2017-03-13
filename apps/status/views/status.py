@@ -11,7 +11,7 @@ from django.shortcuts import render
 from apps.status.models.Solution import RunTimeInfo
 from apps.status.models.Solution import CompileInfo
 from apps.status.models.Solution import Solution
-from const import language_name, support_language, judger_name, judge_result, judge_result_type, vjudge_problem_url
+from const import support_language, judger_name, judge_result, judge_result_type, vjudge_problem_url
 
 def status_list(request):
     context = dict()
@@ -73,19 +73,9 @@ def status_list(request):
         solutions = solutions.filter(result=result) if int(result) < 100  else solutions.filter(result__lt=4)
 
     if content_type == 'json':
-        page_number = cache.get_or_set('solutions_count_'+page_param.replace(' ', ''), solutions.count(), 3)
+        page_number = cache.get_or_set('solutions_count_'+page_param.replace(' ', ''), solutions.count(), 10)
 
     solutions = solutions[offset * limit:(offset + 1) * limit]
-
-    for solution in solutions:
-        solution.language = language_name[solution.language]
-        solution.judger = judger_name[solution.judger]
-        if solution.judge_type == 0:
-            solution.moreinfo = 10 <= solution.result <= 11
-        else:
-            if solution.judge_name == 'HDU':
-                solution.moreinfo = 11 == solution.result
-        solution.result_type = judge_result_type[solution.result]
 
     context['page_param'] = page_param
     context['offset'] = offset
@@ -94,7 +84,7 @@ def status_list(request):
     if content_type == 'json':
         context['page_number'] = page_number
 
-        context['solutions'] = list(solutions.values('solution_id', 'problem_id', 'user_id', 'time', 'memory', 'in_date',
+        context['solutions'] = list(solutions.values('solution_id', 'user_id', 'time', 'memory', 'in_date',
                                                  'result', 'result_name', 'language_name', 'code_length'))
         for item in context['solutions']:
             if item['result_name'] == '' or item['result_name'] == None:
@@ -106,6 +96,14 @@ def status_list(request):
         context['judge_result'] = judge_result
 
         for item in solutions:
+            item.judger = judger_name[item.judger]
+            if item.judge_type == 0:
+                item.moreinfo = 10 <= item.result <= 11
+            else:
+                if item.judge_name == 'HDU':
+                    item.moreinfo = 11 == item.result
+            item.result_type = judge_result_type[item.result]
+
             if item.result_name == '' or item.result_name is None:
                 item.result_name = judge_result[item.result]
             if item.judge_type > 0:
