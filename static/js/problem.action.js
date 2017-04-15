@@ -123,7 +123,7 @@ var table = new Vue({
                                 haveNoJudge = true;
                             }
                             item.result = result;
-                            if (result == 11 || result == 12) {
+                            if (result == 11 || result == 10) {
                                 item.resultText = '<a target="_blank" href="/runtime/'+item.solution_id+'">'+item.result_name+'</a>';
                             }else {
                                 item.resultText = item.result_name;

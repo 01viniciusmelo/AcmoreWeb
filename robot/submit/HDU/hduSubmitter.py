@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from submit.Submitter import Submitter
 import urllib
 import urllib2
-import json
 import time
 
 
