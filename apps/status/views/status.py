@@ -15,7 +15,7 @@ from const import language_name, support_language, judger_name, judge_result, ju
 
 def status_list(request):
     context = dict()
-    limit = 20
+    limit = 13
     page_param = ''
 
     content_type = request.GET.get('content', 'html')

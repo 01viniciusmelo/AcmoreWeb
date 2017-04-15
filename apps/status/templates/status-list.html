@@ -34,6 +34,13 @@ form {
 .table-border-right {
     border-right: 1px dashed #ccc!important;
 }
+.runtime-resource-used, .submit-at {
+    font-family: "Bookman Old Style", "Constantia", "Microsoft YaHei", "simsun";
+    font-size: 12px;
+}
+.runtime-result {
+    line-height: 2.5!important;
+}
 </style>
 {% endblock %}
 
@@ -52,11 +59,8 @@ form {
             <select name="language" class="form-control" id="search_problem_by_language">
                 <option value="" selected="">All</option>
                 {% for language_name in support_language %}
-                {% ifequal language language_name.0 %}
-                <option value="{{ language_name.0 }}" selected="selected">{{ language_name.1 }}</option>
-                {% else %}
-                <option value="{{ language_name.0 }}">{{ language_name.1 }}</option>
-                {% endifequal %}
+                {% ifequal language language_name.0 %}<option value="{{ language_name.0 }}" selected="selected">{{ language_name.1 }}</option>{% else %}
+                <option value="{{ language_name.0 }}">{{ language_name.1 }}</option>{% endifequal %}
                 {% endfor %}
             </select>
         </div>
@@ -65,19 +69,10 @@ form {
             <select name="result" class="form-control" id="search_problem_by_result">
                 <option value="">All</option>
                 {% for item in judge_result %}
-                    {% if 3 < forloop.counter0 and forloop.counter0 < 12 %}
-                        {% ifequal result item %}
-                        <option value="{{ forloop.counter0 }}" selected="selected">{{ item }}</option>
-                        {% else %}
-                        <option value="{{ forloop.counter0 }}">{{ item }}</option>
-                        {% endifequal %}
-                    {% endif %}
+                    {% if 3 < forloop.counter0 and forloop.counter0 < 12 %}{% ifequal result item %}<option value="{{ forloop.counter0 }}" selected="selected">{{ item }}</option>
+                    {% else %}<option value="{{ forloop.counter0 }}">{{ item }}</option>{% endifequal %}{% endif %}
                 {% endfor %}
-                {% ifequal result 'Others' %}
-                <option value="100" selected="selected">Others</option>
-                {% else %}
-                <option value="100">Others</option>
-                {% endifequal %}
+                {% ifequal result 'Others' %}<option value="100" selected="selected">Others</option>{% else %}<option value="100">Others</option>{% endifequal %}
             </select>
         </div>
         <button type="submit" class="btn btn-default">Find.</button>
@@ -86,55 +81,39 @@ form {
     {% if solutions|length %}
     <table class="table table-striped table-condensed">
         <thead>
-            <tr class="level-one-index">
-                <td colspan="2"></td>
-                <th class="table-border-left table-border-right hidden-xs" colspan="3">Run Info</th>
-                <th class="table-border-right hidden-xs" colspan="4">Code Info</th>
-            </tr>
             <tr>
-                <th width="">Problem</th>
-                <th class="hidden-xs" width="">From</th>
-
-                <th width="" class="table-border-left">Result</th>
+                <th>Problem</th>
+                <th class="hidden-xs">From</th>
+                <th>Result</th>
                 <th class="hidden-xs" width="">Memory/Time</th>
-
-                <th width="" class="table-border-left">User</th>
-                <th class="">Language /Size/</th>
-                <th width="" class="table-border-right">Submit at</th>
-
-                <th class="hidden-xs" width="">Judger</th>
+                <th>Code</th>
+                <th>User / Submit at</th>
+                <!--<th class="hiddn-xs" width="">Judger</th>-->
             </tr>
         </thead>
         <tbody>
         {% for solution in solutions %}
             <tr>
-                <td><a href="{% url 'one_problem' solution.judge_name solution.problem_id %}" target="_self">{{ solution.judge_name }}-{{ solution.problem_id }}</a></td>
-                <td class="hidden-xs">
-                    {% if solution.judge_type %}
-                    <a target="_blank" href="{{ solution.vjudge_problem_url }}">{{ solution.judge_name }}</a>
-                    {% else %}
-                        {{ solution.judge_name }}
-                    {% endif %}
+                <td class="runtime-result "><a href="{% url 'one_problem' solution.judge_name solution.problem_id %}" target="_self">{{ solution.judge_name }}-{{ solution.problem_id }}</a></td>
+                <td class="hidden-xs runtime-result table-border-left">
+                    {% if solution.judge_type %}<a target="_blank" href="{{ solution.vjudge_problem_url }}">{{ solution.judge_name }}</a>{% else %}{{ solution.judge_name }}{% endif %}
                 </td>
-
-                {% if solution.moreinfo %}
-                <td class="table-border-left {{ solution.result_type }}"><a href="{% url 'runtime_info' solution.solution_id %}?result={{ solution.result }}" target="_self">{{ solution.result_name }}</a></td>
-                {% else %}
-                <td class="table-border-left {{ solution.result_type }}">{{ solution.result_name }}</td>
+                <td class="runtime-result table-border-left {% if solution.moreinfo %}
+                {{ solution.result_type }}"><a href="{% url 'runtime_info' solution.solution_id %}?result={{ solution.result }}" target="_self">{{ solution.result_name }}</a>
+                {% else %}{{ solution.result_type }}">{{ solution.result_name }}
                 {% endif %}
-
-                <td class="hidden-xs">{{ solution.memory }}K / {{ solution.time }}ms</td>
-
-                <td class="table-border-left"><a href="{% url 'one_user_info' solution.user_id %}" target="_self">{{ solution.user_id }}</a></td>
-
+                </td>
+                <td class="hidden-xs runtime-resource-used table-border-left"><span class="text-warning">{{ solution.memory }}</span> KB<br><span class="text-warning">{{ solution.time }}</span> MS</td>
+                <td class="runtime-result table-border-left">
                 {% if request.user.username == solution.user_id or request.user.is_superuser %}
-                <td><a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language_name }} /{{ solution.code_length }} B/</a></td>
-                {% else %}
-                <td>{{ solution.language_name }} /{{ solution.code_length }} B/</td>
-                {% endif %}
-                <td class="table-border-right utc-time-to-local-time">{{ solution.in_date|date:'c' }}</td>
-
-                <td class="hidden-xs">{{ solution.judger }}</td>
+                <a href="{% url 'only_source_by_run_id' solution.solution_id %}" target="_self">{{ solution.language_name }} /{{ solution.code_length }} B/</a>
+                {% else %}{{ solution.language_name }} /{{ solution.code_length }} B/{% endif %}
+                </td>
+                <td class="table-border-left">
+                    <a href="{% url 'one_user_info' solution.user_id %}" target="_self">{{ solution.user_id }}</a><br>
+                    <span class="utc-time-to-local-time submit-at">{{ solution.in_date|date:'c' }}</span>
+                </td>
+                <!--<td class="hidden-xs">{{ solution.judger }}</td>-->
             </tr>
         {% endfor %}
         </tbody>

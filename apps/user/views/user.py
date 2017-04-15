@@ -43,10 +43,17 @@ def user_info(request, username):
             total_others_number += result['count']
             total_others.append(result)
 
-    solutions_ac = Solution.objects.filter(user_id=username).filter(~Q(problem_id=0)).filter(result=4)\
-        .order_by('problem_id').values('problem_id').distinct()
-    solutions_wa = Solution.objects.filter(user_id=username).filter(~Q(problem_id=0)).filter(~Q(result=4)).filter(~Q(problem_id__in=solutions_ac))\
-        .order_by('problem_id').values('problem_id').distinct()
+    solutions_ac = Solution.objects.raw('SELECT `solution_id`, CONCAT(`judge_name`,"-",`problem_id`) AS `one_problem`, '
+                                        '`problem_id`, `judge_name` FROM `solution` '
+                                        'WHERE `problem_id`!=0 AND `result`=4 AND `user_id`=%s '
+                                        'GROUP BY `one_problem` ORDER BY `one_problem`', (username,))
+
+    solutions_ac_id_set = [item.problem_id for item in solutions_ac]
+
+    solutions_wa = Solution.objects.raw('SELECT `solution_id`, CONCAT(`judge_name`,"-",`problem_id`) AS `one_problem`, '
+                                        '`problem_id`, `judge_name` FROM `solution` '
+                                        'WHERE `problem_id`!=0 AND `result`!=4 AND `user_id`=%s AND `problem_id` NOT IN %s '
+                                        'GROUP BY `one_problem` ORDER BY `one_problem`', (username, solutions_ac_id_set,))
 
     context = dict(
         u=user,

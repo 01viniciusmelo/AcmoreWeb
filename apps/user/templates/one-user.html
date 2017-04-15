@@ -87,7 +87,7 @@
     <div class="text-center">
         <h4 class="text-center text-primary block-title">List of solved problems</h4>
         {% for solution in solutions_ac %}
-            <a target="_blank" href="{% url 'status_list' %}?user_id={{ u.user_id }}&problem={{ solution.problem_id }}">{{ solution.problem_id }}</a>
+            <a target="_blank" href="{% url 'status_list' %}?user_id={{ u.user_id }}&problem={{ solution.problem_id }}&judge_name={{ solution.judge_name }}">{{ solution.one_problem }}</a>
         {% endfor %}
     </div>
     {% endif %}
@@ -95,7 +95,7 @@
     <div class="text-center">
         <h4 class="text-center text-primary block-title">Have submitted but unsolved</h4>
         {% for solution in solutions_wa %}
-            <a target="_blank" href="{% url 'status_list' %}?user_id={{ u.user_id }}&problem={{ solution.problem_id }}">{{ solution.problem_id }}</a>
+            <a target="_blank" href="{% url 'status_list' %}?user_id={{ u.user_id }}&problem={{ solution.problem_id }}&judge_name={{ solution.judge_name }}">{{ solution.one_problem }}</a>
         {% endfor %}
     </div>
     {% endif %}

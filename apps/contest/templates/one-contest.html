@@ -93,7 +93,7 @@ nav.table-page {
         <h3 id="contestName" style="text-align: center" data-contest-id="{{ contest.contest_id }}">{{ contest.title }}</h3>
         <div class="clearfix">
             {% verbatim %}
-            <p class="time service-time">Server time: <span>{{ dateTime }}</span></p>
+            <p class="time service-time">Server time: <span v-text="dateTime"></span></p>
             {% endverbatim %}
             <p class="pull-left time">Begin: <time class="utc-time-to-local-time">{{ contest.start_time|date:'c' }}</time></p>
             <p class="pull-right time">End: <time class="utc-time-to-local-time">{{ contest.end_time|date:'c' }}</time></p>
@@ -106,8 +106,8 @@ nav.table-page {
                 </div>
             </div>
             <div class="clearfix">
-                <p class="pull-left time service-time">Passed: <span>{{ passedTime }}</span></p>
-                <p class="pull-right time service-time">Remainder: <span>{{ remainderTime }}</span></p>
+                <p class="pull-left time service-time">Time passed: <span v-text="passedTime"></span></p>
+                <p class="pull-right time service-time">Time remainder: <span v-text="remainderTime"></span></p>
             </div>
         </div>
         {% endverbatim %}
@@ -168,9 +168,9 @@ nav.table-page {
                 </div>
                 <div class="problem-d">
                     <div v-for="item in problem.d" v-if="item.v != ''">
-                        <h3>{{ item.k }}</h3>
+                        <h3 v-text="item.k"></h3>
                         <div v-if="item.t == '2'" v-html="item.v" class="desc"></div>
-                        <pre v-else class="desc">{{ item.v }}</pre>
+                        <pre v-else class="desc" v-text="item.v"></pre>
                     </div>
                 </div>
                 {% endverbatim %}
