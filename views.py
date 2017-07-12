@@ -1,14 +1,7 @@
-import base64
-import hashlib
-
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.contrib import auth
-from django.views.decorators.cache import cache_page
 
 from judge.settings import BASE_DIR
-
-import json
 
 
 def index(request):

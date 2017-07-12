@@ -50,10 +50,17 @@ def user_info(request, username):
 
     solutions_ac_id_set = [item.problem_id for item in solutions_ac]
 
-    solutions_wa = Solution.objects.raw('SELECT `solution_id`, CONCAT(`judge_name`,"-",`problem_id`) AS `one_problem`, '
-                                        '`problem_id`, `judge_name` FROM `solution` '
-                                        'WHERE `problem_id`!=0 AND `result`!=4 AND `user_id`=%s AND `problem_id` NOT IN %s '
-                                        'GROUP BY `one_problem` ORDER BY `one_problem`', (username, solutions_ac_id_set,))
+    if len(solutions_ac_id_set) > 0:
+        solutions_wa = Solution.objects.raw('SELECT `solution_id`, CONCAT(`judge_name`,"-",`problem_id`) AS `one_problem`, '
+                                            '`problem_id`, `judge_name` FROM `solution` '
+                                            'WHERE `problem_id`!=0 AND `result`!=4 AND `user_id`=%s AND `problem_id` NOT IN %s '
+                                            'GROUP BY `one_problem` ORDER BY `one_problem`', (username, solutions_ac_id_set,))
+    else:
+        solutions_wa = Solution.objects.raw(
+            'SELECT `solution_id`, CONCAT(`judge_name`,"-",`problem_id`) AS `one_problem`, '
+            '`problem_id`, `judge_name` FROM `solution` '
+            'WHERE `problem_id`!=0 AND `result`!=4 AND `user_id`=%s AND `problem_id`'
+            'GROUP BY `one_problem` ORDER BY `one_problem`', (username,))
 
     context = dict(
         u=user,
