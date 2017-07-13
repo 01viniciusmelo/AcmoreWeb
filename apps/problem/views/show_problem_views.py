@@ -31,7 +31,7 @@ def one_problem(request, judge_name, problem_id):
     if problem.attrs != '' and problem.attrs is not None:
         attr = json.loads(problem.attrs)
 
-    submit_alert = 'Judge services will be provided by %s oj.\
+    submit_alert = 'Judge services will be provided by %s.\
                     Make sure your code length is longer than 50 and not exceed 65536 Bytes.' % problem.judge_name
     if judge_name == 'LOCAL':
         language = support_language

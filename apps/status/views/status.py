@@ -74,6 +74,7 @@ def status_list(request):
 
     if content_type == 'json':
         page_number = cache.get_or_set('solutions_count_'+page_param.replace(' ', ''), solutions.count(), 3)
+        limit = 20
 
     solutions = solutions[offset * limit:(offset + 1) * limit]
 

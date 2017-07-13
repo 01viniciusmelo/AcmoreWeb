@@ -17,12 +17,11 @@ ERROR.
 {% endblock %}
 
 {% block main %}
-    {% block mymain %}
-    {% endblock %}
     <div class="content">
-        <h3>Sorry! Some Error happened.</h3>
-        <p>Server will take you return to last page in <span id="timer" style="color:red"></span> second(s).</p>
-        <p><a href="{% url 'index' %}" target="_self">Click here</a> to return to the website index page.</p>
+        <h3>{% if error_msg == '' or error_msg is None %}Sorry! Some Error happened.
+        {% else %}{{ error_msg }}{% endif %}</h3>
+        <p>Server will take you back to <a href="javascript:void(0);" id="toLastPage">last page</a> in <span id="timer" style="color:red"></span> second(s).</p>
+        <p><a href="{% url 'index' %}" target="_self">Click here</a> to index page.</p>
     </div>
 {% endblock %}
 
@@ -31,6 +30,11 @@ ERROR.
 
 {% block script %}
 <script>
+var toLastPage = document.getElementById("toLastPage");
+toLastPage.onclick = function() {
+    history.go(-1);
+};
+
 timer = function(now) {
     if (now <= 0) {
         history.go(-1);

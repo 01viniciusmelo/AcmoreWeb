@@ -21,7 +21,7 @@ def submit_problem(request, judge_name, problem_id):
     if source_code_length_limit[judge_name][0] < len(source_code) < source_code_length_limit[judge_name][1]:
         pass
     else:
-        return HttpResponse("Your source code is too long or too short to submit.")
+        return render(request, 'error.html', context=dict(error_msg='Source code size check failed.'))
 
     if request.META.has_key('HTTP_X_FORWARDED_FOR'):
         ip_address = request.META['HTTP_X_FORWARDED_FOR']
@@ -42,7 +42,7 @@ def submit_problem(request, judge_name, problem_id):
     try:
         problem = Problem.objects.filter(judge_name=judge_name).get(problem_id=problem_id)
     except Problem.DoesNotExist:
-        return HttpResponse('No problem')
+        return HttpResponse('No such problem')
 
     solution = Solution(
         problem_rec_id=problem.rec_id,
@@ -82,8 +82,6 @@ def submit_problem(request, judge_name, problem_id):
     ac_submit_number = Solution.objects.filter(problem_id=problem_id).filter(judge_name=judge_name).filter(result=4).count()
     all_submit_number = Solution.objects.filter(problem_id=problem_id).filter(judge_name=judge_name).count()
 
-    print all_submit_number
-
     problem = Problem.objects.filter(problem_id=problem_id).filter(judge_name=judge_name).get()
 
     problem.accepted = ac_submit_number
@@ -92,11 +90,4 @@ def submit_problem(request, judge_name, problem_id):
     problem.save()
 
     return HttpResponseRedirect(reverse('one_problem', args=[judge_name, problem_id, ])+'#submissions')
-
-
-
-
-
-
-
 

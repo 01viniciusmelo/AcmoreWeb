@@ -10,10 +10,10 @@ from get.OssSaver import OssSaver
 class HduProblemGetter():
     def __init__(self, pid):
         self.problem_id = pid
-        self.problem_url = 'http://hdu.acmore.cc/showproblem.php?pid='+str(pid)
+        self.problem_url = 'http://acm.hdu.edu.cn/showproblem.php?pid='+str(pid)
         self.headers = {
-            'Host':'hdu.acmore.cc',
-            'Origin':'http://hdu.acmore.cc',
+            'Host':'acm.hdu.edu.cn',
+            'Origin':'http://acm.hdu.edu.cn',
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language':'en,zh;q=0.8,zh-CN;q=0.6',
             'Connection':'keep-alive',
@@ -22,7 +22,7 @@ class HduProblemGetter():
             'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36',
         }
         self.oss = OssSaver()
-        self.hdu_mirror_url = 'http://hdu.acmore.cc/'
+        self.hdu_mirror_url = 'http://acm.hdu.edu.cn'
 
     def get(self):
 
