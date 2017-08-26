@@ -107,6 +107,8 @@ var timer = new Vue({
                 var secNum  = Math.round(_this.timestamp - _this.startTime);
                 if (secNum < 0) {
                     return "Not Start";
+                }else if(secNum === 0) {
+                    window.location.reload();
                 }
                 return sec2time(secNum);
             }();
@@ -202,13 +204,13 @@ var pagination = new Vue({
             var temp = [];
 
             if (activeOffset === 0) {
-                temp.push(["disabled", , pageOptions.left]);
+                temp.push(["disabled", null, pageOptions.left]);
             }else {
                 temp.push(["", activeOffset - 1, pageOptions.left]);
             }
             if (activeOffset > 4) {
                 temp.push(["", 0, 0]);
-                temp.push(["disabled", , "..."]);
+                temp.push(["disabled", null, "..."]);
             }
             for(var i = 0; i < pageAction.length; i++) {
                 temp.push([pageClass[i], pageAction[i], pageAction[i]]);
@@ -400,7 +402,7 @@ function showProblem(problem_id) {
 var $problemSelector = $("select[name='problem']");
 $(".problem-submit-launcher").on("click", function () {
     var problem_id = $(this).attr("data-num-id");
-    if (problem_id == "") {
+    if (problem_id === "") {
         problem_id = "A";
     }
     $problemSelector.val($("select[name='problem']>option[data-num-id='"+problem_id+"']").val());
@@ -429,7 +431,7 @@ $("#deleteContest").on("click", function () {
         },
         type:'post',
         success:function (result) {
-            if (result.status == 200)
+            if (Number(result.status) === 200)
                 window.location.href = result.next_page;
             else {
                 alert(result.message);
