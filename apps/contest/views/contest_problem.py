@@ -53,6 +53,8 @@ def problem_content(request):
                             .filter(num=contest_problem_num).filter(contest_id=contest_id).get()
         real_problem_id = contest_problem_info['problem_id']
 
+        print real_problem_id
+
         problem = Problem.objects.values('title','description','input','output','judge_name',
                                             'sample_input','sample_output','spj','hint','time_limit','memory_limit'
                                             ).get(rec_id=real_problem_id)

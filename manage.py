@@ -3,7 +3,7 @@ import os
 import sys
 
 if __name__ == "__main__":
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + "/JudgeWeb/judge"
     sys.path.append(BASE_DIR)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "judge.settings")
     try:

@@ -66,10 +66,10 @@ $("input[name='onlyMyCode']").on("change", function () {
 });
 
 var autoLoadControl = function () {
-    if (window.location.hash == "#status") {
+    if (window.location.hash === "#status") {
         $('#autoLoadContestStatus').bootstrapToggle('on');
         $('#autoLoadContestRank').bootstrapToggle('off');
-    }else if(window.location.hash == "#rank") {
+    }else if(window.location.hash === "#rank") {
         $('#autoLoadContestRank').bootstrapToggle('on');
         $('#autoLoadContestStatus').bootstrapToggle('off');
     }else {
@@ -147,9 +147,11 @@ var desc = new Vue({
     data: {
         diy: "label-diy",
         problem: {},
+    },
+    updated: function () {
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub, "tex2jax"]);
     }
 });
-
 var pageOptions = {
     left: '<span class="glyphicon glyphicon-chevron-left"></span>',
     right: '<span class="glyphicon glyphicon-chevron-right"></span>',
@@ -199,7 +201,7 @@ var pagination = new Vue({
 
             var temp = [];
 
-            if (activeOffset == 0) {
+            if (activeOffset === 0) {
                 temp.push(["disabled", , pageOptions.left]);
             }else {
                 temp.push(["", activeOffset - 1, pageOptions.left]);
@@ -215,10 +217,10 @@ var pagination = new Vue({
         },
         loadContent: function(event) {
             var offset = $(event.target).attr("data-offset");
-            if (typeof(offset) == "undefined") {
+            if (offset === undefined) {
                 offset = $(event.target).parent().attr("data-offset");
             }
-            if (typeof(offset) == "undefined") {
+            if (offset === undefined) {
                 return false;
             }
 
@@ -258,13 +260,13 @@ var resultRow = {
         var _class = "warning";
         var acTime = undefined;
 
-        if (this.dataUserWaNumber != undefined && this.dataUserWaNumber > 0) {
+        if (this.dataUserWaNumber !== undefined && this.dataUserWaNumber > 0) {
             _wa = true;
             _class = "danger";
         }
 
-        if (this.dataUserAcTime != undefined) {
-            if (this.dataFirstSolved != undefined) {
+        if (this.dataUserAcTime !== undefined) {
+            if (this.dataFirstSolved !== undefined) {
                 _class = "info";
             }else {
                 _class = "success";
@@ -325,7 +327,7 @@ $(function() {
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         if (changeHash) {
-            if ($(this).attr("href") == "#problem") {
+            if ($(this).attr("href") === "#problem") {
                 window.location.hash = "#problem/"+lastShowProblem;
             }else {
                 var scrollTop = document.body.scrollTop;
@@ -339,13 +341,13 @@ $(function() {
 
 function statusChange() {
     if (window.location.hash) {
-        if (window.location.hash.indexOf("problem") == 1) {
+        if (window.location.hash.indexOf("problem") === 1) {
             changeHash = 0;
             $('a[href="#problem"]').tab('show');
             changeHash = 1;
             var problem = window.location.hash.split("/")[1];
 
-            if (problem != '' && problem != undefined) {
+            if (problem !== '' && problem !== undefined) {
                 lastShowProblem = problem;
                 showProblem(problem);
             }else {
@@ -354,7 +356,7 @@ function statusChange() {
         }else {
             $('a[href="' + window.location.hash + '"]').tab('show');
 
-            if (window.location.hash == "#status") {
+            if (window.location.hash === "#status") {
                 table.loadPage();
             }
         }
@@ -371,7 +373,7 @@ function showProblem(problem_id) {
         $(".problem-list a[href='"+window.location.hash+"']").addClass("btn-warning");
     }();
     desc.problem = function() {
-        if (dataProblemCache[problem_id] == undefined) {
+        if (dataProblemCache[problem_id] === undefined) {
             var result;
             $.ajax({
                 url:contestOnlyProblemById,
@@ -381,10 +383,11 @@ function showProblem(problem_id) {
                 },
                 async:false,
                 success: function(data) {
-                    if (data.status == 200) {
+                    if (Number(data.status) === 200) {
                         dataProblemCache[problem_id] = data;
                         result = data;
                     }
+
                 }
             });
             return result.problem;

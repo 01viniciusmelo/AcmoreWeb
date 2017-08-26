@@ -170,7 +170,7 @@ nav.table-page {
                     <div v-for="item in problem.d" v-if="item.v != ''">
                         <h3 v-text="item.k"></h3>
                         <div v-if="item.t == '2'" v-html="item.v" class="desc"></div>
-                        <pre v-else class="desc" v-text="item.v"></pre>
+                        <pre v-else class="desc" v-html="item.v"></pre>
                     </div>
                 </div>
                 {% endverbatim %}
@@ -403,7 +403,7 @@ nav.table-page {
 <script>
 {% if contest_status == 3 or protected_status == 1%}
 var checkContestPassword = function () {
-    if ($("input[name='contestPassword']").val() == "") {
+    if ($("input[name='contestPassword']").val() === "") {
         alert('Please input contest password.');
         return false;
     }
@@ -412,7 +412,7 @@ var checkContestPassword = function () {
         url:'{% url 'check_contest_password' %}',
         data:$("form#checkPassword").serializeArray(),
         success:function (result) {
-            if (result.status == 200) {
+            if (Number(result.status) === 200) {
                 location.reload();
             }else {
                 $(".alert>p").text(result.message);
@@ -437,5 +437,44 @@ var contestOnlyProblemById = "{% url 'only_problem_by_id' %}";
 </script>
 <link href="{% static 'css/bootstrap-toggle.min.css' %}" rel="stylesheet">
 <script src="{% static '/js/vue.js'%}"></script>
-<script src="{% static '/js/contest.action.js'%}?_ver=1.0.3"></script>
+<script src="{% static '/js/contest.action.js'%}?_ver=1.0.4"></script>
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+	tex2jax: {
+		inlineMath: [
+			['$', '$'],
+			['\\(', '\\)']
+		],
+		displayMath: [
+			['$$', '$$'],
+			["\\[", "\\]"]
+		],
+		processEscapes: true
+	},
+	TeX: {
+		extensions: ["AMSmath.js", "AMSsymbols.js"],
+		equationNumbers: {
+			autoNumber: ["AMS"],
+			useLabelIds: true
+		},
+		Macros: {
+			hfill: "{}"
+		}
+	},
+	"HTML-CSS": {
+		linebreaks: {
+			automatic: true
+		},
+		availableFonts: ["TeX"],
+		// scale: 100
+	},
+	SVG: {
+		linebreaks: {
+			automatic: true
+		}
+	}
+});
+</script>
 {% endblock %}

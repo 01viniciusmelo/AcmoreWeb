@@ -49,7 +49,7 @@ var pagination = new Vue({
 
             var temp = [];
 
-            if (activeOffset == 0) {
+            if (activeOffset === 0) {
                 temp.push(["disabled", , pageOptions.left]);
             }else {
                 temp.push(["", activeOffset - 1, pageOptions.left]);
@@ -66,12 +66,12 @@ var pagination = new Vue({
         loadContent: function() {
             var offset = $(event.target).attr("data-offset");
 
-            table.isRepeat = offset == "0";
+            table.isRepeat = offset === "0";
 
-            if (offset == undefined) {
+            if (offset === undefined) {
                 offset = $(event.target).parent().attr("data-offset");
             }
-            if (offset == undefined) {
+            if (offset === undefined) {
                 return false;
             }
 
@@ -108,7 +108,7 @@ var table = new Vue({
                 pagination.setPage(data.offset, data.limit, data.page_number);
             };
 
-            if (cache && (table.table[table.type] != undefined)) {
+            if (cache && (table.table[table.type] !== undefined)) {
                 showData(table.table[table.type]);
             }else {
                 var haveNoJudge = false;
@@ -123,7 +123,7 @@ var table = new Vue({
                                 haveNoJudge = true;
                             }
                             item.result = result;
-                            if (result == 11 || result == 10) {
+                            if (result === 11 || result === 10) {
                                 item.resultText = '<a target="_blank" href="/runtime/'+item.solution_id+'">'+item.result_name+'</a>';
                             }else {
                                 item.resultText = item.result_name;
@@ -153,12 +153,12 @@ var table = new Vue({
 
         },
         changeStatus: function(type) {
-            if (type == 1) {
+            if (type === 1) {
                 table.type = 1;
                 delete table.query.result;
                 delete table.query.rank;
                 delete table.query.order;
-            }else if (type == 2) {
+            }else if (type === 2) {
                 table.type = 2;
                 table.query["order"] =  "time";
                 table.query["result"] =  4;
@@ -189,15 +189,15 @@ $(function() {
     $('#autoLoadStatus').bootstrapToggle('off');
     var hash = window.location.hash.split("#")[1];
 
-    if (hash == "") {
+    if (hash === "") {
 
-    }else if(hash == "desc") {
+    }else if(hash === "desc") {
 
-    }else if(hash == "submit"){
+    }else if(hash === "submit"){
         changToSubmit();
-    }else if(hash == "submissions"){
+    }else if(hash === "submissions"){
         changToSubmissions();
-    }else if(hash == "rank") {
+    }else if(hash === "rank") {
         changeToRank();
     }
 

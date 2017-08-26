@@ -2,5 +2,6 @@
 env
 judge/settings.py
 robot/setting.py
+manage.py
 .idea
 jol-2017-3-12-17:11.sql

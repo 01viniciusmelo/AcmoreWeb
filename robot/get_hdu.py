@@ -42,12 +42,11 @@ class Checker(Saver):
         return soup.find_all("a", style='margin:5px')[-1].get_text()
 
 
-
 checker = Checker()
 hdu_db_last_problem_id = checker.hdu_last_problem_id()
 db_last_problem_id = checker.db_last_problem_id()
 
-for problem_id in range(db_last_problem_id, hdu_db_last_problem_id):
+for problem_id in range(db_last_problem_id, hdu_db_last_problem_id + 1):
     getter = HduProblemGetter(problem_id)
     getter.get()
 
