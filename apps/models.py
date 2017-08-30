@@ -96,15 +96,6 @@ class Online(models.Model):
         managed = False
         db_table = 'online'
 
-class Privilege(models.Model):
-    user_id = models.CharField(max_length=48)
-    rightstr = models.CharField(max_length=30)
-    defunct = models.CharField(max_length=1)
-
-    class Meta:
-        managed = False
-        db_table = 'privilege'
-
 class Reply(models.Model):
     rid = models.AutoField(primary_key=True)
     author_id = models.CharField(max_length=48)
@@ -142,3 +133,12 @@ class Topic(models.Model):
         managed = False
         db_table = 'topic'
 '''
+
+class Privilege(models.Model):
+    user_id = models.CharField(max_length=48)
+    rightstr = models.CharField(max_length=30)
+    defunct = models.CharField(max_length=1)
+
+    class Meta:
+        managed = False
+        db_table = 'privilege'

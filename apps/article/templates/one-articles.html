@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}
+Articles.
+{% endblock %}
+{% block style %}
+<style>
+article {
+    border: 1px solid #dddddd;
+    padding: 10px;
+    margin: 16px;
+    margin-bottom: 30px;
+}
+article.odd {
+    background-color: #f2f2f2;
+}
+article.even {
+    background-color: #ffffff;
+}
+article hr {
+    border-top: 2px solid #e8e8e8;
+    margin: 10px 0;
+}
+article h4 {
+    color: #43788a;
+}
+article .gravatar {
+    margin-right: 10px;
+}
+article .gravatar img {
+    width: 64px;
+    height: 64px;
+}
+article .content-wrapper {
+
+}
+div.content {
+    padding: 10px 24px;
+
+}
+.username {
+    color: #2e6da4;
+}
+.comment {
+    border: 1px solid #dddddd;
+    border-left: 5px solid #cccccc;
+    padding: 10px;
+    margin: 0 16px 10px 16px;
+}
+.comment-content {
+    border-left: 2px solid #eeeeee;
+    padding: 10px;
+}
+.comment-option {
+    padding: 10px;
+}
+.reply-area {
+    background-color: #eeeeee;
+    padding: 8px 20px;
+}
+.comment-reply {
+    border-top: 1px solid #cccccc;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+    <article class="article clearfix">
+        <div class="content-wrapper">
+        <div class="clearfix">
+            <div class="gravatar col-sm-1">
+                <img src="{{ article.gravatar }}?s=64" alt="gravatar"/>
+            </div>
+            <div class="col-sm-10">
+                <h4>{{ article.title }}</h4>
+                <div>
+                    <span class="username">{{ article.author.username }}</span> at {{ article.updated_at|date:"Y-m-d H:i:s" }}
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% autoescape off %}
+        <div class="content col-sm-10 col-md-offset-1">{{ article.content }}</div>
+        {% endautoescape %}
+        </div>
+    </article>
+    <div id="comments">
+        <h3>Comments:</h3>
+    </div>
+    {% for key, value in comments.items %}
+        <section class="comment clearfix">
+            <div class="col-sm-2 comment-option">
+                <div>
+                    <img src="{{ value.gravatar }}?s=32">
+                    <span>{{ value.author__username }}</span>
+                </div>
+                {{ value.time|date:"Y/m/d H:i" }}
+            </div>
+            {% autoescape off %}
+            <div class="col-sm-10">
+                <div class="comment-content">{{ value.content }}</div>
+            </div>
+                {% if value.reply_list %}
+            <div class="col-sm-10 col-sm-offset-2 reply-wrapper">
+                <div class="reply-area">
+                    <div><h5>Reply:</h5></div>
+                    {% for reply in value.reply_list %}
+                    <div class="comment-reply">
+                        <img src="{{ reply.gravatar }}?s=32" />
+                        <span class="username">{{ reply.author__username }}</span> to <span class="username">{{ reply.to_user__username }}</span>
+                        at <span>{{ reply.time|date:"Y-m-d H:i:s" }}</span>
+                        <div style="margin-left: 40px">{{ reply.content }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+                {% endif %}
+            {% endautoescape %}
+        </section>
+    {% endfor %}
+
+{% endblock %}
+{% block script %}
+<script>
+
+</script>
+{% endblock %}

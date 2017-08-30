@@ -84,3 +84,6 @@ source_code_length_limit = dict(
 vjudge_problem_url = dict(
     HDU='http://acm.hdu.edu.cn/showproblem.php?pid=',
 )
+
+
+gravatar_cdn = 'https://cdn.v2ex.com/gravatar/'

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}
+Articles.
+{% endblock %}
+{% block style %}
+<style>
+article {
+    border: 1px solid #dddddd;
+    border-left: 8px solid #cccccc;
+    padding: 10px;
+    margin: 16px;
+    margin-bottom: 14px;
+}
+article.odd {
+    background-color: #f2f2f2;
+}
+article.even {
+    background-color: #ffffff;
+}
+article hr {
+    border-top: 2px solid #e8e8e8;
+    margin: 10px 0;
+}
+article h4 {
+    color: #43788a;
+}
+article .gravatar {
+    margin-right: 10px;
+}
+article .gravatar img {
+    width: 64px;
+    height: 64px;
+}
+article .content-wrapper {
+
+}
+div.content {
+    max-height: 160px;
+    overflow-y: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    padding: 5px;
+}
+article .username {
+    color: #2e6da4;
+}
+.comment-number {
+    margin-left: 20px;
+}
+.overflow {
+    transition: max-height .32s cubic-bezier(.95,.05,.795,.035),-webkit-mask-size .22s cubic-bezier(.95,.05,.795,.035);
+    transition: mask-size .22s cubic-bezier(.95,.05,.795,.035),max-height .32s cubic-bezier(.95,.05,.795,.035);
+    transition: mask-size .22s cubic-bezier(.95,.05,.795,.035),max-height .32s cubic-bezier(.95,.05,.795,.035),-webkit-mask-size .22s cubic-bezier(.95,.05,.795,.035);
+    -webkit-mask-image: linear-gradient(#000 calc(100% - 8rem),transparent calc(100% - 2.8rem));
+    mask-image: linear-gradient(#000 calc(100% - 8rem),transparent calc(100% - 2.8rem));
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+.see-more {
+    text-align: center;
+    color: #2e6da4;
+    margin-top: -12px;
+    z-index: 999!important;
+    cursor: pointer;
+    padding: 10px;
+}
+</style>
+{% endblock %}
+
+{% block main %}
+{% for article in articles %}
+    <article class="article {% cycle 'odd' 'even' %} clearfix" data-id="{{ article.tid }}">
+        <div class="gravatar col-sm-1">
+            <img src="{{ article.gravatar }}?s=64" />
+        </div>
+        <div class="content-wrapper col-sm-10">
+            <a href="{% url 'one_article' article.tid %}"><h4>{{ article.title }}</h4></a>
+            <div>
+                <span class="username">{{ article.author__username }}</span> at {{ article.updated_at|date:"Y-m-d H:i:s" }}
+                <a href="{% url 'one_article' article.tid %}"><span class="comment-number">Comments({{ article.comment_count }})</span></a>
+            </div>
+            <hr>
+            {% autoescape off %}
+            <div class="content">{{ article.content }}</div>
+            {% endautoescape %}
+        </div>
+    </article>
+{% endfor %}
+
+{% endblock %}
+{% block script %}
+<script>
+$(function() {
+    $("div.content").each(function (index, item) {
+        if (item.offsetHeight > 140) {
+            $(item).addClass('overflow');
+            var $seeMore = $("<div class='see-more'>--查看更多--</div>");
+            $seeMore.on("click", function () {
+                var tid = $(item).parent().parent().attr('data-id');
+                alert(tid);
+            });
+            $(item).parent().append($seeMore);
+        }
+    });
+});
+</script>
+{% endblock %}

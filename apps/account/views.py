@@ -54,29 +54,20 @@ def login(request):
 
         old_user = OldUser.objects.get(user_id=username)
 
-
-        if not User.objects.filter(username=username).exists():
+        user = User.objects.get(username=username)
+        if user.password == '':
             salt = base64.decodestring(old_user.password)[20:]
 
             password_md5 = hashlib.md5(password).hexdigest()
             password_sha1 = hashlib.sha1(password_md5 + salt).digest()
 
             input_password = base64.b64encode(password_sha1 + salt)
-
             if old_user.password == input_password:
-                user = User.objects.create_user(
-                    username=username,
-                    password=password,
-                    email=old_user.email,
-                    is_email_check=0,
-                    u_info=old_user,
-                )
+                user.set_password(password)
                 user.save()
 
-                #print "new user"
             else:
                 return login_error(from_url, username)
-
         user = auth.authenticate(username=username, password=password)
 
         #print user
