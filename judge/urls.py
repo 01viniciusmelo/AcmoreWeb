@@ -55,6 +55,8 @@ urlpatterns = [
 
     url(r'^article/', include('apps.article.urls')),
 
+    url(r'^manage/', include('apps.manager.urls')),
+
     url(r'^marquee-message$', index_view.marquee_message, name='marquee_message'),
 
 ]

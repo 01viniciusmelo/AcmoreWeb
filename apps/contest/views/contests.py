@@ -369,15 +369,3 @@ def delete_one_contest(request, contest_id):
     return JsonResponse(response)
 
 
-
-
-
-
-
-
-
-
-
-
-
-

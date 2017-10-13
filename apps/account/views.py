@@ -124,7 +124,6 @@ def register(request):
             pass
             #from_url = reverse('index')
 
-
         if  username and email and password and repassword:
             if len(username) < 6:
                 return register_error(from_url, '', 4)
@@ -373,8 +372,6 @@ def modify_information(request):
             status=405,
             message=u'error request.'
         )
-
-
     return HttpResponse(json.dumps(context, cls=DjangoJSONEncoder), content_type="application/json")
 
 
@@ -387,7 +384,6 @@ def logout(request):
     return HttpResponseRedirect(from_url)
 
 
-
 @login_required(redirect_field_name='from_url')
 def user_center(request):
     user = request.user
@@ -397,10 +393,4 @@ def user_center(request):
         return render(request, 'user-center.html', context=context)
     else:
         return render(request, 'error.html')
-
-
-
-
-
-
 

@@ -13,7 +13,7 @@ def get_articles(request):
     offset = request.GET.get("offset", 0)
     articles = Article.objects.all().annotate(comment_count=Count('reply')) \
     .values('tid','content','title', 'author__email', 'author__username', 'updated_at', 'comment_count')\
-    .order_by("-updated_at")[:20]
+    .order_by("-updated_at")[:15]
 
     print articles.query
 

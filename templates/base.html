@@ -129,6 +129,7 @@ html, body {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
+                                {% if request.user.is_superuser %}<li><a href="{% url 'user_center' %}">Manage</a></li>{% endif %}
                                 <li><a href="{% url 'user_center' %}">My Account</a></li>
                                 <li><a href="{% url 'account_logout' %}?from_url={{ request.path }}">Logout</a></li>
                             </ul>

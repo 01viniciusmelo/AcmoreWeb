@@ -3,6 +3,8 @@
 Articles.
 {% endblock %}
 {% block style %}
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/editor/editormd.css' %}" />
 <style>
 article {
     border: 1px solid #dddddd;
@@ -64,11 +66,31 @@ article .username {
     cursor: pointer;
     padding: 10px;
 }
+.add-article-option {
+    text-align: center;
+    display: none;
+    margin: 20px 0 40px 0;
+}
+.add-article {
+    margin: 20px;
+
+}
 </style>
+
 {% endblock %}
 
 {% block main %}
-{% for article in articles %}
+    <div class="add-article"><a href="javascript:void(0);"><button class="btn btn-diy">Post an article.</button></a></div>
+    <div id="newEditor">
+        <textarea style="display:none;">###You can write content using markdown grammar here, a real time previewer on the right.
+###编辑器支持MarkDown语法</textarea>
+    </div>
+    <div class="add-article-option">
+        <button class="btn btn-default">Cancel</button>
+        <button class="btn btn-diy">Submit</button>
+    </div>
+
+    {% for article in articles %}
     <article class="article {% cycle 'odd' 'even' %} clearfix" data-id="{{ article.tid }}">
         <div class="gravatar col-sm-1">
             <img src="{{ article.gravatar }}?s=64" />
@@ -85,10 +107,11 @@ article .username {
             {% endautoescape %}
         </div>
     </article>
-{% endfor %}
+    {% endfor %}
 
 {% endblock %}
 {% block script %}
+<script src="{% static 'js/editor/editormd.js' %}"></script>
 <script>
 $(function() {
     $("div.content").each(function (index, item) {
@@ -101,6 +124,21 @@ $(function() {
             });
             $(item).parent().append($seeMore);
         }
+    });
+    
+    $(".add-article").on("click", function () {
+        $(this).hide();
+        $(".add-article-option").show();
+        var testEditor = editormd("newEditor", {
+            width   : "96%",
+            height  : 540,
+            syncScrolling : "single",
+            path    : "/static/lib/",
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "./php/upload.php",
+            emoji: false,
+        });
     });
 });
 </script>
