@@ -69,8 +69,8 @@
             "bold", "del", "italic", "quote", /*"ucwords", "uppercase", "lowercase",*/ "|",
             "h1", "h2", "h3", "h4", "h5", "h6", "|", 
             "list-ul", "list-ol", "hr", "|",
-            "link", /*"reference-link",*/ "image", "code", "preformatted-text", "code-block", "table", "datetime", /*"emoji",*/ "html-entities", /*"pagebreak",*/ "|",
-            /*"goto-line",*/ "watch", "preview", /*"fullscreen", "clear", "search",*/ "|",
+            "link", /*"reference-link",*/ "image", "code", "preformatted-text", "code-block", "table", /*"datetime", "emoji", "html-entities", "pagebreak",*/ "|",
+            /*"goto-line",*/ "watch", "preview", /*"fullscreen", "clear", "search", */"|",
             "help", /*"info"*/
         ],
         simple : [
@@ -104,7 +104,7 @@
         delay                : 300,            // Delay parse markdown to html, Uint : ms
         autoLoadModules      : true,           // Automatic load dependent module files
         watch                : true,
-        placeholder          : "Enjoy Markdown! coding now...",
+        placeholder          : "Enjoy Markdown! coding now...    编辑器支持MarkDown语法",
         gotoLine             : true,
         codeFold             : false,
         autoHeight           : false,
@@ -2012,7 +2012,11 @@
                 smartLists  : true,
                 smartypants : true
             };
-            
+            //console.log(editormd.markedRenderer(markdownToC, rendererOptions));
+            //console.log(markdownToC);
+            //console.log(rendererOptions);
+            //console.log(markedOptions);
+
             marked.setOptions(markedOptions);
                     
             var newMarkdownDoc = editormd.$marked(cmValue, markedOptions);

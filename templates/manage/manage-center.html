@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}
+ACMORE {{ request.user.username }}.
+{% endblock %}
+
+{% block style %}
+<style>
+.submit-data{
+    background-color: #ccc;
+    padding: 5px 15px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+.editor-launcher {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #5F9EA0;
+    margin-left: 10px;
+}
+</style>
+{% endblock %}
+
+{% block mystyle %}
+
+{% endblock %}
+
+{% block main %}
+    <div class="main-body clearfix">
+        <div >
+            <div class="clearfix">
+                <div><label class="">Users Manage:</label></div>
+                <div class="col-xs-offset-2 col-xs-10">
+                    <a href="#" onclick="window.open('{% url 'change_password' %}', 'newwindow', 'width=480,height=320');">Change one's password.</a>
+                </div>
+            </div>
+            <hr>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block script %}
+<script>
+var sendEmailButton = $(".verification-get-email");
+var sendMail = function() {
+    sendEmailButton.off("click").css({"cursor": "not-allowed"}).html("Retry after <span id='verifyTime'></span>s");
+    timer = function(now) {
+        if (now < 1) {
+            sendEmailButton.on("click", sendMail).css({"cursor": "pointer"}).text("Send Email");
+            return false;
+        }
+        $("#verifyTime").text(now);
+        setTimeout(function() {
+            timer(--now);
+        }, 1000);
+    };
+    timer(60);
+    $.ajax({
+        url: "{% url 'user_check_email' %}",
+        type: "POST",
+        data: {
+            user: "{{ request.user.username }}",
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(data) {
+            if (data.status == 200) {
+
+            }else {
+                sendEmailButton.text(data.message);
+            }
+        }
+    });
+};
+
+sendEmailButton.on("click", sendMail);
+
+$(".check-email-verify-code").on("click", function() {
+    $.ajax({
+        url: "{% url 'user_check_email' %}",
+        type: "POST",
+        data: {
+            code: $("#VerificationCode").val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                $(".verify-email.label").removeClass("label-danger").addClass("label-success").text("Verified");
+                $("#verifyEmailArea").fadeOut();
+                $("#verifyEmailLauncher").hide();
+            }else {
+                var $alert = '<div style="margin-top: 20px;" class="alert alert-danger alert-dismissible fade in" role="alert" id="checkEmailAlert">\
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>\
+                                <span>'+data.message+'</span>\
+                            </div>';
+                $(".check-email-verify-code").parent().parent().parent().append($alert);
+                setTimeout(function () {
+                    $("#checkEmailAlert").alert("close");
+                }, 5000);
+            }
+        }
+    });
+});
+$(".close-email-verify").on("click", function () {
+    $("#verifyEmailArea").hide();
+    $("#verifyEmailLauncher").show();
+});
+$("#verifyEmailLauncher").on("click", function () {
+    $("#verifyEmailLauncher").fadeOut();
+    $("#verifyEmailArea").fadeIn();
+});
+$(".modifyEmilLauncher").on("click", function() {
+    $("#verifyEmailArea").hide();
+    $("#modifyEmailArea").fadeIn();
+});
+$("#fillEmailLauncher").on("click", function() {
+    $("#verifyEmailArea").hide();
+    $(".verify-email").text("Not verified");
+    $("#fillEmailLauncher").remove();
+    $("#modifyEmailArea").fadeIn();
+});
+$(".close-email-modify").on("click", function () {
+    $("#modifyEmailArea").hide();
+    $("#verifyEmailLauncher").fadeIn();
+});
+$(".modify-email").on("click", function () {
+    var email = $("#ModifyEmail").val();
+    if (!checkEmailFormat(email)) {
+         var $alert = '<div style="margin-top: 20px;" class="alert alert-danger alert-dismissible fade in" role="alert" id="checkEmailAlert">\
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>\
+                        <span>Email format error.</span>\
+                    </div>';
+        $(".modify-email").parent().parent().parent().append($alert);
+        setTimeout(function () {
+            $("#checkEmailAlert").alert("close");
+        }, 3000);
+    }else {
+        $.ajax({
+            url: "{% url 'user_modify_information' %}",
+            type: "POST",
+            data: {
+                action: "email",
+                email: email,
+                csrfmiddlewaretoken: $("meta[name='csrf']").attr("content")
+            },
+            success: function(data) {
+                if (data.status == 200) {
+                    $(".email-content").text(email);
+                    $("#verifyEmailLauncher").fadeIn();
+                    $("#modifyEmailArea").fadeOut();
+                }else {
+                    var $alert = '<div style="margin-top: 20px;" class="alert alert-danger alert-dismissible fade in" role="alert" id="checkEmailAlert">\
+                                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>\
+                                    <span>'+data.message+'</span>\
+                                </div>';
+                    $(".modify-email").parent().parent().parent().append($alert);
+                    setTimeout(function () {
+                        $("#checkEmailAlert").alert("close");
+                    }, 5000);
+                }
+            }
+        });
+    }
+});
+
+var editLaunchers = document.getElementsByClassName("editor-launcher");
+for (var i = 0; i < editLaunchers.length; i++) {
+    editLaunchers[i].onclick = function () {
+        var _this = this;
+        var forEditor = _this.getAttribute('data-for');
+        var editorElement = document.getElementById(forEditor);
+
+        var form = document.createElement("form");
+        form.action = editorElement.getAttribute("data-action");
+        var input = document.createElement("input");
+        input.value = editorElement.innerText;
+        input.name = editorElement.getAttribute("data-name");
+        var button = document.createElement("button");
+        button.type = "submit";
+        button.innerText = "Submit";
+
+        form.appendChild(input);
+        form.appendChild(button);
+
+        var thisBlockStyleDisplay = editorElement.style.display;
+        var launcherStyleDisplay = _this.style.display;
+
+        $(form).submit(function (event) {
+            event.preventDefault();
+            var $form = $(form);
+            var postData = {};
+            postData["csrfmiddlewaretoken"] = $("meta[name='csrf']").attr("content");
+
+            var typeName = $form.children("input")[0].name;
+            postData[typeName] = $form.children("input")[0].value;
+            postData['action'] = typeName;
+
+            var url = $form.attr('action');
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: postData,
+                success: function(data) {
+                    console.log(data);
+                    editorElement.innerText = postData[typeName];
+                    editorElement.style.display = thisBlockStyleDisplay;
+                    _this.style.display = launcherStyleDisplay;
+                    $form.remove();
+                }
+            });
+        });
+
+        editorElement.style.display = "none";
+        _this.style.display = "none";
+        editorElement.parentNode.insertBefore(form, editorElement.nextSibling);
+        input.focus();
+    }
+}
+
+
+</script>
+{% endblock %}
+

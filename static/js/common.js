@@ -104,3 +104,5 @@ var vjudge_problem_url_list = {
     HDU:'http://acm.hdu.edu.cn/showproblem.php?pid=',
 };
 
+
+var markdownTag = '<!--Markdown-->';

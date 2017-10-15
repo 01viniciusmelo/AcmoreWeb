@@ -24,7 +24,7 @@ class Article(models.Model):
 class Reply(models.Model):
     rid = models.AutoField(primary_key=True)
     author = models.ForeignKey(User)
-    #author_username = models.CharField(max_length=64, )
+    author_username = models.CharField(max_length=64)
     to_user = models.ForeignKey(User, null=True, related_name='to_user')
     time = models.DateTimeField()
     content = models.TextField()

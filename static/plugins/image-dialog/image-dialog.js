@@ -162,9 +162,9 @@
 
                             if(!settings.crossDomainUpload)
                             {
-                              if (json.success === 1)
+                              if (json.status === 200)
                               {
-                                  dialog.find("[data-url]").val(json.url);
+                                  dialog.find("[data-url]").val(json.data.url);
                               }
                               else
                               {

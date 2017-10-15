@@ -20,11 +20,11 @@ import time
 
 
 def contest_list(request):
-    contests = Contest.objects.raw("select * from contest "
-                                   "left join "
-                                   "(select * from privilege where rightstr like 'm%%') p "
-                                   "on concat('m',contest_id)=rightstr "
-                                   "WHERE contest.defunct = 'N' order by contest_id desc;")
+    contests = Contest.objects.raw("select * from contest \
+                                   left join \
+                                   (select * from privilege where rightstr like 'm%%') p \
+                                   on concat('m',contest_id)=rightstr \
+                                   WHERE contest.defunct = 'N' order by contest_id desc;")
     _contests = list()
     now_time = timezone.now()
     for contest in contests:

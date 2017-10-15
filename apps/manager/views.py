@@ -20,7 +20,7 @@ def change_password(request):
                 user = User.objects.get(username=username)
                 if user.is_superuser:
                     res['status'] = 403
-                    res['message'] = 'User %s also a superuser.' % username
+                    res['message'] = 'User %s is a superuser.' % username
                 else:
                     user.set_password(password)
                     user.save()
@@ -41,6 +41,9 @@ def check_user(request):
     }
     try:
         user = User.objects.get(username=username)
+        if user.is_superuser:
+            res['status'] = 403
+            res['message'] = 'User %s is a superuser.' % username
         res['data'] = {
             'username':user.username,
             'last_login':user.last_login,
@@ -52,4 +55,7 @@ def check_user(request):
 
     return JsonResponse(res)
 
+
+def manage_center(request):
+    return render(request, 'manage/manage-center.html', context={})
 

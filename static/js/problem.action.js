@@ -199,8 +199,9 @@ $(function() {
         changToSubmissions();
     }else if(hash === "rank") {
         changeToRank();
+    }else if(hash === "article") {
+        changeToArticle();
     }
-
     $("select[name='language']").on("change", function() {
         localStorage.setItem("submit-language", $(this).val());
     });
@@ -234,6 +235,11 @@ $(function() {
     $("a[data-href='rank']").on("click", function(e) {
         e.preventDefault();
         changeToRank();
+    });
+    $("a[href='#article']").on("click", function(e) {
+        e.preventDefault();
+        window.location.hash = "article";
+        changeToArticle();
     });
 });
 
@@ -276,4 +282,8 @@ function changeToRank() {
     window.location.hash = "rank";
     table.loadPage(2);
 }
-
+function changeToArticle() {
+    $("a[href='#article']").tab('show');
+    table.isRepeat = false;
+    table.stopRepeat();
+}

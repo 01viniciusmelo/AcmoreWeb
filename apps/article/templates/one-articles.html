@@ -1,135 +1,350 @@
 {% extends "base.html" %}
 {% block title %}
-Articles.
+    Articles.
 {% endblock %}
 {% block style %}
-<style>
-article {
-    border: 1px solid #dddddd;
-    padding: 10px;
-    margin: 16px;
-    margin-bottom: 30px;
-}
-article.odd {
-    background-color: #f2f2f2;
-}
-article.even {
-    background-color: #ffffff;
-}
-article hr {
-    border-top: 2px solid #e8e8e8;
-    margin: 10px 0;
-}
-article h4 {
-    color: #43788a;
-}
-article .gravatar {
-    margin-right: 10px;
-}
-article .gravatar img {
-    width: 64px;
-    height: 64px;
-}
-article .content-wrapper {
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/editor/editormd.css' %}"/>
+    <style>
+        article {
+            border: 1px solid #dddddd;
+            padding: 10px;
+            margin: 16px;
+            margin-bottom: 30px;
+        }
 
-}
-div.content {
-    padding: 10px 24px;
+        article.odd {
+            background-color: #f2f2f2;
+        }
 
-}
-.username {
-    color: #2e6da4;
-}
-.comment {
-    border: 1px solid #dddddd;
-    border-left: 5px solid #cccccc;
-    padding: 10px;
-    margin: 0 16px 10px 16px;
-}
-.comment-content {
-    border-left: 2px solid #eeeeee;
-    padding: 10px;
-}
-.comment-option {
-    padding: 10px;
-}
-.reply-area {
-    background-color: #eeeeee;
-    padding: 8px 20px;
-}
-.comment-reply {
-    border-top: 1px solid #cccccc;
-}
-</style>
+        article.even {
+            background-color: #ffffff;
+        }
+
+        article hr {
+            border-top: 2px solid #e8e8e8;
+            margin: 10px 0;
+        }
+
+        .article-title {
+            color: #43788a;
+        }
+
+        article .gravatar {
+            margin-right: 10px;
+        }
+
+        article .gravatar img {
+            width: 64px;
+            height: 64px;
+        }
+
+        article .content-wrapper {
+
+        }
+
+        div.content {
+            padding: 10px 24px;
+            line-height: 1.8;
+            word-wrap: break-word;
+            font-size: 16px;
+        }
+
+        div.content img {
+            max-width: 100%;
+        }
+
+        .username {
+            color: #2e6da4;
+        }
+
+        .comment {
+            border: 1px solid #dddddd;
+            border-left: 5px solid #cccccc;
+            padding: 10px;
+            margin: 0 16px 10px 16px;
+        }
+
+        .comment-content {
+            border-left: 2px solid #eeeeee;
+            padding: 10px;
+        }
+
+        .comment-option {
+            padding: 10px;
+        }
+
+        .reply-area {
+            background-color: #FFF9E8;
+            padding: 8px 20px;
+        }
+
+        .comment-reply {
+            border-top: 1px solid #cccccc;
+        }
+
+        .markdown-content {
+
+        }
+
+        .linenums li {
+            list-style-type: decimal;
+        }
+
+        #editorArea {
+
+        }
+
+        .add-article-option {
+            text-align: center;
+            margin: 20px 0 40px 0;
+        }
+
+        .add-article {
+            padding: 20px;
+            border: 4px dashed #9d9d9d;
+            text-align: center;
+            width: 50%;
+            margin: 0 auto;
+            margin-bottom: 40px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .add-article .glyphicon {
+            font-size: 84px;
+            color: #aaa;
+        }
+
+        #titleAlert {
+            font-size: 16px;
+            color: red;
+            padding-left: 40px;
+        }
+
+        @-webkit-keyframes twinkling { /*透明度由0到1*/
+            0% {
+                opacity: 0; /*透明度为0*/
+            }
+            100% {
+                opacity: 1; /*透明度为1*/
+
+            }
+        }
+
+        .comment-status-title {
+            padding: 0 40px;
+        }
+
+        .comment-status-title p {
+            font-size: 16px;
+            padding: 20px 0;
+        }
+
+        #editorArea {
+            padding: 0px 3%;
+        }
+
+        .reply-content {
+            margin-left: 40px;
+            color: #333;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .comment-reply {
+            color: #9d9d9d;
+            margin: 18px;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        .reply-editor-area > .reply-control {
+            text-align: right;
+        }
+    </style>
 
 {% endblock %}
 
 {% block main %}
     <article class="article clearfix">
         <div class="content-wrapper">
-        <div class="clearfix">
-            <div class="gravatar col-sm-1">
-                <img src="{{ article.gravatar }}?s=64" alt="gravatar"/>
-            </div>
-            <div class="col-sm-10">
-                <h4>{{ article.title }}</h4>
-                <div>
-                    <span class="username">{{ article.author.username }}</span> at {{ article.updated_at|date:"Y-m-d H:i:s" }}
+            <div class="clearfix">
+                <div class="gravatar col-sm-1">
+                    <img src="{{ article.gravatar }}?s=64" alt="gravatar"/>
+                </div>
+                <div class="col-sm-10">
+                    <h4 class="article-title">{{ article.title }}</h4>
+                    <div>
+                        <span class="username">{{ article.author.username }}</span>
+                        at {{ article.updated_at|date:"Y-m-d H:i:s" }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr>
-        {% autoescape off %}
-        <div class="content col-sm-10 col-md-offset-1">{{ article.content }}</div>
-        {% endautoescape %}
+            <hr>
+            {% autoescape off %}
+                <div class="content col-sm-10 col-md-offset-1 markdown-content markdown-body">{{ article.content }}</div>
+            {% endautoescape %}
         </div>
     </article>
     <div id="comments">
-        <h3>Comments:</h3>
+        <h4>Comments:</h4>
     </div>
-    {% for key, value in comments.items %}
-        <section class="comment clearfix">
-            <div class="col-sm-2 comment-option">
-                <div>
-                    <img src="{{ value.gravatar }}?s=32">
-                    <span>{{ value.author__username }}</span>
-                </div>
-                {{ value.time|date:"Y/m/d H:i" }}
-            </div>
-            {% autoescape off %}
-            <div class="col-sm-10">
-                <div class="comment-content">{{ value.content }}</div>
-            </div>
-                {% if value.reply_list %}
-            <div class="col-sm-10 col-sm-offset-2 reply-wrapper">
-                <div class="reply-area">
-                    <div><h5>Reply:</h5></div>
-                    {% for reply in value.reply_list %}
-                    <div class="comment-reply">
-                        <img src="{{ reply.gravatar }}?s=32" />
-                        <span class="username">{{ reply.author__username }}</span> to <span class="username">{{ reply.to_user__username }}</span>
-                        at <span>{{ reply.time|date:"Y-m-d H:i:s" }}</span>
-                        <div style="margin-left: 40px">{{ reply.content }}</div>
+    {% if comments.items %}
+        {% for key, value in comments.items %}
+            <section class="comment clearfix">
+                <div class="col-sm-2 comment-option">
+                    <div>
+                        <img src="{{ value.gravatar }}?s=32">
+                        <span>{{ value.author__username }}</span>
                     </div>
-                    {% endfor %}
+                    {{ value.time|date:"Y/m/d H:i" }}
                 </div>
+                {% autoescape off %}
+                    <div class="col-sm-10">
+                        <div class="comment-content markdown-content">{{ value.content }}</div>
+                        <div class="reply-editor-area" id="commentArea{{ value.rid }}" data-id="{{ value.rid }}"
+                             data-type="c">
+                            <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
+                        </div>
+                    </div>
+                    {% if value.reply_list %}
+                        <div class="col-sm-10 col-sm-offset-2 reply-wrapper">
+                            <div class="reply-area">
+                                <div><h5>Reply:</h5></div>
+                                {% for reply in value.reply_list %}
+                                    <div class="comment-reply">
+                                        <img src="{{ reply.gravatar }}?s=32"/>
+                                        <span class="username">{{ reply.author__username }}</span> to <span
+                                            class="username">{{ reply.to_user__username }}</span>
+                                        at <span>{{ reply.time|date:"Y-m-d H:i:s" }}</span>
+                                        <div class="reply-content markdown-content">{{ reply.content }}</div>
+                                    </div>
+                                    <div class="reply-editor-area" id="commentArea{{ reply.rid }}"
+                                         data-id="{{ reply.rid }}" data-type="r">
+                                        <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endautoescape %}
+            </section>
+        {% endfor %}
+    {% else %}
+        <div class="comment-status-title">
+            <p>No comment yet.</p>
+        </div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <div id="editorArea">
+            <h4>Leave a new comment</h4>
+            <div style="margin: 20px 0;"><p>Current user: {{ request.user.username }}. <a
+                    href="{% url 'account_logout' %}?from_url={{ request.path }}">Quit »</a></p></div>
+            <h5>Content</h5>
+            <div id="markdownEditor">
+                <textarea style="display:none;"></textarea>
             </div>
-                {% endif %}
-            {% endautoescape %}
-        </section>
-    {% endfor %}
+            <div class="add-article-option">
+                <button class="btn btn-diy" id="submitContent">Comment</button>
+            </div>
+        </div>
+        <div id="newComment" data-id="{{ article.tid }}" data-type="a"></div>
+    {% endif %}
 
 
 {% endblock %}
 {% block script %}
+    <script src="{% static 'js/editor/editormd.js' %}"></script>
+    <script src="{% static 'lib/prettify.min.js' %}"></script>
+    <script src="{% static 'lib/marked.min.js' %}"></script>
+    <script>
+        $(function () {
+            var markdownEditor;
+            var markedOptions = {
+                gfm: true,
+                tables: true,
+                breaks: true,
+                pedantic: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: true
+            };
 
-<script>
+            marked.setOptions(markedOptions);
 
+            $(".markdown-content").each(function (index, item) {
+                var content = item.innerHTML;
+                if (content.substring(0, markdownTag.length) === markdownTag) {
+                    $(item).html(marked(item.innerHTML));
+                    $(item).find("pre").addClass("prettyprint linenums");
+                    prettyPrint();
+                }
+            });
 
-$(function() {
+            var $editor = $("#editorArea").clone(true);
+            $("#editorArea").remove();
+            addCommentArea('newComment');
 
+            function addCommentArea(domId) {
+                $("#editorArea").remove();
 
-});
-</script>
+                var $editorWrapper = $("#" + domId);
+
+                var commentId = $editorWrapper.attr("data-id");
+                var commentType = $editorWrapper.attr("data-type");
+
+                $editorWrapper.append($editor);
+                var newEditor = editormd("markdownEditor", {
+                    width: "100%",
+                    height: 360,
+                    syncScrolling: "single",
+                    path: "/static/lib/",
+                    imageUpload: true,
+                    imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                    imageUploadURL: "{% url 'image_receiver' %}",
+                    emoji: false
+                });
+                $("#submitContent").on("click", function () {
+                    if ($("input[name=title]").val() === "") {
+                        $("#titleAlert").text("Article title required.");
+                        $("#titleAlert").css({"-webkit-animation": "twinkling 0.3s infinite ease-in-out"});
+                        setTimeout(function () {
+                            $("#titleAlert").css("");
+                            $("#titleAlert").text("");
+                        }, 1200);
+                        return false;
+                    }
+                    var value = markdownEditor.getValue();
+                    $.ajax({
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                            content: "<!--Markdown-->\n" + value,
+                            commentId: commentId,
+                            commentType: commentType
+                        },
+                        url: '{% url 'post_receiver' %}',
+                        success: function (result) {
+                            if (result.status === 200) {
+                                window.location.reload();
+                            } else {
+                                alert(result.message);
+                            }
+                        }
+                    });
+                });
+                markdownEditor = newEditor;
+            }
+
+            $(".reply-editor-area a").on("click", function () {
+                var $editorWrapper = $(this).parent().parent();
+                var domId = $editorWrapper.attr("id");
+                addCommentArea(domId);
+            });
+
+        });
+    </script>
 
 {% endblock %}

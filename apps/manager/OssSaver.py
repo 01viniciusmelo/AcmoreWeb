@@ -47,7 +47,17 @@ class OssSaver:
         self.bucket.put_object(diy_prefix+file_name+extension_name, response, headers=headers)
 
         cloud_file_url = self.static_url + diy_prefix + file_name + extension_name
-        #print 'success: %s' % cloud_file_url
 
         return cloud_file_url
+
+    def upload_file(self, file_content, file_name, content_type=''):
+        headers = {'Content-Type': '%s;' % content_type}
+        self.bucket.put_object(file_name, file_content, headers=headers)
+        cloud_file_url = self.static_url + file_name
+        return cloud_file_url
+
+
+
+
+
 

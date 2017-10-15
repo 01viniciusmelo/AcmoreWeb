@@ -7,6 +7,8 @@ from django.shortcuts import render
 from apps.problem.models.Problem import Problem
 from apps.status.models.Solution import Solution
 from apps.models import JudgeLanguage
+from django.db.models import Count
+from apps.article.models import Article, Reply
 
 from const import support_language, vjudge_problem_url
 
@@ -18,7 +20,8 @@ import json
 def one_problem(request, judge_name, problem_id):
     start_time = time.time()
     try:
-        problem = cache.get_or_set('problem_oj' + str(problem_id), Problem.objects.filter(judge_name=judge_name).get(problem_id=problem_id), 3)
+        problem = cache.get_or_set('problem_oj' + str(problem_id),
+                                   Problem.objects.filter(judge_name=judge_name).get(problem_id=problem_id), 3)
     except ObjectDoesNotExist:
         return render(request, 'no-problem.html')
 
@@ -37,22 +40,27 @@ def one_problem(request, judge_name, problem_id):
         language = support_language
     else:
         language = [[item.language_id, item.language_name] for item in JudgeLanguage.objects
-                        .filter(judge_name=judge_name).filter(enabled=1).order_by('language_id').all()]
+            .filter(judge_name=judge_name).filter(enabled=1).order_by('language_id').all()]
 
     v_problem_url = vjudge_problem_url[problem.judge_name] + problem.problem_id if problem.judge_name != 'LOCAL' else ''
 
+    articles = Article.objects.annotate(comment_count=Count('reply')) \
+        .values('tid', 'title', 'author__username', 'updated_at', 'comment_count').order_by('-updated_at').filter(pid=problem_id)
     context = dict(
         problem=problem,
         used_time=round((time.time() - start_time) * 1000, 2),
         attr=attr,
         support_language=language,
         submit_alert=submit_alert,
-        v_problem_url=v_problem_url
+        v_problem_url=v_problem_url,
+        articles=articles
     )
     return render(request, 'one-problem.html', context=context)
 
+
 def problem_list(request):
     return render(request, 'problem-list.html')
+
 
 def problem_list_data(request):
     page_params = '#'
@@ -60,10 +68,10 @@ def problem_list_data(request):
     try:
         offset = int(request.GET.get('offset', 0))
         limit = int(request.GET.get('limit', 20))
-        source  = request.GET.get('source', '')
-        title  = request.GET.get('title', '')
-        problem_id  = request.GET.get('problem', '')
-        judge_name  = request.GET.get('judge_name', '')
+        source = request.GET.get('source', '')
+        title = request.GET.get('title', '')
+        problem_id = request.GET.get('problem', '')
+        judge_name = request.GET.get('judge_name', '')
     except ValueError:
         return render(request, '404.html', status=404)
 
@@ -97,7 +105,7 @@ def problem_list_data(request):
 
     problem_number = problems.count()
 
-    problems = problems[offset*limit:(offset+1)*limit]
+    problems = problems[offset * limit:(offset + 1) * limit]
 
     s_submitted = list()
     s_accepted = list()
@@ -106,14 +114,15 @@ def problem_list_data(request):
         problem_id_list = [i['rec_id'] for i in problems.values('rec_id')]
 
         user_id = request.user.username
-        solution_submitted = Solution.objects.values('problem_rec_id')\
+        solution_submitted = Solution.objects.values('problem_rec_id') \
             .filter(problem_rec_id__in=problem_id_list).filter(user_id=user_id)
 
         if judge_name != '' and judge_name != 'ALL':
             solution_submitted = solution_submitted.filter(judge_name=judge_name)
 
         s_submitted = [i['problem_rec_id'] for i in solution_submitted.values('problem_rec_id').distinct()]
-        s_accepted = [i['problem_rec_id'] for i in solution_submitted.filter(result=4).values('problem_rec_id').distinct()]
+        s_accepted = [i['problem_rec_id'] for i in
+                      solution_submitted.filter(result=4).values('problem_rec_id').distinct()]
 
     context = dict(
         problems=list(problems.values('rec_id', 'problem_id', 'title', 'source', 'in_date', 'accepted',
@@ -128,11 +137,10 @@ def problem_list_data(request):
                 problem['user_status'] = 1
         else:
             problem['user_status'] = 0
-        del(problem['rec_id'])
+        del (problem['rec_id'])
 
         problem['rate'] = 0 if int(problem['submit']) == 0 else \
-            int(problem['accepted'])*100/int(problem['submit'])
-
+            int(problem['accepted']) * 100 / int(problem['submit'])
 
     page_params = page_params + '/limit-' + str(limit) + '/offset-' + str(offset)
 
@@ -141,7 +149,7 @@ def problem_list_data(request):
     else:
         previous = ['Previous', 'default', offset - 1]
 
-    pages = [previous,]
+    pages = [previous, ]
     half_pagination_number = 5
 
     if problem_number / limit + 1 < half_pagination_number * 2 or offset <= half_pagination_number:

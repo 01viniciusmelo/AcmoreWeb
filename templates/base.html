@@ -118,9 +118,10 @@ html, body {
                         {% url 'put_source' as put_source_url %}<li class="{% if request.path == put_source_url %}active{% endif %}"><a href="{% url 'put_source' %}">Paste</a></li>
                     </ul>
                     <ul class="nav navbar-nav">
-                        {% url 'problem_list' as problem_url %}<li class="{% if 'problem' in request.path %}active{% endif %}"><a href="{% url 'problem_list' %}">Problems</a></li>
-                        {% url 'status_list' as status_list_url %}<li class="{% if 'status' in request.path %}active{% endif %}"><a href="{% url 'status_list' %}">Status</a></li>
-                        {% url 'contest_list' as status_list_url %}<li class="{% if '/contest' in request.path %}active{% endif %}"><a href="{% url 'contest_list' %}">Contest</a></li>
+                        <li class="{% if 'problem' in request.path %}active{% endif %}"><a href="{% url 'problem_list' %}">Problems</a></li>
+                        <li class="{% if 'status' in request.path %}active{% endif %}"><a href="{% url 'status_list' %}">Status</a></li>
+                        <li class="{% if '/contest' in request.path %}active{% endif %}"><a href="{% url 'contest_list' %}">Contest</a></li>
+                        <li class="{% if '/article' in request.path %}active{% endif %}"><a href="{% url 'article_list' %}">Article</a></li>
                         {% url 'user_list' as user_list_url %}<li class="{% if request.path == user_list_url %}active{% endif %}"><a href="{% url 'user_list' %}">Rank</a></li>
                         {% url 'help' as help_url %}<li class="{% if request.path == help_url %}active{% endif %}"><a href="{% url 'help' %}">Help</a></li>
                     </ul>
@@ -129,7 +130,7 @@ html, body {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.username }}<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                {% if request.user.is_superuser %}<li><a href="{% url 'user_center' %}">Manage</a></li>{% endif %}
+                                {% if request.user.is_superuser %}<li><a href="{% url 'manage_center' %}">Manage</a></li>{% endif %}
                                 <li><a href="{% url 'user_center' %}">My Account</a></li>
                                 <li><a href="{% url 'account_logout' %}?from_url={{ request.path }}">Logout</a></li>
                             </ul>
@@ -179,7 +180,7 @@ html, body {
         </div>
     </footer>{% block modal %}{% endblock %}
 <script src="{% static '/js/libs.js' %}?_ver=1.1"></script>
-<script src="{% static '/js/common.js' %}?_ver=1.1"></script>
+<script src="{% static '/js/common.js' %}?_ver=1.1.12"></script>
 {% block script %}
 {% endblock %}
 <script>
