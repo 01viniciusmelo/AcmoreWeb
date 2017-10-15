@@ -122,25 +122,25 @@
 {% endblock %}
 {% block main %}
     {% if request.user.is_authenticated %}
-    <div id="editorArea">
-        <div style="padding: 0 20px;">
-            <div class="form-group">
-                <label for="title">Title:</label><span id="titleAlert"></span>
-                <input name="title" type="text" class="form-control" id="title" required="required"/>
+        <div id="editorArea">
+            <div style="padding: 0 20px;">
+                <div class="form-group">
+                    <label for="title">Title:</label><span id="titleAlert"></span>
+                    <input name="title" type="text" class="form-control" id="title" required="required"/>
+                </div>
+            </div>
+            <div id="newEditor">
+                <textarea style="display:none;"></textarea>
+            </div>
+            <div class="add-article-option">
+                <button class="btn btn-default" id="cancelEditor">Cancel</button>
+                <button class="btn btn-diy" id="submitContent">Submit</button>
             </div>
         </div>
-        <div id="newEditor">
-            <textarea style="display:none;"></textarea>
+        <div class="add-article">
+            <div><span class="glyphicon glyphicon-plus"></span></div>
+            Post an article.
         </div>
-        <div class="add-article-option">
-            <button class="btn btn-default" id="cancelEditor">Cancel</button>
-            <button class="btn btn-diy" id="submitContent">Submit</button>
-        </div>
-    </div>
-    <div class="add-article">
-        <div><span class="glyphicon glyphicon-plus"></span></div>
-        Post an article.
-    </div>
     {% endif %}
     {% for article in articles %}
         <article class="article {% cycle 'odd' 'even' %} clearfix" data-id="{{ article.tid }}">
@@ -151,14 +151,12 @@
                 <a href="{% url 'one_article' article.tid %}"><h4>{{ article.title }}</h4></a>
                 <div>
                     <span class="username">{{ article.author__username }}</span>
-                    at {{ article.updated_at|date:"Y-m-d H:i:s" }}
+                    at <span class="utc-time-to-local-time">{{ article.updated_at|date:"c" }}</span>
                     <a href="{% url 'one_article' article.tid %}"><span
                             class="comment-number">Comments({{ article.comment_count }})</span></a>
                 </div>
                 <hr>
-                {% autoescape off %}
-                    <div class="content markdown-body">{{ article.content }}</div>
-                {% endautoescape %}
+                <div class="content markdown-body">{{ article.content }}</div>
             </div>
         </article>
     {% endfor %}
@@ -170,7 +168,16 @@
     <script src="{% static 'lib/marked.min.js' %}"></script>
     <script>
         $(function () {
+            var renderer = new marked.Renderer();
+
+            renderer.code = function (code, lang) {
+                var language = lang && (' language-' + lang) || '';
+                return '<pre class="prettyprint' + language + '">'
+                    + '<code>' + code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code>'
+                    + '</pre>';
+            };
             var markedOptions = {
+                renderer: renderer,
                 gfm: true,
                 tables: true,
                 breaks: true,
@@ -184,9 +191,10 @@
 
             $("div.content").each(function (index, item) {
                 var content = item.innerHTML;
-                if (content.substring(0, markdownTag.length) === markdownTag) {
-                    content = marked(content);
-                    $(item).html(content);
+                if (content.substring(0, markdownTagEscape.length) === markdownTagEscape) {
+                    $(item).html(marked(content.substring(markdownTagEscape.length)));
+                    //$(item).find("pre").addClass("prettyprint linenums");
+                    //prettyPrint();
                 }
                 if (item.offsetHeight > 140) {
                     $(item).addClass('overflow');

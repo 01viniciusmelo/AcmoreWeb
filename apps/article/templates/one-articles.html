@@ -177,14 +177,12 @@
                     <h4 class="article-title">{{ article.title }}</h4>
                     <div>
                         <span class="username">{{ article.author.username }}</span>
-                        at {{ article.updated_at|date:"Y-m-d H:i:s" }}
+                        at <span class="utc-time-to-local-time">{{ article.updated_at|date:'c' }}</span>
                     </div>
                 </div>
             </div>
             <hr>
-            {% autoescape off %}
-                <div class="content col-sm-10 col-md-offset-1 markdown-content markdown-body">{{ article.content }}</div>
-            {% endautoescape %}
+            <div class="content col-sm-10 col-md-offset-1 markdown-content markdown-body">{{ article.content }}</div>
         </div>
     </article>
     <div id="comments">
@@ -198,37 +196,36 @@
                         <img src="{{ value.gravatar }}?s=32">
                         <span>{{ value.author__username }}</span>
                     </div>
-                    {{ value.time|date:"Y/m/d H:i" }}
+                    <span class="utc-time-to-local-time">{{ value.time|date:"c" }}</span>
                 </div>
-                {% autoescape off %}
-                    <div class="col-sm-10">
-                        <div class="comment-content markdown-content">{{ value.content }}</div>
-                        <div class="reply-editor-area" id="commentArea{{ value.rid }}" data-id="{{ value.rid }}"
-                             data-type="c">
-                            <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
+
+                <div class="col-sm-10">
+                    <div class="comment-content markdown-content">{{ value.content }}</div>
+                    <div class="reply-editor-area" id="commentArea{{ value.rid }}" data-id="{{ value.rid }}"
+                         data-type="c">
+                        <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
+                    </div>
+                </div>
+                {% if value.reply_list %}
+                    <div class="col-sm-10 col-sm-offset-2 reply-wrapper">
+                        <div class="reply-area">
+                            <div><h5>Reply:</h5></div>
+                            {% for reply in value.reply_list %}
+                                <div class="comment-reply">
+                                    <img src="{{ reply.gravatar }}?s=32"/>
+                                    <span class="username">{{ reply.author__username }}</span> to <span
+                                        class="username">{{ reply.to_user__username }}</span>
+                                    at <span class="utc-time-to-local-time">{{ reply.time|date:"c" }}</span>
+                                    <div class="reply-content markdown-content">{{ reply.content }}</div>
+                                </div>
+                                <div class="reply-editor-area" id="commentArea{{ reply.rid }}"
+                                     data-id="{{ reply.rid }}" data-type="r">
+                                    <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                    {% if value.reply_list %}
-                        <div class="col-sm-10 col-sm-offset-2 reply-wrapper">
-                            <div class="reply-area">
-                                <div><h5>Reply:</h5></div>
-                                {% for reply in value.reply_list %}
-                                    <div class="comment-reply">
-                                        <img src="{{ reply.gravatar }}?s=32"/>
-                                        <span class="username">{{ reply.author__username }}</span> to <span
-                                            class="username">{{ reply.to_user__username }}</span>
-                                        at <span>{{ reply.time|date:"Y-m-d H:i:s" }}</span>
-                                        <div class="reply-content markdown-content">{{ reply.content }}</div>
-                                    </div>
-                                    <div class="reply-editor-area" id="commentArea{{ reply.rid }}"
-                                         data-id="{{ reply.rid }}" data-type="r">
-                                        <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endautoescape %}
+                {% endif %}
             </section>
         {% endfor %}
     {% else %}
@@ -260,8 +257,17 @@
     <script src="{% static 'lib/marked.min.js' %}"></script>
     <script>
         $(function () {
+            var renderer = new marked.Renderer();
+
+            renderer.code = function (code, lang) {
+                var language = lang && (' language-' + lang) || '';
+                return '<pre class="prettyprint' + language + '">'
+                    + '<code>' + code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</code>'
+                    + '</pre>';
+            };
             var markdownEditor;
             var markedOptions = {
+                renderer: renderer,
                 gfm: true,
                 tables: true,
                 breaks: true,
@@ -275,8 +281,8 @@
 
             $(".markdown-content").each(function (index, item) {
                 var content = item.innerHTML;
-                if (content.substring(0, markdownTag.length) === markdownTag) {
-                    $(item).html(marked(item.innerHTML));
+                if (content.substring(0, markdownTagEscape.length) === markdownTagEscape) {
+                    $(item).html(marked(content.substring(markdownTagEscape.length)));
                     $(item).find("pre").addClass("prettyprint linenums");
                     prettyPrint();
                 }

@@ -106,3 +106,4 @@ var vjudge_problem_url_list = {
 
 
 var markdownTag = '<!--Markdown-->';
+var markdownTagEscape = '&lt;!--Markdown--&gt;';
