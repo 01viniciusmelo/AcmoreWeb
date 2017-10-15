@@ -4,7 +4,6 @@
 {% endblock %}
 {% block style %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/editor/editormd.css' %}"/>
     <style>
         article {
             border: 1px solid #dddddd;
@@ -163,9 +162,8 @@
             text-align: right;
         }
     </style>
-
+    <link rel="stylesheet" href="{% static 'css/editor/editormd.css' %}"/>
 {% endblock %}
-
 {% block main %}
     <article class="article clearfix">
         <div class="content-wrapper">
@@ -200,7 +198,7 @@
                 </div>
 
                 <div class="col-sm-10">
-                    <div class="comment-content markdown-content">{{ value.content }}</div>
+                    <div class="comment-content markdown-content markdown-body">{{ value.content }}</div>
                     <div class="reply-editor-area" id="commentArea{{ value.rid }}" data-id="{{ value.rid }}"
                          data-type="c">
                         <div class="reply-control"><a href="javascript:void(0);">Reply</a></div>
@@ -216,7 +214,7 @@
                                     <span class="username">{{ reply.author__username }}</span> to <span
                                         class="username">{{ reply.to_user__username }}</span>
                                     at <span class="utc-time-to-local-time">{{ reply.time|date:"c" }}</span>
-                                    <div class="reply-content markdown-content">{{ reply.content }}</div>
+                                    <div class="reply-content markdown-content markdown-body">{{ reply.content }}</div>
                                 </div>
                                 <div class="reply-editor-area" id="commentArea{{ reply.rid }}"
                                      data-id="{{ reply.rid }}" data-type="r">
