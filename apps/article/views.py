@@ -81,7 +81,7 @@ def post_receiver(request):
         'status': 200,
         'message': 'ok'
     }
-    content = request.POST.get('content', '')
+    content = "<!--Markdown-->\n" + request.POST.get('content', '')
     if not request.POST.has_key('title'):
         if not request.POST.has_key('commentType'):
             return JsonResponse({

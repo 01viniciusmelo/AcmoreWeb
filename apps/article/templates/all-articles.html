@@ -193,8 +193,13 @@
                 var content = item.innerHTML;
                 if (content.substring(0, markdownTagEscape.length) === markdownTagEscape) {
                     $(item).html(marked(content.substring(markdownTagEscape.length)));
-                    //$(item).find("pre").addClass("prettyprint linenums");
-                    //prettyPrint();
+                    $(item).find("pre").addClass("prettyprint linenums");
+                    prettyPrint();
+                }else {
+                    console.log(content);
+                    $(item).html(content.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'"));
+                    $(item).find("pre").addClass("prettyprint linenums");
+                    prettyPrint();
                 }
                 if (item.offsetHeight > 140) {
                     $(item).addClass('overflow');
@@ -236,7 +241,7 @@
                         dataType: 'json',
                         data: {
                             csrfmiddlewaretoken: '{{ csrf_token }}',
-                            content: "<!--Markdown-->\n" + value,
+                            content: value,
                             title: $("input[name=title]").val()
                         },
                         url: '{% url 'post_receiver' %}',

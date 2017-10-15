@@ -4,6 +4,7 @@
 {% endblock %}
 {% block style %}
     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/editor/editormd.css' %}"/>
     <style>
         article {
             border: 1px solid #dddddd;
@@ -162,7 +163,6 @@
             text-align: right;
         }
     </style>
-    <link rel="stylesheet" href="{% static 'css/editor/editormd.css' %}"/>
 {% endblock %}
 {% block main %}
     <article class="article clearfix">
@@ -283,6 +283,10 @@
                     $(item).html(marked(content.substring(markdownTagEscape.length)));
                     $(item).find("pre").addClass("prettyprint linenums");
                     prettyPrint();
+                }else {
+                    $(item).html(content.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'"));
+                    $(item).find("pre").addClass("prettyprint linenums");
+                    prettyPrint();
                 }
             });
 
@@ -325,7 +329,7 @@
                         dataType: 'json',
                         data: {
                             csrfmiddlewaretoken: '{{ csrf_token }}',
-                            content: "<!--Markdown-->\n" + value,
+                            content: value,
                             commentId: commentId,
                             commentType: commentType
                         },
