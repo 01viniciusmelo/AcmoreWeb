@@ -119,11 +119,9 @@
             }
         }
     </style>
-
 {% endblock %}
-
 {% block main %}
-
+    {% if request.user.is_authenticated %}
     <div id="editorArea">
         <div style="padding: 0 20px;">
             <div class="form-group">
@@ -139,11 +137,11 @@
             <button class="btn btn-diy" id="submitContent">Submit</button>
         </div>
     </div>
-
     <div class="add-article">
         <div><span class="glyphicon glyphicon-plus"></span></div>
         Post an article.
     </div>
+    {% endif %}
     {% for article in articles %}
         <article class="article {% cycle 'odd' 'even' %} clearfix" data-id="{{ article.tid }}">
             <div class="gravatar col-sm-1">
